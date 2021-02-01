@@ -16,4 +16,4 @@ readonly NEW_NAME=$2
 # The 'find' program recursively searches the start directory for java files, 
 # in which the 'sed' application replaces the old names with the new names.
 find $START_DIRECTORY -name \*$SOURCE_SUFFIX -type f -exec \
-    sed -i '' -e 's/'$OLD_NAME'/'$NEW_NAME'/g' {} + 
+  sed -i '' -e 's/'$OLD_NAME'/'$NEW_NAME'/g' {} + 
