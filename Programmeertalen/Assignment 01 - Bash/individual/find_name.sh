@@ -3,6 +3,8 @@
 # Author:   René Kok (13671146)
 # Study:    Doorstroomminor Software Engineering UvA
 # 
+# Usage:    ./find_name.sh <name>
+#
 # This script prints the file name and line number of each occurrence of
 # a given string in all the Java source files in the repository.
 
