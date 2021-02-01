@@ -11,4 +11,6 @@
 readonly START_DIRECTORY=./..
 readonly SOURCE_SUFFIX=*.java
 
-grep -niro --include=\*$SOURCE_SUFFIX $1 $START_DIRECTORY
+readonly NAME=$1
+
+grep -niro --include=\*$SOURCE_SUFFIX $NAME $START_DIRECTORY
