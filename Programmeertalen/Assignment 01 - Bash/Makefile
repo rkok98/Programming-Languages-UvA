@@ -37,4 +37,5 @@ doc_clean:
 clean:  doc_clean
 	$(RM) $(CLASSES)
 
-
+diagrams_dot:
+	cd ./individual && ./generate_diagrams.sh;
