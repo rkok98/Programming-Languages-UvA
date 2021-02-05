@@ -18,7 +18,7 @@ all: 	$(CLASSES)
 diagrams_dot:
 	cd ./individual && ./generate_diagrams.sh;
 
-DOTS   = $(shell find ./ -type f -name '*.dot')
+DOTS = $(shell find ./ -type f -name '*.dot')
 PDFS = $(patsubst %.dot,%.pdf,$(DOTS))
 
 diagrams: 	$(PDFS)
