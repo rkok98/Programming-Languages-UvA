@@ -14,6 +14,20 @@ all: 	$(CLASSES)
 	$(JAVAC) $(FLAGS) $<
 
 
+# Generate *.dot file for all java classes
+diagrams_dot:
+	cd ./individual && ./generate_diagrams.sh;
+
+DOTS   = $(shell find ./ -type f -name '*.dot')
+PDFS = $(patsubst %.dot,%.pdf,$(DOTS))
+
+diagrams: 	$(PDFS)
+
+# Makefile pattern to generate a *.pdf file for each *.dot file
+%.pdf: %.dot
+	dot -Tpdf $< > $@
+
+
 TESTS_JAVAS   = $(shell find ./tests/ -type f -name 'Test_*.java')
 TESTS_CLASSES = $(patsubst %.java,%.class,$(TESTS_JAVAS))
 
@@ -36,15 +50,5 @@ doc_clean:
 
 clean:  doc_clean
 	$(RM) $(CLASSES)
-
-diagrams_dot:
-	cd ./individual && ./generate_diagrams.sh;
-
-DOTS   = $(shell find ./ -type f -name '*.dot')
-PDFS = $(patsubst %.dot,%.pdf,$(DOTS))
-
-diagrams: 	$(PDFS)
-
-%.pdf: %.dot
-	dot -Tpdf $< > $@
-	
+	$(RM) $(DOTS)
+	$(RM) $(PDFS)
