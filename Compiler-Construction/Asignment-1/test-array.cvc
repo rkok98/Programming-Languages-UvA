@@ -13,6 +13,12 @@ export int main() {
     testPrintFloatMat();
 
     testMatMul();
+
+    testScanIntVec();
+    testScanFloatVec();
+
+    testScanIntMat();
+    testScanFloatMat();
     return 0;
 }
 
@@ -41,6 +47,38 @@ void testPrintFloatMat() {
             [9.9, 8.8, 7.7, 6.6, 5.5, 4.4, 3.3, 2.2, 1.1, 0.0]
         ];
     
+    printFloatMat(array);
+}
+
+void testScanIntVec() {
+    int[5] array;
+
+    scanIntVec(array);
+
+    printIntVec(array);
+}
+
+void testScanFloatVec() {
+    float[5] array;
+
+    scanFloatVec(array);
+
+    printFloatVec(array);
+}
+
+void testScanIntMat() {
+    int[2, 5] array;
+
+    scanIntMat(array);
+
+    printIntMat(array);
+}
+
+void testScanFloatMat() {
+    float[2, 5] array;
+
+    scanFloatMat(array);
+
     printFloatMat(array);
 }
 
