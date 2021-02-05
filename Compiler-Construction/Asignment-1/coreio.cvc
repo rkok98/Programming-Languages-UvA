@@ -1,13 +1,31 @@
+#ifndef COREIO_CVC
+#define COREIO_CVC
+
 #include <civic.h>
 #include <core.cvc>
 
 export void fibs(int n) {
-    int i = 0;
-    while (i <= n) {
-        printInt(fib(i))
+    for (int i = 0, n) {
+        printInt(fib(i));
     }
 }
 
-export int primes(int n) {
-    return 0;
+export void primes(int n) {
+    bool isprime(int n) {
+        for (int i = 2, n - 1) {
+            if ((n % i) == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    
+    for (int i = 0, n) {
+        if (isprime(i)) {
+            printInt(i);
+        }
+    }
 }
+
+#endif

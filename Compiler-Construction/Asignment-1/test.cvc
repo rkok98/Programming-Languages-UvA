@@ -1,11 +1,9 @@
 #include <civic.h>
 #include <core.cvc>
+#include <coreio.cvc>
 
 export int main() {
-    if (testIsprime()) {
-        printInt(1);
-    }
-
+    primes(21);
     return 0;
 }
 
