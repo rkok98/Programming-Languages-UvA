@@ -1,15 +1,86 @@
+#ifndef ARRAY_CVC
+#define ARRAY_CVC
+
 #include <civic.h>
 
-export int printIntVec(int[n] vec) {
-    for (int i = 0, i < n, i = i + 1) {
+export void printIntVec(int[n] vec) {
+    for (int i = 0, n) {
         printInt(vec[i]);
+        printSpaces(1);
     }
+
+    printNewlines(1);
 }
 
-export int printFloatVec(float[n] vec) {
-    for (int i = 0, i < n, i = i + 1) {
+export void printFloatVec(float[n] vec) {
+    for (int i = 0, n) {
         printFloat(vec[i]);
+        printSpaces(1);
+    }
+    
+    printNewlines(1);
+}
+
+export void printIntMat(int[m, n] mat) {
+    for (int i = 0, m) {
+        for (int j = 0, n) {
+            printInt(mat[i, j]);
+        }
+
+        printNewlines(1);
     }
 }
 
+export void printFloatMat(float[m, n] mat) {
+    for (int i = 0, m) {
+        for (int j = 0, n) {
+            printFloat(mat[i, j]);
+        }
 
+        printNewlines(1);
+    }
+}
+
+/*
+export void scanIntVec(int[n] vec) {
+    for (int i = 0, n) {
+        scanInt(vec[i]);
+    }
+}
+
+export void scanFloatVec(float[n] vec) {
+    for (int i = 0, n) {
+        scanFloat(vec[i]);
+    }
+}
+
+export void scanIntMat(int[m, n] mat) {
+    for (int i = 0, m) {
+        for (int j = 0, n) {
+            scanInt(mat[i, j]);
+        }
+    }
+}
+
+export void scanFloatMat(float[m, n] mat) {
+    for (int i = 0, m) {
+        for (int j = 0, n) {
+            scanFloat(mat[i, j]);
+        }
+    }
+}
+*/
+
+export void matMul(float[m, n] a, float[o, p] b, float[q, l] c) {
+    for (int i = 0, m) {
+        for (int j = 0, n) {
+            c[i, j] = a[i, j] * b[i, j];
+        }
+    }
+}
+
+export void queens(bool[m, n] a) {
+
+}
+
+#endif
