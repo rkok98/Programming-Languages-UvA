@@ -1,0 +1,13 @@
+#include <civic.h>
+#include <core.cvc>
+
+export void fibs(int n) {
+    int i = 0;
+    while (i <= n) {
+        printInt(fib(i))
+    }
+}
+
+export int primes(int n) {
+    return 0;
+}
