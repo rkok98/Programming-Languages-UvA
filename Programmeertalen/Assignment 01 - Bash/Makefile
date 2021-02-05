@@ -39,3 +39,12 @@ clean:  doc_clean
 
 diagrams_dot:
 	cd ./individual && ./generate_diagrams.sh;
+
+DOTS   = $(shell find ./ -type f -name '*.dot')
+PDFS = $(patsubst %.dot,%.pdf,$(DOTS))
+
+diagrams: 	$(PDFS)
+
+%.pdf: %.dot
+	dot -Tpdf $< > $@
+	
