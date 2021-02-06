@@ -18,16 +18,20 @@ do
     fi
 done
 
+cluster=0
+
 echo "digraph D {"
 for f in $packages/*
 do
     package=$(basename $f)
 
-    echo -e "\tsubgraph cluster_X { label = "$package""
+    echo -e "\tsubgraph cluster_"$cluster" { label = "$package""
     for l in $(cat $f)
     do
         echo -e "\t\t"$l" [shape=box]"
     done
     echo -e "\t}\n"
+
+    ((++cluster))
 done
 echo "}"
