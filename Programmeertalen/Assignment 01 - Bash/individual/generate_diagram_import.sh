@@ -2,7 +2,17 @@
 
 JAVAS=$( find .. -name '*.java')
 
-for f in JAVAS
+echo "digraph D {"
+for f in $JAVAS
 do    
-    cat $f | ./remove_comments.sh | perl -0ne 'while (/class\s+(\S+)\s+extends\s+(\S+).*\{.*}/sg) {print "$1 -> $2\n$1 [shape=oval]\n";}'
+    SOURCE=$(cat $f | ./remove_comments.sh)
+    CLASS=$(echo $SOURCE | perl -0ne 'while (/class\s+(\S+).*?\{.*}/sg) {print "$1\n";}')
+
+    IMPORTS=$(echo $SOURCE | perl -0ne 'while (/import\s\S+\.(\S+)\;/sg) {print "$1\n";}')
+
+    for i in $IMPORTS
+    do
+        echo $CLASS' -> '$i' [arrowhead=dot]'
+    done
 done
+echo "}"
