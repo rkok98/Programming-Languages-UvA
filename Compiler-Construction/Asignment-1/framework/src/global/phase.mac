@@ -38,7 +38,13 @@ SUBPHASE( ri,
           "Rename identifiers",
           RIdoRenameIdentifiers, 
           ALWAYS,
-          pet)      
+          pet)
+
+SUBPHASE( sr,
+          "Strength Reduction",
+          SRdoStrengthReduction,
+          ALWAYS,
+          pet)
 
 SUBPHASE( si, 
           "Sum Integers",

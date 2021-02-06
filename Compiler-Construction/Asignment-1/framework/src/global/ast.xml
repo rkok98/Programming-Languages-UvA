@@ -48,6 +48,12 @@
         </travuser>
       </traversal>
 
+      <traversal id="SR" name="Strength reduction" default="sons" include="strength_reduction.h">
+        <travuser>
+          <node name="Num" />
+        </travuser>
+      </traversal>
+
       <traversal id="SI" name="Sum ins" default="sons" include="sum_ints.h">
         <travuser>
           <node name="Num" />
