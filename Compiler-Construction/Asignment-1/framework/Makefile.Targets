@@ -71,7 +71,7 @@ framework   = memory.o str.o ctinfo.o main_args.o dbug.o globals.o \
               traverse_tables.o traverse_helper.o check.o \
               check_node.o check_attribs.o lookup_table.o
 
-global      = options.o usage.o myglobals.o strength_reduction.o
+global      = options.o usage.o myglobals.o
 
 scanparse   = civic.tab.o civic.lex.o
 
@@ -79,6 +79,6 @@ print       = print.o
 
 codegen     = gen_byte_code.o
 
-demo        = rename_identifiers.o opt_sub.o sum_ints.o
+demo        = rename_identifiers.o opt_sub.o sum_ints.o strength_reduction.o
 
 
