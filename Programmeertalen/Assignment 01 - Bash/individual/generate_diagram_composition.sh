@@ -1,7 +1,11 @@
 #!/bin/bash
-
-# \s*([A-Z]+\S*)\s[a-zA-Z]+;
-
+#
+# Author:   René Kok (13671146)
+# Study:    Doorstroomminor Software Engineering UvA
+# 
+# Usage:    ./generate_diagram_composition.sh
+#
+# This script generates a composition diagram from all the java source files
 
 echo "digraph D {"
 for f in $( find .. -name '*.java')
@@ -13,7 +17,7 @@ do
 
     for i in $IMPORTS
     do
-        echo $CLASS' -> '$i' [arrowhead=dot]'
+        echo $CLASS' -> '$i' [arrowhead=diamond]'
     done
 done
 echo "}"

@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# Author:   René Kok (13671146)
+# Study:    Doorstroomminor Software Engineering UvA
+# 
+# Usage:    ./generate_diagram_import.sh
+#
+# This script generates a import diagram from all the java source files
 
 JAVAS=$( find .. -name '*.java')
 

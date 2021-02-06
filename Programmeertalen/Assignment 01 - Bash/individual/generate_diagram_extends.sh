@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# Author:   René Kok (13671146)
+# Study:    Doorstroomminor Software Engineering UvA
+# 
+# Usage:    ./generate_diagram_extends.sh
+#
+# This script generates a extends diagram from all the java source files
 
 echo "digraph D {"
 for f in $( find .. -name '*.java')
