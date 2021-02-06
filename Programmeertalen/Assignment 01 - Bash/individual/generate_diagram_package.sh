@@ -1,8 +1,10 @@
 #!/bin/bash
 
 JAVAS=$( find .. -name '*.java')
+PACKAGES=$(mktemp -d)
 
-packages=$(mktemp -d)
+# Removing created temp files in unexpected bash exit
+trap 'rm -rf -- "$PACKAGES"' EXIT
 
 for f in $JAVAS
 do  
@@ -12,14 +14,14 @@ do
     class=$(echo $source | perl -0ne 'while (/class\s+(\S+).*?\{.*}/sg) {print "$1\n";}')
 
     if [ -n "$package" ]; then
-        echo $class >> $packages/$package
+        echo $class >> $PACKAGES/$package
     fi
 done
 
 cluster=0
 
 echo "digraph D {"
-for f in $packages/*
+for f in $PACKAGES/*
 do
     package=$(basename $f)
 
