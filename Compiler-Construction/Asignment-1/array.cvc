@@ -96,7 +96,7 @@ export void matMul(float[m, n] a, float[o, p] b, float[q, l] c) {
 }
 
 export void queens(bool[m, n] a) {
-
+    // TODO
 }
 
 #endif

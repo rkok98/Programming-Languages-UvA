@@ -4,7 +4,6 @@
 #include <civic.h>
 #include <array.cvc>
 
-
 export int main() {
     testPrintIntVec();
     testPrintFloatVec();
