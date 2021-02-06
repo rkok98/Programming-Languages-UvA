@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# package\s(\S+)\;
-
 JAVAS=$( find .. -name '*.java')
 
 packages=$(mktemp -d)
