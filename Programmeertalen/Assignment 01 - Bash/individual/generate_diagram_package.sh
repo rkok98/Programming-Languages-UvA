@@ -13,6 +13,7 @@ do
     package=$(echo $source | perl -0ne 'while (/package\s(\S+)\;/sg) {print "$1\n";}')
     class=$(echo $source | perl -0ne 'while (/class\s+(\S+).*?\{.*}/sg) {print "$1\n";}')
 
+    # Write class to file with the name of the package if the package variable is not empty
     if [ -n "$package" ]; then
         echo $class >> $PACKAGES/$package
     fi
