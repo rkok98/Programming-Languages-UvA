@@ -20,59 +20,40 @@
 #include "dbug.h"
 
 #include "memory.h"
-#include "ctinfo.h"
-
-/*
- * INFO structure
- */
-
-struct INFO {
-    int sum;
-};
+#include "free.h"
+#include "str.h"
 
 
-/*
- * INFO macros
- */
-
-#define INFO_SUM(n)  ((n)->sum)
-
-
-/*
- * INFO functions
- */
-
-static info *MakeInfo(void)
-{
-    info *result;
-
-    DBUG_ENTER( "MakeInfo");
-
-    result = (info *)MEMmalloc(sizeof(info));
-
-    INFO_SUM( result) = 0;
-
-    DBUG_RETURN( result);
-}
-
-static info *FreeInfo( info *info)
-{
-    DBUG_ENTER ("FreeInfo");
-
-    info = MEMfree( info);
-
-    DBUG_RETURN( info);
-}
 
 /*
  * Traversal functions
  */
 
-node *SRnum (node *arg_node, info *arg_info)
+node *SRbinop (node *arg_node, info *arg_info)
 {
-    DBUG_ENTER("SRnum");
+    DBUG_ENTER("SRbinop");
 
-    INFO_SUM( arg_info) += NUM_VALUE(arg_node);
+    /*
+     * Extremely important:
+     *  we must continue to traverse the abstract syntax tree !!
+     */
+    BINOP_LEFT( arg_node) = TRAVdo( BINOP_LEFT( arg_node), arg_info);
+    BINOP_RIGHT( arg_node) = TRAVdo( BINOP_RIGHT( arg_node), arg_info);
+
+    if (BINOP_OP( arg_node) == BO_sub) {
+        if ((NODE_TYPE( BINOP_LEFT( arg_node)) == N_var)
+            && (NODE_TYPE( BINOP_RIGHT( arg_node)) == N_var)
+            && STReq( VAR_NAME( BINOP_LEFT( arg_node)), VAR_NAME( BINOP_RIGHT( arg_node)))) {
+            arg_node = FREEdoFreeTree( arg_node);
+            arg_node = TBmakeNum( 0);
+        }
+        else if  ((NODE_TYPE( BINOP_LEFT( arg_node)) == N_num)
+                  && (NODE_TYPE( BINOP_RIGHT( arg_node)) == N_num)
+                  && (NUM_VALUE( BINOP_LEFT( arg_node)) == NUM_VALUE( BINOP_RIGHT( arg_node)))) {
+            arg_node = FREEdoFreeTree( arg_node);
+            arg_node = TBmakeNum( 0);
+        }
+    }
 
     DBUG_RETURN( arg_node);
 }
@@ -84,19 +65,11 @@ node *SRnum (node *arg_node, info *arg_info)
 
 node *SRdoStrengthReduction( node *syntaxtree)
 {
-    info *arg_info;
-
     DBUG_ENTER("SRdoStrengthReduction");
 
-    arg_info = MakeInfo();
-
-    TRAVpush( TR_si);
-    syntaxtree = TRAVdo( syntaxtree, arg_info);
+    TRAVpush( TR_os);
+    syntaxtree = TRAVdo( syntaxtree, NULL);
     TRAVpop();
-
-    CTInote( "Sum of integer constants: %d", INFO_SUM( arg_info));
-
-    arg_info = FreeInfo( arg_info);
 
     DBUG_RETURN( syntaxtree);
 }
