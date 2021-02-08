@@ -67,7 +67,7 @@ node *SRdoStrengthReduction( node *syntaxtree)
 {
     DBUG_ENTER("SRdoStrengthReduction");
 
-    TRAVpush( TR_os);
+    TRAVpush( TR_sr);
     syntaxtree = TRAVdo( syntaxtree, NULL);
     TRAVpop();
 
