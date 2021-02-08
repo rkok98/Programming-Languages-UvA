@@ -66,6 +66,12 @@
         </travuser>
       </traversal>
 
+      <traversal id="CA" name="Count arithmetic operators" default="sons" include="count_arthmtc_op.h">
+        <travuser>
+          <node name="BinOp" />
+        </travuser>
+      </traversal>
+
     </general>
   </phases>
 
