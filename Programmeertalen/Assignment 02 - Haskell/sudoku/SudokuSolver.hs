@@ -60,3 +60,10 @@ main =
        -- TODO: Call your solver.
        printSudoku sud
 
+       freeAtPos sud (1,2)
+
+freeInSeq :: [Value] -> [Value]
+freeInSeq seq = values \\ seq 
+
+freeInRow :: Sudoku -> Row -> [Value]
+freeInRow s r = freeInSeq [ s (r,i) | i <- positions  ]
