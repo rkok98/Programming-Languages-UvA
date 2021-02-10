@@ -51,6 +51,28 @@ static info *FreeInfo( info *info)
   return info;
 }
 
+/** <!--******************************************************************-->
+ *
+ * @fn PRTstmts
+ *
+ * @brief Prints the node and its sons/attributes
+ *
+ * @param arg_node BinOp node to process
+ * @param arg_info pointer to info structure
+ *
+ * @return processed node
+ *
+ ***************************************************************************/
+
+node *
+PRTmodule (node * arg_node, info * arg_info)
+{
+    DBUG_ENTER ("PRTstmts");
+
+    printf("Number of multiplies: %d\n", MODULE_ADD(arg_node));
+
+    DBUG_RETURN (arg_node);
+}
 
 
 /** <!--******************************************************************-->

@@ -66,9 +66,10 @@
         </travuser>
       </traversal>
 
-      <traversal id="CA" name="Count arithmetic operators" default="sons" include="count_arthmtc_op.h">
+      <traversal id="CAO" name="Count arithmetic operators" default="sons" include="count_arthmtc_op.h">
         <travuser>
           <node name="BinOp" />
+          <node name="Module" />
         </travuser>
       </traversal>
 
@@ -101,6 +102,39 @@
 -->
 
   <syntaxtree>
+    <!--
+  Node Module
+-->
+    <node name="Module">
+      <description>represents (sequence of) statements</description>
+      <sons>
+        <son name="Next">
+          <description>remaining statements in sequence</description>
+          <targets>
+            <target mandatory="no">
+              <node name="Stmts" />
+              <phases>
+                <all />
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
+      <attributes>
+        <attribute name="Add">
+          <type name="Int">
+            <targets>
+              <target mandatory="yes">
+                <any />
+                <phases>
+                  <all />
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+      </attributes>
+    </node>
 <!--
  Node Stmts:
 -->
@@ -399,6 +433,7 @@
       </attributes>
       <flags></flags>
     </node>
+
 
   </syntaxtree>
 

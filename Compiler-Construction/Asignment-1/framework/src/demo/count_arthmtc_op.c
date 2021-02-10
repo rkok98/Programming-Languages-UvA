@@ -82,9 +82,9 @@ static info *FreeInfo( info *info)
  * Traversal functions
  */
 
-node *CAbinop (node *arg_node, info *arg_info)
+node *CAObinop (node *arg_node, info *arg_info)
 {
-    DBUG_ENTER("CAbinop");
+    DBUG_ENTER("CAObinop");
 
     if (BINOP_OP( arg_node) == BO_add) {
         INFO_CNT_ADD( arg_info) += 1;
@@ -106,31 +106,41 @@ node *CAbinop (node *arg_node, info *arg_info)
         INFO_CNT_MOD( arg_info) += 1;
     }
 
-    // INFO_SUM( arg_info) += NUM_VALUE(arg_node);
-
     DBUG_RETURN( arg_node);
 }
 
 
-/*
- * Traversal start function
- */
+node *CAOmodule(node *arg_node, info *arg_info) {
+    DBUG_ENTER("CAOmodule");
 
-node *CAdoCountBinOp( node *syntaxtree)
+    info *info = MakeInfo();
+
+    TRAVdo(MODULE_NEXT(arg_node), info);
+
+    MODULE_ADD(arg_node) = INFO_CNT_ADD(info);
+
+    DBUG_RETURN(arg_node);
+}
+
+node *CAOdoCountBinOp( node *syntaxtree)
 {
     info *arg_info;
 
-    DBUG_ENTER("CAdoCountBinOp");
+    DBUG_ENTER("CAOdoCountBinOp");
 
     arg_info = MakeInfo();
 
-    TRAVpush( TR_ca);
+    TRAVpush( TR_cao);
     syntaxtree = TRAVdo( syntaxtree, arg_info);
     TRAVpop();
 
-    CTInote( "Sum of integer constants: %d", INFO_CNT_MUL( arg_info));
+
+
+    // node *module = TBmakeModule(INFO_CNT_MUL(arg_info), syntaxtree);
+
+    // CTInote( "Amount of multipliers %d", INFO_CNT_MUL( arg_info));
 
     arg_info = FreeInfo( arg_info);
 
-    DBUG_RETURN( syntaxtree);
+    DBUG_RETURN(syntaxtree);
 }

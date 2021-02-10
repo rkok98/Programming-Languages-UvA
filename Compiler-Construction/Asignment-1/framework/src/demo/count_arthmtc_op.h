@@ -3,7 +3,8 @@
 
 #include "types.h"
 
-extern node *CAbinop (node *arg_node, info *arg_info);
-extern node *CAdoCountBinOp( node *syntaxtree);
+extern node *CAObinop (node *arg_node, info *arg_info);
+extern node *CAOmodule (node *arg_node, info *arg_info);
+extern node *CAOdoCountBinOp( node *syntaxtree);
 
 #endif

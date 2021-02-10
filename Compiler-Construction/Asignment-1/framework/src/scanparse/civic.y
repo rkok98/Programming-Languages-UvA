@@ -37,11 +37,11 @@ static int yyerror( char *errname);
 %token <cflt> FLOAT
 %token <id> ID
 
-%type <node> intval floatval boolval constant expr
+%type <node> intval floatval boolval constant expr module
 %type <node> stmts stmt assign varlet program
 %type <cbinop> binop
 
-%start program
+%start module
 
 %%
 
@@ -50,6 +50,12 @@ program: stmts
            parseresult = $1;
          }
          ;
+
+module: stmts
+        {
+          parseresult = TBmakeModule(0, $1);
+        }
+        ;
 
 stmts: stmt stmts
         {

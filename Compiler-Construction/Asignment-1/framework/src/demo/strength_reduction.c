@@ -52,7 +52,7 @@ node *SRbinop(node *arg_node, info *arg_info) {
             BINOP_OP(arg_node) = BO_add;
             BINOP_RIGHT(arg_node) = TBmakeVar(STRcpy(VAR));
 
-            BINOP_LEFT(arg_node) = TBmakeBinop(BO_mul, TBmakeVar(STRcpy(VAR)), TBmakeNum(MULTIPLIER - 1));
+            BINOP_LEFT(arg_node) = TBmakeBinop(BO_mul, TBmakeNum(MULTIPLIER - 1), TBmakeVar(STRcpy(VAR)));
         } else {
             arg_node = TBmakeBinop(BO_add, TBmakeVar(STRcpy(VAR)), TBmakeVar(STRcpy(VAR)));
         }
