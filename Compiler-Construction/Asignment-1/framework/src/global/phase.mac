@@ -35,10 +35,10 @@ PHASE( pet,
        ALWAYS)
 
 SUBPHASE( cao,
-"Count Arithmetic operators",
-CAOdoCountBinOp,
-ALWAYS,
-pet)
+          "Count Arithmetic operators",
+          CAOdoCountBinOp,
+          ALWAYS,
+          pet)
 
 SUBPHASE( ri, 
           "Rename identifiers",

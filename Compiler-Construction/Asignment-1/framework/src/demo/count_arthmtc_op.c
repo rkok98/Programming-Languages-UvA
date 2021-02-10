@@ -1,13 +1,13 @@
 /*****************************************************************************
  *
- * Module: sum_ints
+ * Module: count_arthmtc_op.c
  *
- * Prefix: SI
+ * Prefix: CAO
  *
  * Description:
  *
- * This module implements a demo traversal of the abstract syntax tree that
- * sums up all integer constants and prints the result at the end of the traversal.
+ * This module implements a traversal of the abstract syntax tree that
+ * count all arithmetic operators.
  *
  *****************************************************************************/
 
@@ -22,11 +22,6 @@
 #include "memory.h"
 #include "ctinfo.h"
 
-
-/*
- * INFO structure
- */
-
 struct INFO {
     int cnt_add;
     int cnt_sub;
@@ -35,21 +30,11 @@ struct INFO {
     int cnt_mod;
 };
 
-
-/*
- * INFO macros
- */
-
 #define INFO_CNT_ADD(n)  ((n)->cnt_add)
 #define INFO_CNT_SUB(n)  ((n)->cnt_sub)
 #define INFO_CNT_MUL(n)  ((n)->cnt_mul)
 #define INFO_CNT_DIV(n)  ((n)->cnt_div)
 #define INFO_CNT_MOD(n)  ((n)->cnt_mod)
-
-
-/*
- * INFO functions
- */
 
 static info *MakeInfo(void)
 {
@@ -77,11 +62,6 @@ static info *FreeInfo( info *info)
     DBUG_RETURN( info);
 }
 
-
-/*
- * Traversal functions
- */
-
 node *CAObinop (node *arg_node, info *arg_info)
 {
     DBUG_ENTER("CAObinop");
@@ -108,7 +88,6 @@ node *CAObinop (node *arg_node, info *arg_info)
 
     DBUG_RETURN( arg_node);
 }
-
 
 node *CAOmodule(node *arg_node, info *arg_info) {
     DBUG_ENTER("CAOmodule");
