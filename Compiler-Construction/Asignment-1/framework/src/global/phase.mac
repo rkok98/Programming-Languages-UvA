@@ -46,18 +46,20 @@ SUBPHASE( si,
           ALWAYS,
           pet)
 
+SUBPHASE( sr,
+          "Strength reduction",
+          SRdoStrengthReduction,
+          ALWAYS,
+          pet)
+
 SUBPHASE( os, 
           "Optimise subtraction",
           OSdoOptSub, 
           ALWAYS,
           pet)
 
-SUBPHASE( ca,
-"Count arithmetic operators",
-CAdoCountBinOp,
-ALWAYS,
-pet)
-ENDPHASE( pet) 
+
+ENDPHASE( pet)
 
 
 /******************************************************************************/

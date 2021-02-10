@@ -23,57 +23,44 @@
 #include "free.h"
 #include "str.h"
 
-/*
- * Traversal functions
- */
-
 node *SRbinop(node *arg_node, info *arg_info) {
     DBUG_ENTER("SRbinop");
 
-    /*
-     * Extremely important:
-     *  we must continue to traverse the abstract syntax tree !!
-     */
-    BINOP_RIGHT(arg_node) = TRAVdo(BINOP_RIGHT(arg_node), arg_info);
-    BINOP_LEFT(arg_node) = TRAVdo(BINOP_LEFT(arg_node), arg_info);
-
-    // 1. Check if operator is a multiplier operator
+    // Check if operator is a multiplier operator
     if (BINOP_OP(arg_node) == BO_mul) {
-        // 2. Declare var node and multiplier node
+        // Declare multiplier and var node
         int MULTIPLIER;
-        node * VAR_NODE;
+        char *VAR;
 
-        // Writes var and multiplier to the right node
-        // Returns if there's no num and var node
         if ((NODE_TYPE(BINOP_LEFT(arg_node)) == N_var)
             && (NODE_TYPE(BINOP_RIGHT(arg_node)) == N_num)) {
-            MULTIPLIER = NUM_VALUE(BINOP_RIGHT(arg_node)) - 1;
-            VAR_NODE = BINOP_LEFT(arg_node);
+
+            MULTIPLIER = NUM_VALUE(BINOP_RIGHT(arg_node));
+            VAR = VAR_NAME(BINOP_LEFT(arg_node));
         } else if ((NODE_TYPE(BINOP_LEFT(arg_node)) == N_num)
                    && (NODE_TYPE(BINOP_RIGHT(arg_node)) == N_var)) {
-            MULTIPLIER = NUM_VALUE(BINOP_LEFT(arg_node)) - 1;
-            VAR_NODE = BINOP_RIGHT(arg_node);
-        } else {
+
+            VAR = VAR_NAME(BINOP_RIGHT(arg_node));
+            MULTIPLIER = NUM_VALUE(BINOP_LEFT(arg_node));
+        }
+        else {
+            // Returns if there's no num and var node
             DBUG_RETURN(arg_node);
         }
 
-        // 1. Make Parent addition
-        BINOP_OP(arg_node) = BO_add;
+        if (MULTIPLIER > 2) {
+            BINOP_OP(arg_node) = BO_add;
+            BINOP_RIGHT(arg_node) = TBmakeVar(STRcpy(VAR));
 
-        // 2. Make right node the var
-        BINOP_RIGHT(arg_node) = VAR_NODE;
-
-        // 3. Make left node var * multiplier
-        BINOP_LEFT(arg_node) = TBmakeBinop(BO_mul, TBmakeNum(2), TBmakeNum(MULTIPLIER));
+            BINOP_LEFT(arg_node) = TBmakeBinop(BO_mul, TBmakeVar(STRcpy(VAR)), TBmakeNum(MULTIPLIER - 1));
+        } else {
+            arg_node = TBmakeBinop(BO_add, TBmakeVar(STRcpy(VAR)), TBmakeVar(STRcpy(VAR)));
+        }
     }
 
+    BINOP_LEFT(arg_node) = TRAVdo(BINOP_LEFT(arg_node), arg_info);
     DBUG_RETURN(arg_node);
 }
-
-
-/*
- * Traversal start function
- */
 
 node *SRdoStrengthReduction(node *syntaxtree) {
     DBUG_ENTER("SRdoStrengthReduction");
