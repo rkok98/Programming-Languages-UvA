@@ -41,7 +41,7 @@ struct INFO {
  */
 
 #define INFO_CNT_ADD(n)  ((n)->cnt_add)
-#define INFO_CNT_SUB(n)  ((n)->cnt_add)
+#define INFO_CNT_SUB(n)  ((n)->cnt_sub)
 #define INFO_CNT_MUL(n)  ((n)->cnt_mul)
 #define INFO_CNT_DIV(n)  ((n)->cnt_div)
 #define INFO_CNT_MOD(n)  ((n)->cnt_mod)
@@ -118,6 +118,10 @@ node *CAOmodule(node *arg_node, info *arg_info) {
     TRAVdo(MODULE_NEXT(arg_node), info);
 
     MODULE_ADD(arg_node) = INFO_CNT_ADD(info);
+    MODULE_SUB(arg_node) = INFO_CNT_SUB(info);
+    MODULE_MUL(arg_node) = INFO_CNT_MUL(info);
+    MODULE_DIV(arg_node) = INFO_CNT_DIV(info);
+    MODULE_MOD(arg_node) = INFO_CNT_MOD(info);
 
     DBUG_RETURN(arg_node);
 }
@@ -133,12 +137,6 @@ node *CAOdoCountBinOp( node *syntaxtree)
     TRAVpush( TR_cao);
     syntaxtree = TRAVdo( syntaxtree, arg_info);
     TRAVpop();
-
-
-
-    // node *module = TBmakeModule(INFO_CNT_MUL(arg_info), syntaxtree);
-
-    // CTInote( "Amount of multipliers %d", INFO_CNT_MUL( arg_info));
 
     arg_info = FreeInfo( arg_info);
 

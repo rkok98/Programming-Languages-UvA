@@ -53,7 +53,7 @@ program: stmts
 
 module: stmts
         {
-          parseresult = TBmakeModule(0, $1);
+          parseresult = TBmakeModule(0, 0, 0, 0, 0, $1);
         }
         ;
 

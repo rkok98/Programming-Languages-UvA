@@ -69,7 +69,11 @@ PRTmodule (node * arg_node, info * arg_info)
 {
     DBUG_ENTER ("PRTstmts");
 
-    printf("Number of multiplies: %d\n", MODULE_ADD(arg_node));
+    printf("Number of additions: %d\n", MODULE_ADD(arg_node));
+    printf("Number of subtractions: %d\n", MODULE_SUB(arg_node));
+    printf("Number of multipliers: %d\n", MODULE_MUL(arg_node));
+    printf("Number of dividers: %d\n", MODULE_DIV(arg_node));
+    printf("Number of modulo: %d\n", MODULE_MOD(arg_node));
 
     DBUG_RETURN (arg_node);
 }
