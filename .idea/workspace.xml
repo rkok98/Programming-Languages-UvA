@@ -11,8 +11,13 @@
   <component name="ChangeListManager">
     <list default="true" id="48502b84-8efc-4b40-8fd8-8028294b31cd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.h" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/Makefile.Targets" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/Makefile.Targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_arthmtc_op.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_arthmtc_op.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_arthmtc_op.h" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_arthmtc_op.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_ids.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.h" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_ids.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/strength_reduction.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/strength_reduction.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/strength_reduction.h" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/strength_reduction.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,11 +60,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments" />
       <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo" />
       <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/global" />
       <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/user" />
       <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/codegen" />
-      <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/framework" />
     </key>
   </component>
   <component name="RunManager">
@@ -168,7 +173,21 @@
       <option name="project" value="LOCAL" />
       <updated>1613072015053</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Created countd ids">
+      <created>1613076754828</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1613076754828</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Cleanup">
+      <created>1613077000625</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1613077000625</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,6 +214,7 @@
     <MESSAGE value="Strength Reduction" />
     <MESSAGE value="Count AOP" />
     <MESSAGE value="Created countd ids" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created countd ids" />
+    <MESSAGE value="Cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleanup" />
   </component>
 </project>
