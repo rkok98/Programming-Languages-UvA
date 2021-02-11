@@ -53,7 +53,7 @@ static info *FreeInfo( info *info)
 
 /** <!--******************************************************************-->
  *
- * @fn PRTstmts
+ * @fn PRTmodule
  *
  * @brief Prints the node and its sons/attributes
  *
