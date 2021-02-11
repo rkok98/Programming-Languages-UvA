@@ -16,15 +16,15 @@ struct INFO {
 };
 
 struct COUNTER {
-    int amount;
     char *id;
+    int amount;
 };
 
 typedef struct COUNTER counter;
 
-#define INFO_LUT(n)  ((n)->table)
-#define COUNTER_AMOUNT(n) ((n)->amount)
+#define INFO_LUT(n) ((n)->table)
 #define COUNTER_ID(n) ((n)->id)
+#define COUNTER_AMOUNT(n) ((n)->amount)
 
 static info *MakeInfo(void) {
     info *result;
@@ -94,7 +94,7 @@ node *CIDvarlet(node *arg_node, info *arg_info) {
     char *ID = STRcpy(VARLET_NAME(arg_node));
 
     InsertCounter(LUT, ID);
-    
+
     DBUG_RETURN(arg_node);
 }
 
