@@ -7,7 +7,10 @@
  * Description:
  *
  * This module implements a traversal of the abstract syntax tree that
- * count all arithmetic operators.
+ * counts all arithmetic operators and inserts these into a module node.
+ *
+ * Author: René Kok (13671146)
+ *         Doorstroomminor Software Engineering UvA
  *
  *****************************************************************************/
 
@@ -23,70 +26,56 @@
 #include "ctinfo.h"
 
 struct INFO {
-    int cnt_add;
-    int cnt_sub;
-    int cnt_mul;
-    int cnt_div;
-    int cnt_mod;
+    int add;
+    int sub;
+    int mul;
+    int div;
+    int mod;
 };
 
-#define INFO_CNT_ADD(n)  ((n)->cnt_add)
-#define INFO_CNT_SUB(n)  ((n)->cnt_sub)
-#define INFO_CNT_MUL(n)  ((n)->cnt_mul)
-#define INFO_CNT_DIV(n)  ((n)->cnt_div)
-#define INFO_CNT_MOD(n)  ((n)->cnt_mod)
+#define INFO_ADD(n)  ((n)->add)
+#define INFO_SUB(n)  ((n)->sub)
+#define INFO_MUL(n)  ((n)->mul)
+#define INFO_DIV(n)  ((n)->div)
+#define INFO_MOD(n)  ((n)->mod)
 
-static info *MakeInfo(void)
-{
+static info *MakeInfo(void) {
     info *result;
 
-    DBUG_ENTER( "MakeInfo");
+    DBUG_ENTER("MakeInfo");
 
-    result = (info *)MEMmalloc(sizeof(info));
+    result = (info *) MEMmalloc(sizeof(info));
 
-    INFO_CNT_ADD( result) = 0;
-    INFO_CNT_SUB( result) = 0;
-    INFO_CNT_MUL( result) = 0;
-    INFO_CNT_DIV( result) = 0;
-    INFO_CNT_MOD( result) = 0;
+    INFO_ADD(result) = 0;
+    INFO_SUB(result) = 0;
+    INFO_MUL(result) = 0;
+    INFO_DIV(result) = 0;
+    INFO_MOD(result) = 0;
 
-    DBUG_RETURN( result);
+    DBUG_RETURN(result);
 }
 
-static info *FreeInfo( info *info)
-{
-    DBUG_ENTER ("FreeInfo");
+static info *FreeInfo(info *info) {
+    DBUG_ENTER("FreeInfo");
 
-    info = MEMfree( info);
+    info = MEMfree(info);
 
-    DBUG_RETURN( info);
+    DBUG_RETURN(info);
 }
 
-node *CAObinop (node *arg_node, info *arg_info)
-{
+/*
+ * Analyzes a binary operator node and adds 1 to the amount of the right operator
+ */
+node *CAObinop(node *arg_node, info *arg_info) {
     DBUG_ENTER("CAObinop");
 
-    if (BINOP_OP( arg_node) == BO_add) {
-        INFO_CNT_ADD( arg_info) += 1;
-    }
+    if (BINOP_OP(arg_node) == BO_add) INFO_ADD(arg_info) += 1;
+    if (BINOP_OP(arg_node) == BO_sub) INFO_SUB(arg_info) += 1;
+    if (BINOP_OP(arg_node) == BO_mul) INFO_MUL(arg_info) += 1;
+    if (BINOP_OP(arg_node) == BO_div) INFO_DIV(arg_info) += 1;
+    if (BINOP_OP(arg_node) == BO_mod) INFO_MOD(arg_info) += 1;
 
-    if (BINOP_OP( arg_node) == BO_sub) {
-        INFO_CNT_SUB( arg_info) += 1;
-    }
-
-    if (BINOP_OP( arg_node) == BO_mul) {
-        INFO_CNT_MUL( arg_info) += 1;
-    }
-
-    if (BINOP_OP( arg_node) == BO_div) {
-        INFO_CNT_DIV( arg_info) += 1;
-    }
-
-    if (BINOP_OP( arg_node) == BO_mod) {
-        INFO_CNT_MOD( arg_info) += 1;
-    }
-
-    DBUG_RETURN( arg_node);
+    DBUG_RETURN(arg_node);
 }
 
 node *CAOmodule(node *arg_node, info *arg_info) {
@@ -96,28 +85,30 @@ node *CAOmodule(node *arg_node, info *arg_info) {
 
     TRAVdo(MODULE_NEXT(arg_node), info);
 
-    MODULE_ADD(arg_node) = INFO_CNT_ADD(info);
-    MODULE_SUB(arg_node) = INFO_CNT_SUB(info);
-    MODULE_MUL(arg_node) = INFO_CNT_MUL(info);
-    MODULE_DIV(arg_node) = INFO_CNT_DIV(info);
-    MODULE_MOD(arg_node) = INFO_CNT_MOD(info);
+    MODULE_ADD(arg_node) = INFO_ADD(info);
+    MODULE_SUB(arg_node) = INFO_SUB(info);
+    MODULE_MUL(arg_node) = INFO_MUL(info);
+    MODULE_DIV(arg_node) = INFO_DIV(info);
+    MODULE_MOD(arg_node) = INFO_MOD(info);
 
     DBUG_RETURN(arg_node);
 }
 
-node *CAOdoCountBinOp( node *syntaxtree)
-{
+/*
+ * Traversal start function
+ */
+node *CAOdoCountBinOp(node *syntaxtree) {
     info *arg_info;
 
     DBUG_ENTER("CAOdoCountBinOp");
 
     arg_info = MakeInfo();
 
-    TRAVpush( TR_cao);
-    syntaxtree = TRAVdo( syntaxtree, arg_info);
+    TRAVpush(TR_cao);
+    syntaxtree = TRAVdo(syntaxtree, arg_info);
     TRAVpop();
 
-    arg_info = FreeInfo( arg_info);
+    arg_info = FreeInfo(arg_info);
 
     DBUG_RETURN(syntaxtree);
 }

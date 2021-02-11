@@ -1,4 +1,21 @@
-#include "count_arthmtc_op.h"
+/*****************************************************************************
+ *
+ * Module: count_arthmtc_op.c
+ *
+ * Prefix: CID
+ *
+ * Description:
+ *
+ * This module implements a traversal of the abstract syntax tree that
+ * counts the number of occurrences of each identifier.
+ * After the traversal, the identifiers are printed with the number they occur.
+ *
+ * Author: René Kok (13671146)
+ *         Doorstroomminor Software Engineering UvA
+ *
+ *****************************************************************************/
+
+#include "count_ids.h"
 
 #include "types.h"
 #include "tree_basic.h"
@@ -86,7 +103,6 @@ node *CIDvar(node *arg_node, info *arg_info) {
     DBUG_RETURN(arg_node);
 }
 
-
 node *CIDvarlet(node *arg_node, info *arg_info) {
     DBUG_ENTER("CIDvarlet");
 
@@ -98,6 +114,9 @@ node *CIDvarlet(node *arg_node, info *arg_info) {
     DBUG_RETURN(arg_node);
 }
 
+/*
+ * Traversal start function
+ */
 node *CIDdoCountIds(node *syntaxtree) {
     info *arg_info;
 
