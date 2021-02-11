@@ -32,29 +32,30 @@
 #include "free.h"
 #include "str.h"
 
+#include "stdio.h"
+
 node *SRbinop(node *arg_node, info *arg_info) {
     DBUG_ENTER("SRbinop");
 
     if (BINOP_OP(arg_node) == BO_mul) {
-        // Declare multiplier and var node
         int MULTIPLIER;
         node *VAR;
 
-        if ((NODE_TYPE(BINOP_LEFT(arg_node)) == N_var
-             || NODE_TYPE(BINOP_LEFT(arg_node)) == N_varlet)
-            && (NODE_TYPE(BINOP_RIGHT(arg_node)) == N_num)) {
-
-            MULTIPLIER = NUM_VALUE(BINOP_RIGHT(arg_node));
-            VAR = BINOP_LEFT(arg_node);
-        } else if ((NODE_TYPE(BINOP_LEFT(arg_node)) == N_num)
-                   && (NODE_TYPE(BINOP_RIGHT(arg_node)) == N_var
-                       || NODE_TYPE(BINOP_RIGHT(arg_node)) == N_varlet)) {
-
+        if (NODE_TYPE(BINOP_LEFT(arg_node)) == N_num
+            && (NODE_TYPE(BINOP_RIGHT(arg_node)) == N_var
+                || NODE_TYPE(BINOP_RIGHT(arg_node)) == N_varlet)) {
             VAR = BINOP_RIGHT(arg_node);
             MULTIPLIER = NUM_VALUE(BINOP_LEFT(arg_node));
+
+        } else if
+           (NODE_TYPE(BINOP_RIGHT(arg_node)) == N_num
+            && (NODE_TYPE(BINOP_LEFT(arg_node)) == N_var
+                || NODE_TYPE(BINOP_LEFT(arg_node)) == N_varlet)) {
+            MULTIPLIER = NUM_VALUE(BINOP_RIGHT(arg_node));
+            VAR = BINOP_LEFT(arg_node);
         }
         else {
-            // Returns if there's no num and var node
+            // Returns if there's no num and var(let) node
             DBUG_RETURN(arg_node);
         }
 
@@ -62,7 +63,7 @@ node *SRbinop(node *arg_node, info *arg_info) {
             BINOP_OP(arg_node) = BO_add;
 
             if (NODE_TYPE(VAR) == N_var) {
-                char *V_NAME = VARLET_NAME(VAR);
+                char *V_NAME = VAR_NAME(VAR);
 
                 BINOP_RIGHT(arg_node) = TBmakeVar(STRcpy(V_NAME));
                 BINOP_LEFT(arg_node) = TBmakeBinop(BO_mul, TBmakeNum(MULTIPLIER - 1), TBmakeVar(STRcpy(V_NAME)));
@@ -76,7 +77,7 @@ node *SRbinop(node *arg_node, info *arg_info) {
             }
         } else {
             if (NODE_TYPE(VAR) == N_var) {
-                char *V_NAME = VARLET_NAME(VAR);
+                char *V_NAME = VAR_NAME(VAR);
 
                 arg_node = TBmakeBinop(BO_add, TBmakeVar(STRcpy(V_NAME)), TBmakeVar(STRcpy(V_NAME)));
             }
