@@ -10,7 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48502b84-8efc-4b40-8fd8-8028294b31cd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/print/print.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/print/print.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/strength_reduction.h" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/strength_reduction.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,7 +229,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613087891411</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="PRTModule doc">
+      <created>1613087923427</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1613087923427</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,6 +267,7 @@
     <MESSAGE value="Cleanup" />
     <MESSAGE value="Fix print.c" />
     <MESSAGE value="Varlet strength reduction" />
-    <option name="LAST_COMMIT_MESSAGE" value="Varlet strength reduction" />
+    <MESSAGE value="PRTModule doc" />
+    <option name="LAST_COMMIT_MESSAGE" value="PRTModule doc" />
   </component>
 </project>

@@ -3,7 +3,8 @@
 
 #include "types.h"
 
-extern node *SRbinop (node *arg_node, info *arg_info);
-extern node *SRdoStrengthReduction( node *syntaxtree);
+extern node *SRbinop(node *arg_node, info *arg_info);
+
+extern node *SRdoStrengthReduction(node *syntaxtree);
 
 #endif
