@@ -35,21 +35,22 @@
 node *SRbinop(node *arg_node, info *arg_info) {
     DBUG_ENTER("SRbinop");
 
-    // Check if operator is a multiplier operator
     if (BINOP_OP(arg_node) == BO_mul) {
         // Declare multiplier and var node
         int MULTIPLIER;
-        char *VAR;
+        node *VAR;
 
-        if ((NODE_TYPE(BINOP_LEFT(arg_node)) == N_var)
+        if ((NODE_TYPE(BINOP_LEFT(arg_node)) == N_var
+             || NODE_TYPE(BINOP_LEFT(arg_node)) == N_varlet)
             && (NODE_TYPE(BINOP_RIGHT(arg_node)) == N_num)) {
 
             MULTIPLIER = NUM_VALUE(BINOP_RIGHT(arg_node));
-            VAR = VAR_NAME(BINOP_LEFT(arg_node));
+            VAR = BINOP_LEFT(arg_node);
         } else if ((NODE_TYPE(BINOP_LEFT(arg_node)) == N_num)
-                   && (NODE_TYPE(BINOP_RIGHT(arg_node)) == N_var)) {
+                   && (NODE_TYPE(BINOP_RIGHT(arg_node)) == N_var
+                       || NODE_TYPE(BINOP_RIGHT(arg_node)) == N_varlet)) {
 
-            VAR = VAR_NAME(BINOP_RIGHT(arg_node));
+            VAR = BINOP_RIGHT(arg_node);
             MULTIPLIER = NUM_VALUE(BINOP_LEFT(arg_node));
         }
         else {
@@ -59,11 +60,32 @@ node *SRbinop(node *arg_node, info *arg_info) {
 
         if (MULTIPLIER > 2) {
             BINOP_OP(arg_node) = BO_add;
-            BINOP_RIGHT(arg_node) = TBmakeVar(STRcpy(VAR));
 
-            BINOP_LEFT(arg_node) = TBmakeBinop(BO_mul, TBmakeNum(MULTIPLIER - 1), TBmakeVar(STRcpy(VAR)));
+            if (NODE_TYPE(VAR) == N_var) {
+                char *V_NAME = VARLET_NAME(VAR);
+
+                BINOP_RIGHT(arg_node) = TBmakeVar(STRcpy(V_NAME));
+                BINOP_LEFT(arg_node) = TBmakeBinop(BO_mul, TBmakeNum(MULTIPLIER - 1), TBmakeVar(STRcpy(V_NAME)));
+            }
+
+            if (NODE_TYPE(VAR) == N_varlet) {
+                char *VL_NAME = VARLET_NAME(VAR);
+
+                BINOP_RIGHT(arg_node) = TBmakeVarlet(STRcpy(VL_NAME));
+                BINOP_LEFT(arg_node) = TBmakeBinop(BO_mul, TBmakeNum(MULTIPLIER - 1), TBmakeVarlet(STRcpy(VL_NAME)));
+            }
         } else {
-            arg_node = TBmakeBinop(BO_add, TBmakeVar(STRcpy(VAR)), TBmakeVar(STRcpy(VAR)));
+            if (NODE_TYPE(VAR) == N_var) {
+                char *V_NAME = VARLET_NAME(VAR);
+
+                arg_node = TBmakeBinop(BO_add, TBmakeVar(STRcpy(V_NAME)), TBmakeVar(STRcpy(V_NAME)));
+            }
+
+            if (NODE_TYPE(VAR) == N_varlet) {
+                char *VL_NAME = VARLET_NAME(VAR);
+
+                arg_node = TBmakeBinop(BO_add, TBmakeVar(STRcpy(VL_NAME)), TBmakeVarlet(STRcpy(VL_NAME)));
+            }
         }
     }
 

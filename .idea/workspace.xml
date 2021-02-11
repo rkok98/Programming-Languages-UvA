@@ -11,9 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="48502b84-8efc-4b40-8fd8-8028294b31cd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_arthmtc_op.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_arthmtc_op.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_ids.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_ids.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/strength_reduction.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/strength_reduction.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/global/phase.mac" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/global/phase.mac" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,7 +203,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613080904406</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Cleanup">
+      <created>1613081206536</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1613081206536</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,8 +237,8 @@
     <MESSAGE value="Strength Reduction" />
     <MESSAGE value="Count AOP" />
     <MESSAGE value="Created countd ids" />
-    <MESSAGE value="Cleanup" />
     <MESSAGE value="Move cvc files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Move cvc files" />
+    <MESSAGE value="Cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleanup" />
   </component>
 </project>
