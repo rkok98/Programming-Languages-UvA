@@ -6,9 +6,18 @@
  *
  * Description:
  *
- * This module implements a demo traversal of the abstract syntax tree that
- * sums up all integer constants and prints the result at the end of the traversal.
+ * This module implements a traversal of the abstract syntax tree that
+ * implements an optimisation called strength reduction.
+ * The traversal converts an multiplier operation to a sequence of additions.
  *
+ * Example:
+ *      2*k -> k+k
+ *      k*2 -> k+k
+ *      3*k -> k+k+k
+ *      k*3 -> k+k+k
+ *
+ * Author: René Kok (13671146)
+ *         Doorstroomminor Software Engineering UvA
  *****************************************************************************/
 
 

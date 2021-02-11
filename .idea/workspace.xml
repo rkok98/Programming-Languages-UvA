@@ -12,10 +12,8 @@
     <list default="true" id="48502b84-8efc-4b40-8fd8-8028294b31cd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_arthmtc_op.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_arthmtc_op.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_arthmtc_op.h" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_arthmtc_op.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_ids.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_ids.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_ids.h" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/count_ids.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/scanparse/civic.y" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/scanparse/civic.y" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/strength_reduction.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/strength_reduction.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,11 +56,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/civic progs" />
       <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments" />
       <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo" />
       <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/global" />
       <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/user" />
-      <recent name="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/codegen" />
     </key>
   </component>
   <component name="RunManager">
@@ -192,7 +190,21 @@
       <option name="project" value="LOCAL" />
       <updated>1613077669382</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Cleanup">
+      <created>1613080844515</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1613080844515</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Move cvc files">
+      <created>1613080904406</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1613080904406</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,6 +232,7 @@
     <MESSAGE value="Count AOP" />
     <MESSAGE value="Created countd ids" />
     <MESSAGE value="Cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleanup" />
+    <MESSAGE value="Move cvc files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Move cvc files" />
   </component>
 </project>

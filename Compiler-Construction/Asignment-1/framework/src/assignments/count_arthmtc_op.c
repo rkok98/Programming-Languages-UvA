@@ -1,6 +1,6 @@
 /*****************************************************************************
  *
- * Module: count_arthmtc_op.c
+ * Module: count_arthmtc_op
  *
  * Prefix: CAO
  *
