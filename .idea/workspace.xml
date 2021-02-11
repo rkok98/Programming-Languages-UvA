@@ -10,12 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48502b84-8efc-4b40-8fd8-8028294b31cd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/Makefile.Targets" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/Makefile.Targets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/global/ast.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/global/ast.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/global/phase.mac" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/global/phase.mac" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.h" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/demo/count_ids.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612974816290</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Created countd ids">
+      <created>1613072015053</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1613072015053</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,6 +194,7 @@
     <MESSAGE value="Init" />
     <MESSAGE value="Strength Reduction" />
     <MESSAGE value="Count AOP" />
-    <option name="LAST_COMMIT_MESSAGE" value="Count AOP" />
+    <MESSAGE value="Created countd ids" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created countd ids" />
   </component>
 </project>
