@@ -21,6 +21,9 @@ blocks = [[1..3],[4..6],[7..9]]
 centerOfBlocks :: [Int]
 centerOfBlocks = [1, 4, 7]
 
+openPosition :: Int
+openPosition = 0
+
 -- Converts a sudoku into a grid.
 sud2grid :: Sudoku -> Grid
 sud2grid s = [[s (r, c) | c <- positions] | r <- positions]
@@ -59,11 +62,53 @@ main =
        sud <- (readSudoku . getSudokuName) args
        -- TODO: Call your solver.
        printSudoku sud
+       print $ constraints sud
 
-       freeAtPos sud (1,2)
+freeInLs :: [Value] -> [Value]
+freeInLs ls = values \\ ls 
 
-freeInSeq :: [Value] -> [Value]
-freeInSeq seq = values \\ seq 
+subGrid :: Sudoku -> (Row,Column) -> [Value]
+subGrid s (r,c) = 
+  [ s (r',c') | r' <- (\x -> concat $ filter (elem x) blocks ) r, 
+                c' <- (\x -> concat $ filter (elem x) blocks ) c ]
 
 freeInRow :: Sudoku -> Row -> [Value]
-freeInRow s r = freeInSeq [ s (r,i) | i <- positions  ]
+freeInRow s r = freeInLs [ s (r,i) | i <- positions ]
+
+freeInColumn :: Sudoku -> Column -> [Value]
+freeInColumn s c = freeInLs [ s (i,c) | i <- positions ]
+
+freeInSubgrid :: Sudoku -> (Row,Column) -> [Value]
+freeInSubgrid s (r,c) = freeInLs (subGrid s (r,c))
+
+freeAtPos :: Sudoku -> (Row,Column) -> [Value]
+freeAtPos s (r,c) = (freeInRow s r) `intersect` (freeInColumn s c) `intersect` (freeInSubgrid s (r,c)) 
+
+openPositions :: Sudoku -> [(Row,Column)]
+openPositions s = [ (r,c) | r <- positions,  
+                            c <- positions, 
+                            s (r,c) == openPosition ]
+
+rowValid :: Sudoku -> Row -> Bool
+rowValid s r = null (freeInRow s r)
+
+colValid :: Sudoku -> Column -> Bool
+colValid s c = null (freeInColumn s c)
+
+subgridValid :: Sudoku -> (Row,Column) -> Bool
+subgridValid s (r,c) = null (freeInSubgrid s (r,c))
+
+consistent :: Sudoku -> Bool
+consistent s = and $ [ rowValid s r | r <- positions ] ++ [ colValid s c | c <- positions] ++ [ subgridValid s (r,c) | r <- positions, c <- positions ]
+
+-- Solver
+third (_, _, x) = x
+
+printNode :: Node -> IO() 
+printNode = printSudoku . fst
+
+constraints :: Sudoku -> [Constraint]
+constraints s = sortBy lengthSolutions [(r, c, freeAtPos s (r,c)) | (r,c) <- openPositions s ]
+
+lengthSolutions :: (Row, Column, [Value]) -> (Row, Column, [Value]) -> Ordering
+lengthSolutions (_, _, sols) (_, _, sols') = compare (length sols) (length sols')
