@@ -40,6 +40,12 @@ SUBPHASE( cao,
           ALWAYS,
           pet)
 
+SUBPHASE( cid,
+          "Count Identifiers",
+          CIDdoCountIds,
+          ALWAYS,
+          pet)
+
 SUBPHASE( ri, 
           "Rename identifiers",
           RIdoRenameIdentifiers, 

@@ -60,6 +60,13 @@
         </travuser>
       </traversal>
 
+      <traversal id="CID" name="Count identifiers" default="sons" include="count_ids.h">
+        <travuser>
+          <node name="Var" />
+          <node name="VarLet" />
+        </travuser>
+      </traversal>
+
       <traversal id="OS" name="Optimise subtraction" default="sons" include="opt_sub.h">
         <travuser>
           <node name="BinOp" />
