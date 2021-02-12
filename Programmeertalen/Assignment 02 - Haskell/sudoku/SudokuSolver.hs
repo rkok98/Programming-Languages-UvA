@@ -63,7 +63,7 @@ main =
        sud <- (readSudoku . getSudokuName) args
        -- TODO: Call your solver.
        printSudoku sud
-
+       print $ constraints sud
 
 freeInLs :: [Value] -> [Value]
 freeInLs ls = values \\ ls 
@@ -103,13 +103,34 @@ consistent :: Sudoku -> Bool
 consistent s = and $ [ rowValid s r | r <- positions ] ++ [ colValid s c | c <- positions] ++ [ subgridValid s (r,c) | r <- positions, c <- positions ]
 
 -- Solver part
+
+-- Prints a node
 printNode :: Node -> IO() 
 printNode = printSudoku . fst
 
+-- Calculates all constraints for a given sudoku sorted by solutions length
 constraints :: Sudoku -> [Constraint]
 constraints s = sortBy solutionsLengthComparable [(r, c, freeAtPos s (r,c)) | (r,c) <- openPositions s ]
 
+-- Comparable that compares the length of the solutions array in a constraint
 solutionsLengthComparable :: Constraint -> Constraint -> Ordering
 solutionsLengthComparable (_, _, sols) (_, _, sols') = compare (length sols) (length sols')
 
--- solve the suduko
+
+-- makeTree :: [Constraint] -> Tree
+
+-- 1. Make binary tree from list
+-- 2. Traverse through binary tree
+ 
+data Tree = Nil | Node Tree Node Tree
+
+-- 1. Recursive constraints aanpassen
+--- Neemt node in 
+
+-- 2. Roept functie extend n, die vult plek in
+
+-- All verschillende waardes (map? map maybe?)
+
+
+  -- Klaar als lijst van constraints leeg is
+  -- Gebruik Maybe / Just
