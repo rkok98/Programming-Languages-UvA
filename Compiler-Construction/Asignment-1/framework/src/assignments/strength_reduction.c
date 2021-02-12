@@ -32,8 +32,6 @@
 #include "free.h"
 #include "str.h"
 
-#include "stdio.h"
-
 node *SRbinop(node *arg_node, info *arg_info) {
     DBUG_ENTER("SRbinop");
 
@@ -46,7 +44,6 @@ node *SRbinop(node *arg_node, info *arg_info) {
                 || NODE_TYPE(BINOP_RIGHT(arg_node)) == N_varlet)) {
             VAR = BINOP_RIGHT(arg_node);
             MULTIPLIER = NUM_VALUE(BINOP_LEFT(arg_node));
-
         } else if
            (NODE_TYPE(BINOP_RIGHT(arg_node)) == N_num
             && (NODE_TYPE(BINOP_LEFT(arg_node)) == N_var
