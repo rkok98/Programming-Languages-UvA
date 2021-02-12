@@ -1,5 +1,6 @@
 import System.Environment
 import Data.List
+import Data.Maybe
 
 type Row = Int
 type Column = Int
@@ -62,7 +63,7 @@ main =
        sud <- (readSudoku . getSudokuName) args
        -- TODO: Call your solver.
        printSudoku sud
-       print $ constraints sud
+
 
 freeInLs :: [Value] -> [Value]
 freeInLs ls = values \\ ls 
@@ -82,7 +83,7 @@ freeInSubgrid :: Sudoku -> (Row,Column) -> [Value]
 freeInSubgrid s (r,c) = freeInLs (subGrid s (r,c))
 
 freeAtPos :: Sudoku -> (Row,Column) -> [Value]
-freeAtPos s (r,c) = (freeInRow s r) `intersect` (freeInColumn s c) `intersect` (freeInSubgrid s (r,c)) 
+freeAtPos s (r,c) = freeInRow s r `intersect` freeInColumn s c `intersect` freeInSubgrid s (r,c)
 
 openPositions :: Sudoku -> [(Row,Column)]
 openPositions s = [ (r,c) | r <- positions,  
@@ -101,14 +102,14 @@ subgridValid s (r,c) = null (freeInSubgrid s (r,c))
 consistent :: Sudoku -> Bool
 consistent s = and $ [ rowValid s r | r <- positions ] ++ [ colValid s c | c <- positions] ++ [ subgridValid s (r,c) | r <- positions, c <- positions ]
 
--- Solver
-third (_, _, x) = x
-
+-- Solver part
 printNode :: Node -> IO() 
 printNode = printSudoku . fst
 
 constraints :: Sudoku -> [Constraint]
-constraints s = sortBy lengthSolutions [(r, c, freeAtPos s (r,c)) | (r,c) <- openPositions s ]
+constraints s = sortBy solutionsLengthComparable [(r, c, freeAtPos s (r,c)) | (r,c) <- openPositions s ]
 
-lengthSolutions :: (Row, Column, [Value]) -> (Row, Column, [Value]) -> Ordering
-lengthSolutions (_, _, sols) (_, _, sols') = compare (length sols) (length sols')
+solutionsLengthComparable :: Constraint -> Constraint -> Ordering
+solutionsLengthComparable (_, _, sols) (_, _, sols') = compare (length sols) (length sols')
+
+-- solve the suduko
