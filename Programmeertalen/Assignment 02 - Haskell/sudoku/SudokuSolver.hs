@@ -118,13 +118,27 @@ solutionsLengthComparable :: Constraint -> Constraint -> Ordering
 solutionsLengthComparable (_, _, solutions) (_, _, solutions') = compare (length solutions) (length solutions')
 
 solveSudoku :: Sudoku -> Sudoku
-solveSudoku sud = solve (sud, constraints sud)
+solveSudoku = head . backtrack
 
-solve :: Node -> Sudoku
-solve (sud, []) | consistent sud = sud
-                | otherwise = sud 
-solve (sud, cons) = solve (extendNode (sud, tail cons) (row, col, head v))
-  where (row, col, v) = head cons
+--solve :: Node -> Sudoku
+--solve (sud, []) | consistent sud = sud
+--                | otherwise = sud 
+-- solve (sud, cons) = solve (extendNode (sud, tail cons) (row, col, head v))
+--   where (row, col, v) = head cons
 
-extendNode :: Node -> (Row, Column, Value) -> Node
-extendNode (sud, cons) (row, col, con) = (extend sud (row, col, con), cons)
+-- extendNode :: Node -> (Row, Column, Value) -> Node
+-- extendNode (sud, cons) (row, col, con) = (extend sud (row, col, con), cons)
+
+
+backtrack :: Sudoku -> [Sudoku]
+backtrack s | openPositions s == [] = [s]
+            | otherwise = concatMap backtrack $ children s
+
+-- extend :: Sudoku -> (Row, Column, Value) -> Sudoku
+
+children :: Sudoku -> [Sudoku]
+children s = [extend s (row, col, v) | v <- freeAtPos s (row, col)]
+    where (row, col) = head (openPositions s)
+
+-- children s = extend s (row, col, head v)
+--    where (row, col, v) = head (constraints s)
