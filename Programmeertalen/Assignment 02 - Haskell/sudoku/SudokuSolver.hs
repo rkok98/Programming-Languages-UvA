@@ -84,7 +84,8 @@ freeInSubgrid sud (row, col) = values \\ subGrid sud (row, col)
 
 freeAtPos :: Sudoku -> (Row, Column) -> [Value]
 freeAtPos sud (row, col) = freeInRow sud row `intersect` 
-                           freeInColumn sud col `intersect` 
+                           freeInColumn sud col `intersect`
+                           freeInNrcgrid sud (row, col) `intersect` 
                            freeInSubgrid sud (row, col)
 
 openPositions :: Sudoku -> [(Row, Column)]
@@ -131,3 +132,13 @@ solve sud | null (openPositions sud) = [sud]
 subtree :: Sudoku -> [Sudoku]
 subtree sud = [extend sud (row, col, v) | v <- freeAtPos sud (row, col)]
     where (row, col) = head (openPositions sud)
+
+-- Solve NRC
+nrcBlocks :: [[Int]]
+nrcBlocks = [[2..4], [6..8]]
+
+nrcGrid :: Sudoku -> (Row, Column) -> [Value]
+nrcGrid sud (row, col) = [ sud (row', col') | row' <- concat $ filter(elem row) nrcBlocks, col' <- concat $ filter(elem col) nrcBlocks ]
+
+freeInNrcgrid :: Sudoku -> (Row, Column) -> [Value]
+freeInNrcgrid sud (row, col) = values \\ nrcGrid sud (row, col)
