@@ -64,14 +64,14 @@ getSudokuName [] = error "Filename of sudoku as first argument."
 getSudokuName (x:_) = x
 
 -- Do not modify the way your sudoku is printed!
+main :: IO ()
 main =
     do args <- getArgs
        sud <- (readSudoku . getSudokuName) args
        printSudoku (solveSudoku sud)
 
 subGrid :: Sudoku -> (Row, Column) -> [Value]
-subGrid s (r,c) = [ s (r',c') | r' <- (\x -> concat $ filter (elem x) blocks ) r, 
-                c' <- (\x -> concat $ filter (elem x) blocks ) c ]
+subGrid sud (row, col) = [ sud (row', col') | row' <- concat $ filter(elem row) blocks, col' <- concat $ filter(elem col) blocks ]
 
 freeInRow :: Sudoku -> Row -> [Value]
 freeInRow sud row = values \\ [ sud (row, pos) | pos <- positions ]
@@ -80,7 +80,7 @@ freeInColumn :: Sudoku -> Column -> [Value]
 freeInColumn sud col = values \\ [ sud (pos, col) | pos <- positions ]
 
 freeInSubgrid :: Sudoku -> (Row, Column) -> [Value]
-freeInSubgrid sud (row, col) = values \\ (subGrid sud (row, col))
+freeInSubgrid sud (row, col) = values \\ subGrid sud (row, col)
 
 freeAtPos :: Sudoku -> (Row, Column) -> [Value]
 freeAtPos sud (row, col) = freeInRow sud row `intersect` 
@@ -112,11 +112,11 @@ printNode = printSudoku . fst
 
 -- Calculates all constraints for a given sudoku sorted by solutions length
 constraints :: Sudoku -> [Constraint]
-constraints sud = sortBy solutionsLengthComparable [(row, col, freeAtPos sud (row, col)) | (row, col) <- openPositions sud ]
+constraints sud = sortBy solsLengthComparable [(row, col, freeAtPos sud (row, col)) | (row, col) <- openPositions sud ]
 
 -- Comparable that compares the length of the solutions array in a constraint
-solutionsLengthComparable :: Constraint -> Constraint -> Ordering
-solutionsLengthComparable (_, _, solutions) (_, _, solutions') = compare (length solutions) (length solutions')
+solsLengthComparable :: Constraint -> Constraint -> Ordering
+solsLengthComparable (_, _, sols) (_, _, sols') = compare (length sols) (length sols')
 
 solveSudoku :: Sudoku -> Sudoku
 solveSudoku sud | consistent solution = solution
