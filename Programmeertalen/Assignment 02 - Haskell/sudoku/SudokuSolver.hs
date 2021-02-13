@@ -62,8 +62,13 @@ main =
     do args <- getArgs
        sud <- (readSudoku . getSudokuName) args
        -- TODO: Call your solver.
-       printSudoku sud
-       print $ constraints sud
+       
+       -- print $ consistent sud
+
+       -- print "Non-consistent Sudoku:" 
+       -- printSudoku sud
+
+       -- print "Consistent Sudoku:"
        printSudoku (solveSudoku sud)
 
 freeInLs :: [Value] -> [Value]
@@ -127,10 +132,12 @@ solveSudoku :: Sudoku -> Sudoku
 solveSudoku sud = solve (sud, constraints sud)
 
 solve :: Node -> Sudoku
-solve (s, cs) = extendNode (s, tail cs) (r, c, head v)
+solve (s, []) | consistent s = s
+              | otherwise = s -- WTF MOET IK HIER DOEN
+solve (s, cs) = solve (extendNode (s, tail cs) (r, c, head v))
   where (r, c, v) = head cs
 
 -- data Node = (Sudoku, [Constraint])
 -- extend :: Sudoku -> (Row, Column, Value) -> Sudoku
-extendNode :: Node -> (Row, Column, Value) -> Sudoku
-extendNode (s, cs) (r, c, v) = extend s (r, c, v)
+extendNode :: Node -> (Row, Column, Value) -> Node
+extendNode (s, cs) (r, c, v) = (extend s (r, c, v), cs)
