@@ -121,9 +121,9 @@ solveSudoku :: Sudoku -> Sudoku
 solveSudoku = head . solve
 
 solve :: Sudoku -> [Sudoku]
-solve s | null (openPositions s) = [s]
-        | otherwise = concatMap solve $ children s
+solve sud | null (openPositions sud) = [sud]
+          | otherwise = concatMap solve $ nodes sud
 
-children :: Sudoku -> [Sudoku]
-children s = [extend s (row, col, v) | v <- freeAtPos s (row, col)]
-    where (row, col) = head (openPositions s)
+nodes :: Sudoku -> [Sudoku]
+nodes sud = [extend sud (row, col, v) | v <- freeAtPos sud (row, col)]
+    where (row, col) = head (openPositions sud)
