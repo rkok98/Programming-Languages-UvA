@@ -56,6 +56,7 @@ readSudoku filename =
 -- Prints a Sudoku to the terminal by transforming it to a grid first.
 printSudoku :: Sudoku -> IO ()
 printSudoku = putStr . unlines . map (unwords . map show) . sud2grid
+                
 
 -- Helper to parse command-line arguments.
 getSudokuName :: [String] -> String
@@ -118,7 +119,9 @@ solutionsLengthComparable :: Constraint -> Constraint -> Ordering
 solutionsLengthComparable (_, _, solutions) (_, _, solutions') = compare (length solutions) (length solutions')
 
 solveSudoku :: Sudoku -> Sudoku
-solveSudoku = head . solve
+solveSudoku sud | consistent solution = solution
+                | otherwise = error "Unsolvable sudoku!"
+                where solution = head (solve sud)
 
 solve :: Sudoku -> [Sudoku]
 solve sud | null (openPositions sud) = [sud]
