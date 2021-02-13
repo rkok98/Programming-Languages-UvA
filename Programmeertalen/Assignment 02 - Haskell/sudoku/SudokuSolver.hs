@@ -64,6 +64,7 @@ main =
        -- TODO: Call your solver.
        printSudoku sud
        print $ constraints sud
+       printSudoku (solveSudoku sud)
 
 freeInLs :: [Value] -> [Value]
 freeInLs ls = values \\ ls 
@@ -122,15 +123,14 @@ solutionsLengthComparable (_, _, sols) (_, _, sols') = compare (length sols) (le
 -- 1. Make binary tree from list
 -- 2. Traverse through binary tree
  
-data Tree = Nil | Node Tree Node Tree
+solveSudoku :: Sudoku -> Sudoku
+solveSudoku sud = solve (sud, constraints sud)
 
--- 1. Recursive constraints aanpassen
---- Neemt node in 
+solve :: Node -> Sudoku
+solve (s, cs) = extendNode (s, tail cs) (r, c, head v)
+  where (r, c, v) = head cs
 
--- 2. Roept functie extend n, die vult plek in
-
--- All verschillende waardes (map? map maybe?)
-
-
-  -- Klaar als lijst van constraints leeg is
-  -- Gebruik Maybe / Just
+-- data Node = (Sudoku, [Constraint])
+-- extend :: Sudoku -> (Row, Column, Value) -> Sudoku
+extendNode :: Node -> (Row, Column, Value) -> Sudoku
+extendNode (s, cs) (r, c, v) = extend s (r, c, v)
