@@ -11,8 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="48502b84-8efc-4b40-8fd8-8028294b31cd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/strength_reduction.c" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/src/assignments/strength_reduction.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/test/test1.4.cvc" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/test/test1.4.cvc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/civic progs/array.cvc" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/civic progs/array.cvc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/civic progs/core.cvc" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/civic progs/core.cvc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/civic progs/coreio.cvc" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-Construction/Asignment-1/framework/civic progs/coreio.cvc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,9 +64,9 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -83,6 +84,7 @@
       <workItem from="1612785447485" duration="21281000" />
       <workItem from="1612883972862" duration="385000" />
       <workItem from="1612884423063" duration="21880000" />
+      <workItem from="1613310436174" duration="1132000" />
     </task>
     <task id="LOCAL-00001" summary="Started on strength reduction">
       <created>1612645109326</created>

@@ -3,6 +3,9 @@
 
 #include <civic.h>
 
+/*
+ * Print int vec to stdout.
+ */
 export void printIntVec(int[n] vec) {
     for (int i = 0, n) {
         printInt(vec[i]);
@@ -12,6 +15,9 @@ export void printIntVec(int[n] vec) {
     printNewlines(1);
 }
 
+/*
+ * Print float vec to stdout.
+ */
 export void printFloatVec(float[n] vec) {
     for (int i = 0, n) {
         printFloat(vec[i]);
@@ -21,6 +27,9 @@ export void printFloatVec(float[n] vec) {
     printNewlines(1);
 }
 
+/*
+ * Print int mat to stdout.
+ */
 export void printIntMat(int[m, n] mat) {
     for (int i = 0, m) {
         for (int j = 0, n) {
@@ -32,6 +41,9 @@ export void printIntMat(int[m, n] mat) {
     }
 }
 
+/*
+ * Print float mat to stdout.
+ */
 export void printFloatMat(float[m, n] mat) {
     for (int i = 0, m) {
         for (int j = 0, n) {
@@ -43,6 +55,9 @@ export void printFloatMat(float[m, n] mat) {
     }
 }
 
+/*
+ * Scan int vec from stdin.
+ */
 export void scanIntVec(int[n] vec) {
     for (int i = 0, n) {
         printInt(i);
@@ -52,6 +67,9 @@ export void scanIntVec(int[n] vec) {
     }
 }
 
+/*
+ * Scan float vec from stdin.
+ */
 export void scanFloatVec(float[n] vec) {
     for (int i = 0, n) {
         printInt(i);
@@ -61,6 +79,9 @@ export void scanFloatVec(float[n] vec) {
     }
 }
 
+/*
+ * Scan int mat from stdin.
+ */
 export void scanIntMat(int[m, n] mat) {
     for (int i = 0, m) {
         for (int j = 0, n) {
@@ -74,6 +95,9 @@ export void scanIntMat(int[m, n] mat) {
     }
 }
 
+/*
+ * Scan float mat from stdin.
+ */
 export void scanFloatMat(float[m, n] mat) {
     for (int i = 0, m) {
         for (int j = 0, n) {
@@ -87,16 +111,15 @@ export void scanFloatMat(float[m, n] mat) {
     }
 }
 
+/*
+ * Multiply two floating point matrices a and b and store result in c.
+ */
 export void matMul(float[m, n] a, float[o, p] b, float[q, l] c) {
     for (int i = 0, m) {
         for (int j = 0, n) {
             c[i, j] = a[i, j] * b[i, j];
         }
     }
-}
-
-export void queens(bool[m, n] a) {
-    // TODO
 }
 
 #endif

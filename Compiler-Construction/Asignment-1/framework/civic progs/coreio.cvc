@@ -4,12 +4,18 @@
 #include <civic.h>
 #include <core.cvc>
 
+/*
+ * Print first n Fibonacci numbers.
+ */
 export void fibs(int n) {
     for (int i = 0, n) {
         printInt(fib(i));
     }
 }
 
+/*
+ * Print first n prime numbers.
+ */
 export void primes(int n) {
     bool isprime(int n) {
         for (int i = 2, n - 1) {
