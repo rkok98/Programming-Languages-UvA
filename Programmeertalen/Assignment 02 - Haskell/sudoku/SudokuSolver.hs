@@ -121,7 +121,7 @@ subgridValid sud (row, col) = null (freeInSubgrid sud (row, col))
 -- Validates the whole sudoku by validating the rows, columns and subgrids
 consistent :: Sudoku -> Bool
 consistent sud = and $ [ rowValid sud row | row <- positions ] ++ 
-                       [ colValid sud col | col <- positions] ++ 
+                       [ colValid sud col | col <- positions ] ++ 
                        [ subgridValid sud (row, col) | row <- centerOfBlocks, col <- centerOfBlocks ]
 
 -- Prints a node
@@ -188,6 +188,6 @@ nrcGridValid sud (row, col) = null (freeInNrcGrid sud (row, col))
 -- Validates the whole sudoku by validating the rows, columns, subgrids and nrc grids
 nrcConsistent :: Sudoku -> Bool
 nrcConsistent sud = and $ [ rowValid sud row | row <- positions ] ++ 
-                          [ colValid sud col | col <- positions] ++ 
+                          [ colValid sud col | col <- positions ] ++ 
                           [ subgridValid sud (row, col) | row <- centerOfBlocks, col <- centerOfBlocks ] ++
                           [ nrcGridValid sud (row, col) | row <- centerOfNrcBlocks, col <- centerOfNrcBlocks ]
