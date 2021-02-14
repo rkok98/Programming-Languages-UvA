@@ -1,0 +1,44 @@
+#ifndef CORE_CVC
+#define CORE_CVC
+
+export int gcd(int a, int b) {
+    while (a != b) {
+        if (a > b) {
+            a = a - b;
+        } else {
+            b = b - a;
+        }
+    }
+
+    return a;
+}
+
+export int fac(int n) {
+    int fact = 1;
+
+    for (int i = 1, n + 1) {
+        fact = fact * i;
+    }
+
+    return fact;
+}
+
+export int fib(int n) {
+    if (n <= 1) {
+      return n; 
+    }
+
+    return fib(n - 1) + fib(n - 2); 
+}
+
+export bool isprime(int n) {
+    for (int i = 2, n - 1) {
+        if ((n % i) == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+#endif
