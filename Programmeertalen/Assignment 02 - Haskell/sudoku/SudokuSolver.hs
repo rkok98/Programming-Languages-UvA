@@ -14,7 +14,10 @@ type Grid = [[Value]]
 type Sudoku = (Row,Column) -> Value
 type Constraint = (Row, Column, [Value])
 type Node = (Sudoku, [Constraint])
-type Solver = Sudoku -> (Row, Column) -> [Value]
+
+type FreeAtPos = Sudoku -> (Row, Column) -> [Value]
+type Consistent = Sudoku -> Bool
+type Solver = (FreeAtPos, Consistent)
 
 positions :: [Int]
 positions = [1..9]
@@ -119,7 +122,7 @@ subgridValid sud (row, col) = null (freeInSubgrid sud (row, col))
 consistent :: Sudoku -> Bool
 consistent sud = and $ [ rowValid sud row | row <- positions ] ++ 
                        [ colValid sud col | col <- positions] ++ 
-                       [ subgridValid sud (row, col) | row <- positions, col <- positions ]
+                       [ subgridValid sud (row, col) | row <- centerOfBlocks, col <- centerOfBlocks ]
 
 -- Prints a node
 printNode :: Node -> IO() 
@@ -136,26 +139,26 @@ solsLengthComparable (_, _, sols) (_, _, sols') = compare (length sols) (length 
 
 -- Solves solvable sudokus, if the sudoku is not solvable an error will be returned
 solveSudoku :: Sudoku -> Solver -> Sudoku
-solveSudoku sud solver | consistent solution = solution
-                       | otherwise = error "Unsolvable sudoku!"
-                where solution = head (solve sud solver)
+solveSudoku sud (freePos, consistent') | consistent' solution = solution
+                                       | otherwise = error "Unsolvable sudoku!"
+                where solution = head (solve sud freePos)
 
 -- Calculates states of a sudoku and will return the state of a sudoku if it's solved
-solve :: Sudoku -> Solver -> [Sudoku]
-solve sud solver | null (openPositions sud) = [sud]
-                 | otherwise = concatMap  (`solve` solver) (subSudokus sud solver)
+solve :: Sudoku -> FreeAtPos -> [Sudoku]
+solve sud freeAtPos' | null (openPositions sud) = [sud]
+                     | otherwise = concatMap  (`solve` freeAtPos') (subSudokus sud freeAtPos')
 
 -- Generate sub sudokus from sudoku
-subSudokus :: Sudoku -> Solver -> [Sudoku]
-subSudokus sud solver = [extend sud (row, col, v) | v <- solver sud (row, col)]
+subSudokus :: Sudoku -> FreeAtPos -> [Sudoku]
+subSudokus sud freeAtPos' = [extend sud (row, col, v) | v <- freeAtPos' sud (row, col)]
     where (row, col) = head (openPositions sud)
 
 -- Solve NRC
 nrcSolver :: Solver
-nrcSolver = freeAtPosNrc
+nrcSolver = (freeAtPosNrc, nrcConsistent)
 
 normalSolver :: Solver
-normalSolver = freeAtPos
+normalSolver = (freeAtPos, consistent)
 
 -- Returns the right solver for the given sudoku type (normal or nrc sudoku)
 getSolver :: [String] -> Solver
@@ -167,10 +170,24 @@ getSolver xs
 nrcBlocks :: Grid
 nrcBlocks = [[2..4], [6..8]]
 
+centerOfNrcBlocks :: [Int]
+centerOfNrcBlocks = [3, 7]
+
 -- Returns the remaining possible values of a given nrc grid
 freeInNrcGrid :: Sudoku -> (Row, Column) -> [Value]
 freeInNrcGrid sud (row, col) = values \\ getGrids sud (row, col) nrcBlocks
 
 -- Returns the remaining possible values of a position based on row, column, subgrid and nrc grid
 freeAtPosNrc :: Sudoku -> (Row, Column) -> [Value]
-freeAtPosNrc sud (row, col) = freeInNrcGrid sud (row, col) `intersect` freeAtPos sud (row, col) 
+freeAtPosNrc sud (row, col) = freeInNrcGrid sud (row, col) `intersect` freeAtPos sud (row, col)
+
+-- Validates given nrc grid
+nrcGridValid :: Sudoku -> (Row, Column) -> Bool
+nrcGridValid sud (row, col) = null (freeInNrcGrid sud (row, col))
+
+-- Validates the whole sudoku by validating the rows, columns, subgrids and nrc grids
+nrcConsistent :: Sudoku -> Bool
+nrcConsistent sud = and $ [ rowValid sud row | row <- positions ] ++ 
+                          [ colValid sud col | col <- positions] ++ 
+                          [ subgridValid sud (row, col) | row <- centerOfBlocks, col <- centerOfBlocks ] ++
+                          [ nrcGridValid sud (row, col) | row <- centerOfNrcBlocks, col <- centerOfNrcBlocks ]
