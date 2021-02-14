@@ -103,10 +103,6 @@ main =
     sud <- (readSudoku . getSudokuName) args
     printSudoku (solveSudoku sud (getSolver (tail args)))
 
--- Returns an array representing the filled in values of a block that contains the given coordinates
-getGrids :: Sudoku -> (Row, Column) -> Grid -> [Value]
-getGrids sud (row, col) blocks' = [sud (row', col') | row' <- concat $ filter (elem row) blocks', col' <- concat $ filter (elem col) blocks']
-
 -- Returns the remaining possible values of a given list of values
 freeVals :: [Value] -> [Value]
 freeVals vals = values \\ vals
@@ -118,6 +114,10 @@ freeInRow sud row = freeVals [sud (row, pos) | pos <- positions]
 -- Returns the remaining possible values of a given column
 freeInColumn :: Sudoku -> Column -> [Value]
 freeInColumn sud col = freeVals [sud (pos, col) | pos <- positions]
+
+-- Returns an array representing the filled in values of a block that contains the given coordinates
+getGrids :: Sudoku -> (Row, Column) -> Grid -> [Value]
+getGrids sud (row, col) blocks' = [sud (row', col') | row' <- concat $ filter (elem row) blocks', col' <- concat $ filter (elem col) blocks']
 
 -- Returns the remaining possible values of a given subgrid
 freeInSubgrid :: Sudoku -> (Row, Column) -> [Value]
