@@ -69,11 +69,25 @@ static info *FreeInfo(info *info) {
 node *CAObinop(node *arg_node, info *arg_info) {
     DBUG_ENTER("CAObinop");
 
-    if (BINOP_OP(arg_node) == BO_add) INFO_ADD(arg_info) += 1;
-    if (BINOP_OP(arg_node) == BO_sub) INFO_SUB(arg_info) += 1;
-    if (BINOP_OP(arg_node) == BO_mul) INFO_MUL(arg_info) += 1;
-    if (BINOP_OP(arg_node) == BO_div) INFO_DIV(arg_info) += 1;
-    if (BINOP_OP(arg_node) == BO_mod) INFO_MOD(arg_info) += 1;
+    if (BINOP_OP( arg_node) == BO_add) {
+        INFO_ADD( arg_info) += 1;
+    }
+
+    if (BINOP_OP( arg_node) == BO_sub) {
+        INFO_SUB( arg_info) += 1;
+    }
+
+    if (BINOP_OP( arg_node) == BO_mul) {
+        INFO_MUL( arg_info) += 1;
+    }
+
+    if (BINOP_OP( arg_node) == BO_div) {
+        INFO_DIV( arg_info) += 1;
+    }
+
+    if (BINOP_OP( arg_node) == BO_mod) {
+        INFO_MOD( arg_info) += 1;
+    }
 
     DBUG_RETURN(arg_node);
 }
