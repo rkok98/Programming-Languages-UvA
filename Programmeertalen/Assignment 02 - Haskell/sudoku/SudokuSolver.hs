@@ -137,7 +137,7 @@ freeAtPos sud (row, col) =
 
 -- Returns the remaining possible values of a position based on row, column, subgrid and nrc grid
 freeAtPosNrc :: Sudoku -> (Row, Column) -> [Value]
-freeAtPosNrc sud (row, col) = freeInNrcGrid sud (row, col) \\ freeAtPos sud (row, col)
+freeAtPosNrc sud (row, col) = freeInNrcGrid sud (row, col) `intersect` freeAtPos sud (row, col)
 
 -- Returns a list of open positions in a sudoku
 openPositions :: Sudoku -> [(Row, Column)]
