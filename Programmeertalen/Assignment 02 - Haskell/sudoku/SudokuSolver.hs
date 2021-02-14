@@ -68,7 +68,7 @@ main :: IO ()
 main =
     do args <- getArgs
        sud <- (readSudoku . getSudokuName) args
-       printSudoku (solveSudoku sud)
+       printSudoku (solveSudoku sud freeAtPosNrc)
 
 subGrid :: Sudoku -> (Row, Column) -> [Value]
 subGrid sud (row, col) = [ sud (row', col') | row' <- concat $ filter(elem row) blocks, col' <- concat $ filter(elem col) blocks ]
@@ -119,21 +119,28 @@ constraints sud = sortBy solsLengthComparable [(row, col, freeAtPos sud (row, co
 solsLengthComparable :: Constraint -> Constraint -> Ordering
 solsLengthComparable (_, _, sols) (_, _, sols') = compare (length sols) (length sols')
 
-solveSudoku :: Sudoku -> Sudoku
-solveSudoku sud | consistent solution = solution
-                | otherwise = error "Unsolvable sudoku!"
-                where solution = head (solve sud)
+solveSudoku :: Sudoku -> Solver -> Sudoku
+solveSudoku sud solver | consistent solution = solution
+                       | otherwise = error "Unsolvable sudoku!"
+                where solution = head (solve sud solver)
 
-solve :: Sudoku -> [Sudoku]
-solve sud | null (openPositions sud) = [sud]
-          | otherwise = concatMap solve $ subtree sud
+solve :: Sudoku -> Solver -> [Sudoku]
+solve sud solver | null (openPositions sud) = [sud]
+          | otherwise = concatMap  (`solve` solver) (subtree sud solver) --solve $ subtree sud solver
 
 -- Generate 
-subtree :: Sudoku -> [Sudoku]
-subtree sud = [extend sud (row, col, v) | v <- freeAtPos sud (row, col)]
+subtree :: Sudoku -> Solver -> [Sudoku]
+subtree sud solver = [extend sud (row, col, v) | v <- solver sud (row, col)]
     where (row, col) = head (openPositions sud)
 
 -- Solve NRC
+type Solver = Sudoku -> (Row, Column) -> [Value]
+
+getSolver :: [String] -> Solver getSolver (x:xs)
+    | null xs = normalSolver
+    | head xs == "nrc" = nrcSolver
+    | head xs == "normal" = normalSolver
+
 nrcBlocks :: [[Int]]
 nrcBlocks = [[2..4], [6..8]]
 
@@ -142,3 +149,6 @@ nrcGrid sud (row, col) = [ sud (row', col') | row' <- concat $ filter(elem row) 
 
 freeInNrcgrid :: Sudoku -> (Row, Column) -> [Value]
 freeInNrcgrid sud (row, col) = values \\ nrcGrid sud (row, col)
+
+freeAtPosNrc :: Sudoku -> (Row, Column) -> [Value]
+freeAtPosNrc sud (row, col) = freeInNrcgrid sud (row, col) `intersect` freeAtPos sud (row, col) 
