@@ -68,7 +68,7 @@ main :: IO ()
 main =
     do args <- getArgs
        sud <- (readSudoku . getSudokuName) args
-       printSudoku (solveSudoku sud freeAtPosNrc)
+       printSudoku (solveSudoku sud (getSolver (tail args)))
 
 subGrid :: Sudoku -> (Row, Column) -> [Value]
 subGrid sud (row, col) = [ sud (row', col') | row' <- concat $ filter(elem row) blocks, col' <- concat $ filter(elem col) blocks ]
@@ -85,7 +85,6 @@ freeInSubgrid sud (row, col) = values \\ subGrid sud (row, col)
 freeAtPos :: Sudoku -> (Row, Column) -> [Value]
 freeAtPos sud (row, col) = freeInRow sud row `intersect` 
                            freeInColumn sud col `intersect`
-                           freeInNrcgrid sud (row, col) `intersect` 
                            freeInSubgrid sud (row, col)
 
 openPositions :: Sudoku -> [(Row, Column)]
@@ -136,7 +135,14 @@ subtree sud solver = [extend sud (row, col, v) | v <- solver sud (row, col)]
 -- Solve NRC
 type Solver = Sudoku -> (Row, Column) -> [Value]
 
-getSolver :: [String] -> Solver getSolver (x:xs)
+nrcSolver :: Solver
+nrcSolver = freeAtPosNrc
+
+normalSolver :: Solver
+normalSolver = freeAtPos
+
+getSolver :: [String] -> Solver
+getSolver xs
     | null xs = normalSolver
     | head xs == "nrc" = nrcSolver
     | head xs == "normal" = normalSolver
