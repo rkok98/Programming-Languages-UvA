@@ -2,6 +2,7 @@
 -- Study:    Doorstroomminor Software Engineering UvA
 --
 -- This script solves sudoku's by using a search tree.
+-- It's possible to solve normal and NRC sudokus with this solver.
 
 import Data.List
 import Data.Maybe
@@ -125,7 +126,7 @@ freeInSubgrid sud (row, col) = freeVals (getGrids sud (row, col) blocks)
 
 -- Returns the remaining possible values of a given nrc grid
 freeInNrcGrid :: Sudoku -> (Row, Column) -> [Value]
-freeInNrcGrid sud (row, col) = values \\ getGrids sud (row, col) nrcBlocks
+freeInNrcGrid sud (row, col) = freeVals (getGrids sud (row, col) nrcBlocks)
 
 -- Returns the remaining possible values of a position based on row, column and subgrid
 freeAtPos :: Sudoku -> (Row, Column) -> [Value]
@@ -136,7 +137,7 @@ freeAtPos sud (row, col) =
 
 -- Returns the remaining possible values of a position based on row, column, subgrid and nrc grid
 freeAtPosNrc :: Sudoku -> (Row, Column) -> [Value]
-freeAtPosNrc sud (row, col) = freeInNrcGrid sud (row, col) `intersect` freeAtPos sud (row, col)
+freeAtPosNrc sud (row, col) = freeInNrcGrid sud (row, col) \\ freeAtPos sud (row, col)
 
 -- Returns a list of open positions in a sudoku
 openPositions :: Sudoku -> [(Row, Column)]
