@@ -1,6 +1,9 @@
 #ifndef CORE_CVC
 #define CORE_CVC
 
+/*
+ * Returns the greatest common denominator of int a and int b.
+ */
 export int gcd(int a, int b) {
     while (a != b) {
         if (a > b) {
@@ -13,6 +16,9 @@ export int gcd(int a, int b) {
     return a;
 }
 
+/*
+ * Returns the factorial of int n.
+ */
 export int fac(int n) {
     int fact = 1;
 
@@ -23,6 +29,9 @@ export int fac(int n) {
     return fact;
 }
 
+/*
+ * Returns the n-th Fibonacci number.
+ */
 export int fib(int n) {
     if (n <= 1) {
       return n; 
@@ -31,6 +40,9 @@ export int fib(int n) {
     return fib(n - 1) + fib(n - 2); 
 }
 
+/*
+ * Returns true if n is a prime number and false otherwise.
+ */
 export bool isprime(int n) {
     for (int i = 2, n - 1) {
         if ((n % i) == 0) {
