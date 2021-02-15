@@ -448,6 +448,158 @@
       </attributes>
     </node>
 <!--
+  Node
+-->
+    <node name="If">
+      <sons>
+        <son name="Expr">
+          <targets>
+            <target mandatory="yes">
+              <set name="Expr"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+        <son name="Then">
+          <targets>
+            <target mandatory="no">
+              <node name="Stmts"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+        <son name="Else">
+          <targets>
+            <target mandatory="no">
+              <node name="Stmts"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
+    </node>
+<!--
+  Node While:
+-->
+    <node name="While">
+      <sons>
+        <son name="Expr">
+          <targets>
+            <target mandatory="yes">
+              <set name="Expr"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+        <son name="Block">
+          <targets>
+            <target mandatory="no">
+              <node name="Stmts"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
+    </node>
+<!--
+  Node: DoWhile
+-->
+    <node name="DoWhile">
+      <sons>
+        <son name="Cond">
+          <targets>
+            <target mandatory="yes">
+              <set name="Expr"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+        <son name="Block">
+          <targets>
+            <target mandatory="no">
+              <node name="Stmts"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
+    </node>
+<!--
+  Node: For
+-->
+    <node name="For">
+      <sons>
+        <son name="Start">
+          <targets>
+            <target mandatory="yes">
+              <set name="Expr"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+        <son name="Stop">
+          <targets>
+            <target mandatory="yes">
+              <set name="Expr"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+        <son name="Step">
+          <targets>
+            <target mandatory="no">
+              <set name="Expr"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+        <son name="Block">
+          <targets>
+            <target mandatory="no">
+              <node name="Stmts"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
+      <attributes>
+        <attribute name="LoopVar">
+          <type name="String">
+            <targets>
+              <target mandatory="yes">
+                <any/>
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+      </attributes>
+    </node>
+<!--
  Node Assign:
 -->
      <node name="Assign">
