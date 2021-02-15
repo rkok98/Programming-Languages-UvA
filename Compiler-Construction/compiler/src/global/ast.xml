@@ -346,6 +346,76 @@
       </attributes>
     </node>
 <!--
+  Node FunBody:
+-->
+    <node name="FunBody">
+      <sons>
+        <son name="VarDecls">
+          <targets>
+            <target mandatory="no">
+              <node name="VarDecl"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+        <son name="Stmts">
+          <targets>
+            <target mandatory="no">
+              <node name="Stmts"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
+    </node>
+<!--
+  Node VarDec:
+-->
+    <node name="VarDecl">
+      <sons>
+        <son name="Next">
+          <targets>
+            <target mandatory="no">
+              <node name="VarDecl"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
+      <attributes>
+        <attribute name="Id">
+          <type name="String">
+            <targets>
+              <target mandatory="yes">
+                <any/>
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+        <attribute name="Type">
+          <type name="Type">
+            <targets>
+              <target mandatory="yes">
+                <any/>
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+      </attributes>
+    </node>
+<!--
  Node Stmts:
 -->
      <node name="Stmts">
