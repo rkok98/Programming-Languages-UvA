@@ -26,6 +26,8 @@ static int yyerror( char *errname);
  int                 cint;
  float               cflt;
  binop               cbinop;
+ monop               cmonop;
+ type                ctype;
  node               *node;
 }
 

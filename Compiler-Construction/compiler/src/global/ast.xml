@@ -81,12 +81,17 @@
     </nodeset>
     <nodeset name="Stmt">
       <target>
-        <node name="Assign" />
+        <node name="Assign"/>
+        <node name="IfElse"/>
+        <node name="While"/>
+        <node name="DoWhile"/>
+        <node name="For"/>
+        <node name="RetType"/>
       </target>
     </nodeset>
     <nodeset name="Decl">
       <target>
-        <node name="GlobDef" />
+        <node name="GlobalDef" />
         <node name="FunDef" />
       </target>
     </nodeset>
@@ -147,6 +152,7 @@
   Node FunDec:
 -->
     <node name="FunDec">
+      <sons>
       <son name="FunHeader">
         <targets>
           <target mandatory="yes">
@@ -157,6 +163,7 @@
           </target>
         </targets>
       </son>
+      </sons>
     </node>
 <!--
   Node FunDef:
@@ -194,7 +201,7 @@
     <node name="FunHeader">
       <attributes>
         <attribute name="RetType">
-          <type name="RetType">
+          <type name="Type">
             <targets>
               <target mandatory="yes">
                 <any />
@@ -321,27 +328,29 @@
         </son>
       </sons>
       <attributes>
-        <attribute name="Type">
-          <type name="Type"/>
-          <targets>
-            <target mandatory="yes">
-              <any/>
-              <phases>
-                <all/>
-              </phases>
-            </target>
-          </targets>
-        </attribute>
         <attribute name="Id">
-          <type name="String"/>
-          <targets>
-            <target mandatory="yes">
-              <any/>
-              <phases>
-                <all/>
-              </phases>
-            </target>
-          </targets>
+          <type name="String">
+            <targets>
+              <target mandatory="yes">
+                <any/>
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+        <attribute name="Type">
+          <type name="Type">
+            <targets>
+              <target mandatory="yes">
+                <any/>
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
         </attribute>
       </attributes>
     </node>
@@ -448,9 +457,9 @@
       </attributes>
     </node>
 <!--
-  Node
+  Node IfElse:
 -->
-    <node name="If">
+    <node name="IfElse">
       <sons>
         <son name="Expr">
           <targets>
@@ -516,7 +525,7 @@
 -->
     <node name="DoWhile">
       <sons>
-        <son name="Cond">
+        <son name="Expr">
           <targets>
             <target mandatory="yes">
               <set name="Expr"/>
@@ -666,6 +675,40 @@
         <description>operator type</description>
         <attribute name="Op">
           <type name="BinOp">
+            <targets>
+              <target mandatory="yes">
+                <any />
+                <phases>
+                  <all />
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+      </attributes>
+    </node>
+<!--
+  Node MonOp:
+-->
+    <node name="MonOp">
+      <description>represents binary operator application</description>
+      <sons>
+        <son name="Expr">
+          <description>left operand expression</description>
+          <targets>
+            <target mandatory="yes">
+              <set name="Expr" />
+              <phases>
+                <all />
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
+      <attributes>
+        <description>operator type</description>
+        <attribute name="Op">
+          <type name="MonOp">
             <targets>
               <target mandatory="yes">
                 <any />
