@@ -82,13 +82,226 @@
         <node name="Assign" />
       </target>
     </nodeset>
+    <nodeset name="Decl">
+      <target>
+        <node name="GlobDef" />
+        <node name="FunDef" />
+      </target>
+    </nodeset>
   </nodesets>
 
 <!--
   =========================================================================
 -->
-
   <syntaxtree>
+<!--
+  Node Program:
+-->
+    <node name="Program">
+      <sons>
+        <son name="Decls">
+          <targets>
+            <target mandatory="yes">
+              <node name="Decls" />
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
+    </node>
+<!--
+  Node Declarations
+-->
+    <node name="Decls">
+      <description>represents (sequence of) declarations</description>
+      <sons>
+        <son name="Decl">
+          <description>first declaration in declaration</description>
+          <targets>
+            <target mandatory="yes">
+              <set name="Decl"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+        <son name="Next">
+          <description>remaining declaration in declaration</description>
+          <targets>
+            <target mandatory="no">
+              <node name="Decls"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
+    </node>
+<!--
+  Node FunDec:
+-->
+    <node name="FunDec">
+      <son name="FunHeader">
+        <targets>
+          <target mandatory="yes">
+            <node name="FunHeader" />
+            <phases>
+              <all />
+            </phases>
+          </target>
+        </targets>
+      </son>
+    </node>
+<!--
+  Node FunDef:
+-->
+    <node name="FunDef">
+      <sons>
+        <son name="FunHeader">
+          <targets>
+            <target mandatory="yes">
+              <node name="FunHeader" />
+              <phases>
+                <all />
+              </phases>
+            </target>
+          </targets>
+        </son>
+        <son name="FunBody">
+          <targets>
+            <target mandatory="no">
+              <node name="FunBody" />
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
+      <flags>
+        <flag name="IsExport" />
+      </flags>
+    </node>
+<!--
+  Node FunHeader
+-->
+    <node name="FunHeader">
+      <attributes>
+        <attribute name="RetType">
+          <type name="RetType">
+            <targets>
+              <target mandatory="yes">
+                <any />
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+        <attribute name="Id">
+          <type name="String">
+            <targets>
+              <target mandatory="yes">
+                <any/>
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+      </attributes>
+    </node>
+<!--
+  Node RetType:
+  // TODO Void?
+-->
+    <node name="RetType">
+      <attributes>
+        <attribute name="BasicType">
+          <type name="Type">
+            <targets>
+              <target mandatory="no">
+                <any/>
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+      </attributes>
+    </node>
+<!--
+  Node GlobalDec:
+-->
+    <node name="GlobalDec">
+      <attributes>
+        <attribute name="Type">
+          <type name="Type">
+            <targets>
+              <target mandatory="yes">
+                <any/>
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+        <attribute name="Id">
+          <type name="String">
+            <targets>
+              <target mandatory="yes">
+                <any/>
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+      </attributes>
+    </node>
+<!--
+  Node GlobalDef:
+-->
+    <node name="GlobalDef">
+      <attributes>
+        <attribute name="Type">
+          <type name="Type">
+            <targets>
+              <target mandatory="yes">
+                <any/>
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+        <attribute name="Id">
+          <type name="String">
+            <targets>
+              <target mandatory="yes">
+                <any/>
+                <phases>
+                  <all/>
+                </phases>
+              </target>
+            </targets>
+          </type>
+        </attribute>
+      </attributes>
+      <flags>
+        <flag name="IsExport" />
+      </flags>
+    </node>
 <!--
  Node Stmts:
 -->
