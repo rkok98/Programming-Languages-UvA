@@ -305,9 +305,21 @@
       </flags>
     </node>
 <!--
-  Node Type:
+  Node Param:
 -->
     <node name="Param">
+      <sons>
+        <son name="Next">
+          <targets>
+            <target mandatory="no">
+              <node name="Param"/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </son>
+      </sons>
       <attributes>
         <attribute name="Type">
           <type name="Type"/>
