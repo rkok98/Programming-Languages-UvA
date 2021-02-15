@@ -12,13 +12,15 @@
 -->
 
   <attributetypes>
-    <type name="String" ctype="char*" init="NULL" copy="function" />
-    <type name="Int" ctype="int" init="0" copy="literal" />
-    <type name="Bool" ctype="bool" init="FALSE" copy="literal" />
-    <type name="Float" ctype="float" init="0.0" copy="literal" />
-    <type name="BinOp" ctype="binop" init="BO_unknown" copy="literal" />
-    <type name="Link" ctype="node*" init="NULL" copy="lookup" />
-    <type name="CompilerPhase" ctype="compiler_phase_t" init="PH_initial" copy="literal" />
+    <type name="String" ctype="char*" init="NULL" copy="function"/>
+    <type name="Int" ctype="int" init="0" copy="literal"/>
+    <type name="Bool" ctype="bool" init="FALSE" copy="literal"/>
+    <type name="Float" ctype="float" init="0.0" copy="literal"/>
+    <type name="BinOp" ctype="binop" init="BO_unknown" copy="literal"/>
+    <type name="MonOp" ctype="monop" init="MO_unknown" copy="literal"/>
+    <type name="Type" ctype="type" init="T_unknown" copy="literal"/>
+    <type name="Link" ctype="node*" init="NULL" copy="lookup"/>
+    <type name="CompilerPhase" ctype="compiler_phase_t" init="PH_initial" copy="literal"/>
   </attributetypes>
 
 <!--
@@ -301,6 +303,35 @@
       <flags>
         <flag name="IsExport" />
       </flags>
+    </node>
+<!--
+  Node Type:
+-->
+    <node name="Param">
+      <attributes>
+        <attribute name="Type">
+          <type name="Type"/>
+          <targets>
+            <target mandatory="yes">
+              <any/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </attribute>
+        <attribute name="Id">
+          <type name="String"/>
+          <targets>
+            <target mandatory="yes">
+              <any/>
+              <phases>
+                <all/>
+              </phases>
+            </target>
+          </targets>
+        </attribute>
+      </attributes>
     </node>
 <!--
  Node Stmts:
