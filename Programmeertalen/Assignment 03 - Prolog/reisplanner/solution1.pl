@@ -1,15 +1,19 @@
-:- consult(graph.pl).
+:- consult('graph.pl').
 
 connected(X,Y) :- edge(X,Y) ; edge(Y,X).
 
-path(A,B,Path) :-
-       travel(A,B,[A],Q), 
-       reverse(Q,Path).
+path(From, To, Path) :-
+    travel(From, To, [], Path).
 
-travel(A,B,P,[B|P]) :- 
-       connected(A,B).
-travel(A,B,Visited,Path) :-
-       connected(A,C),           
-       C \== B,
-       \+member(C,Visited),
-       travel(C,B,[C|Visited],Path).  
+travel(X, Y, Visited, Path) :-
+    X==Y,
+    reverse(Visited, Path),
+    !.
+travel(From, To, Visited, Path) :-
+    edge(From, X, Cost),
+    From\==To,
+    \+ member(edge(_, X, _), Visited),
+    travel(X,
+           To,
+           [edge(From, X, Cost)|Visited],
+           Path).
