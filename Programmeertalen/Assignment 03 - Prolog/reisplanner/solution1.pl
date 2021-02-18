@@ -3,8 +3,8 @@
 path(From, To, Path) :-
     travel(From, To, [], Path).
 
-travel(X, Y, Visited, Path) :-
-    X == Y,
+travel(From, To, Visited, Path) :-
+    From == To,
     reverse(Visited, Path),
     !.
 
