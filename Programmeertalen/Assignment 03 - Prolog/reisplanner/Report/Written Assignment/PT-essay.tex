@@ -1,75 +1,26 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% LATEX-TEMPLATE TECHNISCH RAPPORT
-%-------------------------------------------------------------------------------
-% This template is derived from the AVI PT report template.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%-------------------------------------------------------------------------------
-%	PACKAGES EN DOCUMENT CONFIGURATIE
-%-------------------------------------------------------------------------------
-
 \documentclass{uva-inf-article}
-%\usepackage[dutch]{babel}
-%\usepackage{csquotes}
-
-\usepackage[style=numeric-comp]{biblatex}
-\addbibresource{PT-essay.bib}
-
 \usepackage{listings}
 
-%-------------------------------------------------------------------------------
-%	GEGEVENS VOOR IN DE TITEL
-%-------------------------------------------------------------------------------
-
-% Vul de naam van de opdracht in.
 \assignment{Prolog}
-% Vul het soort opdracht in.
 \assignmenttype{Essay}
-% Vul de titel van de eindopdracht in.
 \title{Reisplanner}
 
-% Vul de volledige namen van alle auteurs in.
 \author{René Kok}
-% Vul de corresponderende UvAnetID's in.
 \uvanetid{13671146}
 
-% Vul eventueel ook de naam van de docent of vakcoordinator toe.
 \docent{Koen van Elsen}
 \course{Programmeertalen}
-% Te vinden op onder andere Datanose.
-\courseid{}
+\courseid{5062PROG6Y}
 
-% Dit is de datum die op het document komt te staan. Standaard is dat vandaag.
 \date{\today}
-
-%-------------------------------------------------------------------------------
-%	VOORPAGINA
-%-------------------------------------------------------------------------------
 
 \begin{document}
 \maketitle
-
-%-------------------------------------------------------------------------------
-%	INHOUDSOPGAVE EN ABSTRACT
-%-------------------------------------------------------------------------------
-
-% Niet doen bij korte verslagen en rapporten
-%\tableofcontents
-%\begin{abstract}
-%\lipsum[13]
-%\end{abstract}
-
-%-------------------------------------------------------------------------------
-%	INTRODUCTIE
-%-------------------------------------------------------------------------------
 
 \section{Introductie}
 Voor de derde week van programmeertalen is het de opdracht om een reisplanner te programmeren 
 voor de dienstregeling van de Nederlandse Spoorwegen.\\
 In dit document wordt er antwoord gegeven op de vragen gesteld in de opdracht.
-%-------------------------------------------------------------------------------
-%	METHODE
-%-------------------------------------------------------------------------------
 
 \section{Opdracht 1: paden zoeken (Ontwikkeld)}
 \textbf{Welke operator wordt er gebruikt voor het vergelijken van de naburige knoop met de knoop gegeven door To en waarom?}\\
@@ -80,7 +31,6 @@ Wanneer de betreffende naburige knoop onderdeel is van een kant die aanwezig is 
 zijn er een oneindig aantal routes mogelijk omdat de knopen eindeloos herhaald mogen worden.\\\\
 \textbf{Welke paden zijn er van 1 naar 3, van 3 naar 5 en van 5 naar 4?}
 
-%TODO:QUERY
 \begin{lstlisting}
     1 to 3: [edge(1,2,5), edge(2,3,4)]
     3 to 5: [edge(3,1,9), edge(1,2,5), edge(2,5,5)]
@@ -102,18 +52,4 @@ zijn er een oneindig aantal routes mogelijk omdat de knopen eindeloos herhaald m
     3 to 5 : [edge(3,2,2), edge(2,5,5)]
     5 to 4 : [edge(5,4,2)]
 \end{lstlisting}
-
-%-------------------------------------------------------------------------------
-%	REFERENTIES
-%-------------------------------------------------------------------------------
-
-\printbibliography
-
-%-------------------------------------------------------------------------------
-%	BIJLAGEN EN EINDE
-%-------------------------------------------------------------------------------
-
-%\section{Bijlage A}
-%\section{Bijlage B}
-%\section{Bijlage C}
 \end{document}
