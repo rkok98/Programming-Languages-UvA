@@ -1,0 +1,111 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LATEX-TEMPLATE TECHNISCH RAPPORT
+%-------------------------------------------------------------------------------
+% This template is derived from the AVI PT report template.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------
+%	PACKAGES EN DOCUMENT CONFIGURATIE
+%-------------------------------------------------------------------------------
+
+\documentclass{uva-inf-article}
+%\usepackage[dutch]{babel}
+%\usepackage{csquotes}
+
+\usepackage[style=numeric-comp]{biblatex}
+\addbibresource{PT-essay.bib}
+
+%-------------------------------------------------------------------------------
+%	GEGEVENS VOOR IN DE TITEL
+%-------------------------------------------------------------------------------
+
+% Vul de naam van de opdracht in.
+\assignment{Prolog}
+% Vul het soort opdracht in.
+\assignmenttype{Essay}
+% Vul de titel van de eindopdracht in.
+\title{Reisplanner}
+
+% Vul de volledige namen van alle auteurs in.
+\author{René Kok}
+% Vul de corresponderende UvAnetID's in.
+\uvanetid{13671146}
+
+% Vul eventueel ook de naam van de docent of vakcoordinator toe.
+\docent{Koen van Elsen}
+\course{Programmeertalen}
+% Te vinden op onder andere Datanose.
+\courseid{}
+
+% Dit is de datum die op het document komt te staan. Standaard is dat vandaag.
+\date{\today}
+
+%-------------------------------------------------------------------------------
+%	VOORPAGINA
+%-------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+
+%-------------------------------------------------------------------------------
+%	INHOUDSOPGAVE EN ABSTRACT
+%-------------------------------------------------------------------------------
+
+% Niet doen bij korte verslagen en rapporten
+%\tableofcontents
+%\begin{abstract}
+%\lipsum[13]
+%\end{abstract}
+
+%-------------------------------------------------------------------------------
+%	INTRODUCTIE
+%-------------------------------------------------------------------------------
+
+\section{Introduction}
+\lipsum[1]
+
+%-------------------------------------------------------------------------------
+%	METHODE
+%-------------------------------------------------------------------------------
+
+\section{Opdracht 1: paden zoeken (Ontwikkeld)}
+\textbf{Welke operator wordt er gebruikt voor het vergelijken van de naburige knoop met de knoop gegeven door To en waarom?}\\
+Voor het vergelijken van de naburige knoopmet de knoop gegeven door To wordt de "==" operator gebruikt. 
+Deze operator is bedoeld om te controleren of een variabele gelijkwaardig is aan een andere variabele in prolog.\\\\  
+\textbf{Waarom mag de betreffende naburige knoop niet onderdeel zijn van een kant die aanwezig is in Visited, de lijst van kanten die al bezocht zijn?}\\
+Wanneer de betreffende naburige knoop onderdeel is van een kant die aanwezig is in Visited, 
+zijn er een oneindig aantal routes mogelijk omdat de knopen eindeloos herhaald mogen worden.\\\\
+\textbf{Welke paden zijn er van 1 naar 3, van 3 naar 5 en van 5 naar 4?}\\
+
+%TODO:QUERY
+?- path(1, 3, Path).
+Path = [edge(1, 2, 5), edge(2, 3, 4)].
+
+?- path(3, 5, Path).
+Path = [edge(3, 1, 9), edge(1, 2, 5), edge(2, 5, 5)] ;
+Path = [edge(3, 2, 2), edge(2, 5, 5)].
+
+?- path(5, 4, Path).
+Path = [edge(5, 1, 3), edge(1, 2, 5), edge(2, 4, 3)] ;
+Path = [edge(5, 4, 2)].
+
+\section{Opdracht 2: het kortste pad vinden (Competent)}
+\textbf{Wat zijn de kosten van ieder pad van 5 naar 4 om deze te bewandelen?}\\
+\\\\
+\textbf{Wat zijn de kortste paden van 1 naar 3, van 3 naar 5 en van 5 naar 4?}\\
+\\\\
+
+%-------------------------------------------------------------------------------
+%	REFERENTIES
+%-------------------------------------------------------------------------------
+
+\printbibliography
+
+%-------------------------------------------------------------------------------
+%	BIJLAGEN EN EINDE
+%-------------------------------------------------------------------------------
+
+%\section{Bijlage A}
+%\section{Bijlage B}
+%\section{Bijlage C}
+\end{document}
