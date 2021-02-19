@@ -9,7 +9,7 @@
 :- consult('solution2.pl').
 
 /**
- * Answers question 2.1:
+ * Answers question 1.1:
  * What paths are there from 1 to 3, from 3 to 5 and from 5 to 4?
  */
 assignment1_1() :-
@@ -25,10 +25,9 @@ assignment1_1() :-
  */
 assignment2_1() :-
     writeln("What is the cost of each path from 5 to 4 to walk it?"),
-    path(5, 4, Path),
-    writeln("Path ":Path),
-    cost(Path, Cost),
-    writeln("Cost ":Cost),
+    findall(Path, path(5, 4, Path), Paths),
+    maplist(cost, Paths, Costs),
+    writeln("Costs": Costs),
     nl.
 
 /**
