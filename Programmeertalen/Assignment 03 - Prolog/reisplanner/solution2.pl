@@ -8,7 +8,7 @@ cost([Head | Tail], Cost) :-
     Cost is HeadCost + TailCost.
 
 shortestPath(From, To, Path) :-
-    findall((Cost, NewPath),
-            (path(From, To, NewPath), cost(NewPath, Cost)), Paths),
-    sort(Paths, [(_, Result) | _]),
-    Path = Result.
+    findall((Cost, NPath),
+            (path(From, To, NPath), cost(NPath, Cost)), Paths),
+    sort(Paths, [(_, Answer) | _]),
+    Path = Answer.
