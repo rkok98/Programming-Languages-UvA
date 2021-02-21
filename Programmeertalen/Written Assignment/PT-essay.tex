@@ -62,7 +62,10 @@
 %-------------------------------------------------------------------------------
 
 \section{Introduction}
-Smart Contracts \cite{relevant-citation-1} are key to ...
+Smart Contracts \cite{what-are-smart-contracts} are key to simplify complex blockchain transactions.
+Smart contracts can streamline this complex process that involves several intermediaries because of a 
+lack of trust among participants in the transaction.
+For this assignment I design a programming language that, in my view, matches the needs of smart contracts.
 %\lipsum[1]
 
 \subsection{Relevant characteristics of application domain}
@@ -78,12 +81,21 @@ Smart Contracts \cite{relevant-citation-1} are key to ...
 \section{Analysis}
 %\lipsum[3]
 \subsection{The type system}
-\subsubsection{Type checking}
-Because smart contracts are designed for transactions, you want a smart contract to be accurate and secure before executing the smart contract. 
+Because smart contracts are designed for transactions, a smart contract needs to be accurate and secure. No hidden suprises at runtime.
 That is why I chose to have the language static typed.
 Static type checking has the advantages that the smart contract is guaranteed to meet a number of type safety features for all possible inputs.
 In addition, a static typing language is better optimized as opposed to dynamically typed language, because the compiler knows if a program is correctly typed.
 This results in a smaller and faster binary because no dynamic safety checks need to be performed.
+\\\\
+While type inference does not affect runtime of a program, because types are inference occurs at compile-time,
+an explicit type inference seems to be the best choice for smart contracts because  
+explicit type annotations serve as documentation for the code.
+\\\\
+I also made the choice for nominative typing. 
+While structural typing is more flexible, noimnative typing is less prone to errors.
+It's common for objects to be structural equivalent, but semanticily different.
+polymorphism can be implemented through a shared interface such as in the Java programming language.
+
 \subsection{State management}
 \subsection{Compilation/interpretation strategy}
 \subsection{Evaluation strategy (lazy/eager)}
