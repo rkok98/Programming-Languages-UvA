@@ -34,6 +34,18 @@ PHASE( pet,
        "Perform example transformations",
        ALWAYS)
 
+SUBPHASE( cao,
+          "Count Arithmetic operators",
+          CAOdoCountBinOp,
+          ALWAYS,
+          pet)
+
+SUBPHASE( cid,
+          "Count Identifiers",
+          CIDdoCountIds,
+          ALWAYS,
+          pet)
+
 SUBPHASE( ri, 
           "Rename identifiers",
           RIdoRenameIdentifiers, 
@@ -46,18 +58,19 @@ SUBPHASE( si,
           ALWAYS,
           pet)
 
+SUBPHASE( sr,
+          "Strength reduction",
+          SRdoStrengthReduction,
+          ALWAYS,
+          pet)
+
 SUBPHASE( os, 
           "Optimise subtraction",
           OSdoOptSub, 
           ALWAYS,
           pet)
 
-SUBPHASE( ca,
-"Count arithmetic operators",
-CAdoCountBinOp,
-ALWAYS,
-pet)
-ENDPHASE( pet) 
+ENDPHASE( pet)
 
 
 /******************************************************************************/
