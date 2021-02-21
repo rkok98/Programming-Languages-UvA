@@ -1,7 +1,7 @@
 /**
  * Author:   René Kok (13671146)
  * Study:    Doorstroomminor Software Engineering UvA
- * 
+ *
  * This queries will try to answer the questions asked in the prolog assignment.
  */
 
