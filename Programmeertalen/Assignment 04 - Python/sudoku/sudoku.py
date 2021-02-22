@@ -1,4 +1,6 @@
 
+open_position = 0
+
 # Reads a sudoku from file
 # returns the sudoku as matrix and size of the sudoku
 def sudokuToArray(filename):
@@ -17,30 +19,40 @@ def sudokuToArray(filename):
     return sudoku, size
 
 # Prints sudoku
-def printSudoku(sudoku):
+def print_sudoku(sudoku):
     for _, row in enumerate(sudoku):
         print(' '.join(map(str, row)))
 
-def freeValues(values):
-    n = [item for item in range(1, len(values))] 
+# Free values in given sequence
+def free_values(values):
+    n = [i for i in range(1, len(values))] 
 
     values_set = set(values)
     n_set = set(n)
 
-    return (values_set - n_set).union(n_set - values_set)
+    open_values = list(sorted(values_set - n_set))
+    open_values.pop(open_position)
 
-def freeInRow(sudoku, row):
-    return freeValues(sudoku[row])
+    return open_values
 
+# Free values in row
+def free_in_row(sudoku, row):
+    return free_values(sudoku[row])
 
+# Free values in column
+def free_in_col(sudoku, col):
+    return free_values([row[col] for row in sudoku] )
+
+def free_in_sub_grid(sudoku):
+    return 
 
 def main():
     print("hello world!")
 
 if __name__ == "__main__":
     sudoku, size = sudokuToArray('/Users/renekok/Developer/pre-master/Programmeertalen/Assignment 04 - Python/sudoku/sudoku_boards/1_open_spots_9_grid.txt')
-    print(sudoku)
-    printSudoku(sudoku)
-    print(freeInRow(sudoku, 1))
+    print_sudoku(sudoku)
+    print(free_in_row(sudoku, 1))
+    print(free_in_col(sudoku, 1))
 
 
