@@ -15,9 +15,7 @@ def sudokuToArray(filename):
             row = list(map(int, row.split(' ')))
             sudoku.append(row)
 
-    size = len(sudoku)
-
-    return sudoku, size
+    return sudoku
 
 
 def print_sudoku(sudoku):
@@ -135,12 +133,8 @@ def main():
     args = parser.parse_args()
     sudoku = args.sudoku_string
 
-    sudoku, size = sudokuToArray(sudoku)
+    sudoku = sudokuToArray(sudoku)
 
-    #print(open_positions(sudoku))
-    #print(consistent(sudoku))
-    #print(constraints(sudoku))
-    #print(free_in_row(sudoku, 2))
     sudoku = solve(sudoku)
     print_sudoku(sudoku)
 
