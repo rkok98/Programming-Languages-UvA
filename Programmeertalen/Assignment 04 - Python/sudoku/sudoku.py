@@ -35,6 +35,14 @@ def sub_grids(sudoku):
 
     return [size[i:i + sqrt] for i in range(0, len(size), sqrt)]
 
+def get_grid(sudoku, row, col):
+    grids = sub_grids(sudoku)
+
+    grid_row = [i for rows in grids for i in rows if row in rows]
+    grid_col = [i for cols in grids for i in cols if col in cols]
+
+    return [sudoku[row][col] for row in grid_row for col in grid_col]
+
 
 # Free values in given sequence
 def free_values(values):
@@ -56,14 +64,8 @@ def free_in_row(sudoku, row):
 def free_in_col(sudoku, col):
     return free_values([row[col] for row in sudoku])
 
-
 def free_in_sub_grid(sudoku, row, col):
-    grids = sub_grids(sudoku)
-
-    grid_row = [i for rows in grids for i in rows if row in rows]
-    grid_col = [i for cols in grids for i in cols if col in cols]
-
-    return [sudoku[row][col] for row in grid_row for col in grid_col]
+    return free_values(get_grid(sudoku, row, col))
 
 
 def main():
@@ -72,7 +74,6 @@ def main():
     print_sudoku(sudoku)
     print(free_in_row(sudoku, 1))
     print(free_in_col(sudoku, 1))
-    print(sub_grids(sudoku))
     print(free_in_sub_grid(sudoku, 1, 1))
 
 
