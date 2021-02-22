@@ -1,9 +1,7 @@
+import argparse
 import math
 
 open_position = 0
-
-# Reads a sudoku from file
-# returns the sudoku as matrix and size of the sudoku
 
 
 def sudokuToArray(filename):
@@ -21,19 +19,24 @@ def sudokuToArray(filename):
 
     return sudoku, size
 
-# Prints sudoku
-
 
 def print_sudoku(sudoku):
     for _, row in enumerate(sudoku):
         print(' '.join(map(str, row)))
 
-# Returns a list of sub grid coordinates
+
 def sub_grids(sudoku):
     sqrt = int(math.sqrt(len(sudoku)))
     size = [i for i in range(0, len(sudoku[0]))]
 
     return [size[i:i + sqrt] for i in range(0, len(size), sqrt)]
+
+
+def sub_grids_start(sudoku):
+    sqrt = int(math.sqrt(len(sudoku)))
+
+    return [i for i in range(0, len(sudoku[0]), sqrt)]
+
 
 def get_grid(sudoku, row, col):
     grids = sub_grids(sudoku)
@@ -44,37 +47,92 @@ def get_grid(sudoku, row, col):
     return [sudoku[row][col] for row in grid_row for col in grid_col]
 
 
-# Free values in given sequence
 def free_values(values):
-    n = [i for i in range(1, len(values))]
+    n = [i for i in range(1, len(values) + 1)]
 
     values_set = set(values)
     n_set = set(n)
 
-    open_values = list(sorted(values_set - n_set))
-    open_values.pop(open_position)
+    return list(sorted(n_set - values_set))
 
-    return open_values
 
-# Free values in row
 def free_in_row(sudoku, row):
     return free_values(sudoku[row])
 
-# Free values in column
+
 def free_in_col(sudoku, col):
     return free_values([row[col] for row in sudoku])
+
 
 def free_in_sub_grid(sudoku, row, col):
     return free_values(get_grid(sudoku, row, col))
 
 
+def free_at_pos(sudoku, row, col):
+    _row = free_in_row(sudoku, row)
+    _col = free_in_col(sudoku, col)
+    _grid = free_in_sub_grid(sudoku, row, col)
+
+    return list(set(_row) & set(_col) & set(_grid))
+
+
+def open_positions(sudoku):
+    return [(sudoku.index(row), row.index(col)) for row in sudoku for col in row if col == open_position]
+
+
+def valid_row(sudoku, row):
+    return not free_in_row(sudoku, row)
+
+
+def valid_col(sudoku, col):
+    return not free_in_col(sudoku, col)
+
+
+def valid_sub_grid(sudoku, row, col):
+    return not free_in_sub_grid(sudoku, row, col)
+
+
+def consistent(sudoku):
+    print(sub_grids_start(sudoku))
+
+    for i in range(0, len(sudoku)):
+        if (not valid_row(sudoku, i) or not valid_col(sudoku, i)):
+            return False
+
+    for i in sub_grids_start(sudoku):
+        for j in sub_grids_start(sudoku):
+            if (not valid_sub_grid(sudoku, i, j)):
+                return False
+
+    return True
+
+
+def constraints(sudoku):
+    constraints = [(pos[0], pos[1], free_at_pos(sudoku, pos[0], pos[1])) for pos in open_positions(sudoku)]
+    constraints.sort(key=lambda c: len(c[2]))
+
+    return constraints
+
+def solve(sudoku):
+    return
+
+
+
 def main():
-    sudoku, size = sudokuToArray(
-        '/Users/renekok/Developer/pre-master/Programmeertalen/Assignment 04 - Python/sudoku/sudoku_boards/1_open_spots_9_grid.txt')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('sudoku_string', action="store",
+                        help='sudoku string to be parsed.')
+
+    args = parser.parse_args()
+    sudoku = args.sudoku_string
+
+    sudoku, size = sudokuToArray(sudoku)
+
     print_sudoku(sudoku)
-    print(free_in_row(sudoku, 1))
-    print(free_in_col(sudoku, 1))
-    print(free_in_sub_grid(sudoku, 1, 1))
+    print(open_positions(sudoku))
+    print(consistent(sudoku))
+    print(constraints(sudoku))
+    print(free_in_row(sudoku, 2))
 
 
 if __name__ == "__main__":
