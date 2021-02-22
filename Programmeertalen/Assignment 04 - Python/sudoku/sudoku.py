@@ -108,21 +108,46 @@ def consistent(sudoku):
 
 
 def constraints(sudoku):
-    constraints = [(pos[0], pos[1], free_at_pos(sudoku, pos[0], pos[1])) for pos in open_positions(sudoku)]
+    constraints = [(pos[0], pos[1], free_at_pos(sudoku, pos[0], pos[1])) for pos in open_positions(sudoku) if free_at_pos(sudoku, pos[0], pos[1])]
     constraints.sort(key=lambda c: len(c[2]))
 
     return constraints
 
 def solve(sudoku):
-    _constraints = constraints(sudoku)
+    sudokus = [sudoku]
+    cons = constraints(sudoku)
+    '''
+    while(sudokus):
+        sud = sudokus.pop()
 
-    while(_constraints):
-        constraint = _constraints[0]
-        extend(sudoku, constraint[0], constraint[1], constraint[2][0])
+        if (consistent(sud)):
+            return sud
         
-        _constraints = constraints(sudoku)
+        _constraints = constraints(sud)
 
-    return sudoku
+        constraint = _constraints[0]
+        sud = extend(sud, constraint[0], constraint[1], constraint[2][0])
+        
+        _constraints = constraints(sud)
+        sudokus.append(sud)
+        print_sudoku(sud)
+        print(sudokus)
+    '''    
+
+    while sudokus:
+        sud = sudokus.pop()
+
+        if consistent(sud):
+            return sud
+
+        while cons:
+            print(cons)
+            constraint = cons[0]
+            sud = extend(sud, constraint[0], constraint[1], constraint[2][0])
+            sudokus.append(sud)
+            cons = constraints(sud)
+
+
 
 
 def main():
@@ -137,7 +162,7 @@ def main():
 
     sudoku = solve(sudoku)
     print_sudoku(sudoku)
-
+    print(consistent(sudoku))
 
 if __name__ == "__main__":
     main()
