@@ -77,7 +77,7 @@ def free_at_pos(sudoku, row, col):
 
 
 def open_positions(sudoku):
-    return [(sudoku.index(row), row.index(col)) for row in sudoku for col in row if col == open_position]
+    return [(row, col) for row, cols in enumerate(sudoku) for col, val in enumerate(cols) if val == open_position]   
 
 
 def valid_row(sudoku, row):
@@ -93,8 +93,6 @@ def valid_sub_grid(sudoku, row, col):
 
 
 def consistent(sudoku):
-    print(sub_grids_start(sudoku))
-
     for i in range(0, len(sudoku)):
         if (not valid_row(sudoku, i) or not valid_col(sudoku, i)):
             return False
@@ -129,10 +127,10 @@ def main():
     sudoku, size = sudokuToArray(sudoku)
 
     print_sudoku(sudoku)
-    print(open_positions(sudoku))
+    #print(open_positions(sudoku))
     print(consistent(sudoku))
-    print(constraints(sudoku))
-    print(free_in_row(sudoku, 2))
+    #print(constraints(sudoku))
+    #print(free_in_row(sudoku, 2))
 
 
 if __name__ == "__main__":
