@@ -114,42 +114,25 @@ def constraints(sudoku):
     return constraints
 
 def solve(sudoku):
-    sudokus = [sudoku]
-    cons = constraints(sudoku)
-    '''
-    while(sudokus):
-        sud = sudokus.pop()
+    stack = [sudoku]
 
-        if (consistent(sud)):
-            return sud
-        
-        _constraints = constraints(sud)
+    while stack:
+        top = stack.pop()
+        print('----------')
+        print_sudoku(top)
 
-        constraint = _constraints[0]
-        sud = extend(sud, constraint[0], constraint[1], constraint[2][0])
-        
-        _constraints = constraints(sud)
-        sudokus.append(sud)
-        print_sudoku(sud)
-        print(sudokus)
-    '''    
+        if consistent(top):
+            return top
 
-    while sudokus:
-        sud = sudokus.pop()
+        pos = open_positions(top)[0]
 
-        if consistent(sud):
-            return sud
+        for val in free_at_pos(top, pos[0], pos[1]):
+            top[pos[0]][pos[1]] = val
+            stack.append(top)
 
-        while cons:
-            print(cons)
-            constraint = cons[0]
-            sud = extend(sud, constraint[0], constraint[1], constraint[2][0])
-            sudokus.append(sud)
-            cons = constraints(sud)
+    return "failure"
 
-
-
-
+                
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('sudoku_string', action="store",
