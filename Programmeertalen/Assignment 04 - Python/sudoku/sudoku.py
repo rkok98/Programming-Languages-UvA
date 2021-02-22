@@ -123,7 +123,6 @@ def solve(sudoku):
         extend(sudoku, constraint[0], constraint[1], constraint[2][0])
         
         _constraints = constraints(sudoku)
-        print(_constraints)
 
     return sudoku
 
@@ -138,15 +137,12 @@ def main():
 
     sudoku, size = sudokuToArray(sudoku)
 
-    print_sudoku(sudoku)
-    print()
     #print(open_positions(sudoku))
     #print(consistent(sudoku))
     #print(constraints(sudoku))
     #print(free_in_row(sudoku, 2))
     sudoku = solve(sudoku)
     print_sudoku(sudoku)
-    print(consistent(sudoku))
 
 
 if __name__ == "__main__":
