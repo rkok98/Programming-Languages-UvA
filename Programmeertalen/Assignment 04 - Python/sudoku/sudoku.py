@@ -1,9 +1,9 @@
-import argparse
+import sys
 import math
 import copy
-import re
 
 open_position = 0
+
 
 def sudokuToArray(filename):
     sudoku = []
@@ -11,36 +11,19 @@ def sudokuToArray(filename):
     with open(filename) as f:
         lines = f.readlines()
 
-        try:
-            for row in lines:
-                row = row.rstrip()
-                row = validate_row(row, sudoku)
-                sudoku.append(row)
-        except ValueError as e:
-            print(e)
+        for row in lines:
+            row = row.rstrip()
+            row = list(map(int, row.split(' ')))
+            sudoku.append(row)
 
     return sudoku
 
-def validate_row(row, sudoku):
-    pattern = r"[0-9]+\s*"
-
-    if not re.match(pattern, row):
-        raise ValueError("Malformed sudoku")
-
-    row = list(map(int, row.split(' ')))
-    max_value = len(sudoku)
-
-    if max(row) > max_value:
-        raise ValueError("sudoku contains numbers that are greater than allowable values")
-
-    if min(row) < open_position:
-        raise ValueError("sudoku contains numbers that are lower than allowable values")
-
-    return row
 
 def print_sudoku(sudoku):
     for _, row in enumerate(sudoku):
-        print(*row)
+        print(' '.join(map(str, row)))
+
+    print()
 
 def extend(sudoku, row, col, value):
     sudoku[row][col] = value
@@ -133,15 +116,19 @@ def constraints(sudoku):
 
     return constraints
 
-def solve(sudoku):
+def solve(sudoku, amount_sols):
     stack = []
+    solutions = []
     stack.append(sudoku)
 
     while stack:
         sud = stack.pop()
 
         if consistent(sud):
-            return sud
+            solutions.append(sud)
+
+            if len(solutions) is amount_sols:
+                return solutions
         
         cons = constraints(sud)
         if cons:
@@ -155,24 +142,25 @@ def solve(sudoku):
                 s = extend(s, row, col, val)
                 stack.append(s)
 
-                if consistent(s):
-                    return s
-
-    return "failure"
+    if solutions:
+        return solutions
+    else:
+        raise ValueError
                 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('sudoku_string', action="store",
-                        help='sudoku string to be parsed.')
-
-    args = parser.parse_args()
-    sudoku = args.sudoku_string
+    sudoku, amount_sols = parse_args()
 
     sudoku = sudokuToArray(sudoku)
-
-    #sudoku = solve(sudoku)
+    sudokus = solve(sudoku, amount_sols)
     
-    print_sudoku(sudoku)
+    for sudoku in sudokus:
+        print_sudoku(sudoku)
+
+def parse_args():
+    sudoku_file = sys.argv[1]
+    solutions_amount = sys.argv[2] if len(sys.argv) > 2 else 1
+
+    return sudoku_file, solutions_amount
 
 if __name__ == "__main__":
     main()
