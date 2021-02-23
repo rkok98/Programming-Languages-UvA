@@ -1,9 +1,9 @@
 import argparse
 import math
 import copy
+import re
 
 open_position = 0
-
 
 def sudokuToArray(filename):
     sudoku = []
@@ -11,17 +11,36 @@ def sudokuToArray(filename):
     with open(filename) as f:
         lines = f.readlines()
 
-        for row in lines:
-            row = row.rstrip()
-            row = list(map(int, row.split(' ')))
-            sudoku.append(row)
+        try:
+            for row in lines:
+                row = row.rstrip()
+                row = validate_row(row, sudoku)
+                sudoku.append(row)
+        except ValueError as e:
+            print(e)
 
     return sudoku
 
+def validate_row(row, sudoku):
+    pattern = r"[0-9]+\s*"
+
+    if not re.match(pattern, row):
+        raise ValueError("Malformed sudoku")
+
+    row = list(map(int, row.split(' ')))
+    max_value = len(sudoku)
+
+    if max(row) > max_value:
+        raise ValueError("sudoku contains numbers that are greater than allowable values")
+
+    if min(row) < open_position:
+        raise ValueError("sudoku contains numbers that are lower than allowable values")
+
+    return row
 
 def print_sudoku(sudoku):
     for _, row in enumerate(sudoku):
-        print(' '.join(map(str, row)))
+        print(*row)
 
 def extend(sudoku, row, col, value):
     sudoku[row][col] = value
@@ -151,10 +170,9 @@ def main():
 
     sudoku = sudokuToArray(sudoku)
 
-    sudoku = solve(sudoku)
+    #sudoku = solve(sudoku)
     
     print_sudoku(sudoku)
-    print(consistent(sudoku))
 
 if __name__ == "__main__":
     main()
