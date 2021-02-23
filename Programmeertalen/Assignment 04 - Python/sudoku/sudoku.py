@@ -1,5 +1,6 @@
 import argparse
 import math
+import copy
 
 open_position = 0
 
@@ -114,22 +115,24 @@ def constraints(sudoku):
     return constraints
 
 def solve(sudoku):
-    stack = [sudoku]
+    stack = []
+    stack.append(sudoku)
 
     while stack:
-        top = stack.pop()
-        print('----------')
-        print_sudoku(top)
+        sud = stack.pop()
 
-        if consistent(top):
-            return top
+        if consistent(sud):
+            return sud
 
-        pos = open_positions(top)[0]
+        cons = open_positions(sud)[0]
+        for val in free_at_pos(sud, cons[0], cons[1]):
+            s = copy.deepcopy(sud)
+            s[cons[0]][cons[1]] = val
+            stack.append(s)
 
-        for val in free_at_pos(top, pos[0], pos[1]):
-            top[pos[0]][pos[1]] = val
-            stack.append(top)
-
+            if consistent(s):
+                return s
+        
     return "failure"
 
                 
@@ -142,8 +145,10 @@ def main():
     sudoku = args.sudoku_string
 
     sudoku = sudokuToArray(sudoku)
+    sudoku2 = copy.deepcopy(sudoku)
 
     sudoku = solve(sudoku)
+    
     print_sudoku(sudoku)
     print(consistent(sudoku))
 
