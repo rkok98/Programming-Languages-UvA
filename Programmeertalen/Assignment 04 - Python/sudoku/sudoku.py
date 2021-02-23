@@ -97,7 +97,7 @@ def valid_sub_grid(sudoku, row, col):
 
 def consistent(sudoku):
     for i in range(0, len(sudoku)):
-        if (not valid_row(sudoku, i) or not valid_col(sudoku, i)):
+        if not (valid_row(sudoku, i) or valid_col(sudoku, i)):
             return False
 
     for i in sub_grids_start(sudoku):
@@ -109,7 +109,7 @@ def consistent(sudoku):
 
 
 def constraints(sudoku):
-    constraints = [(pos[0], pos[1], free_at_pos(sudoku, pos[0], pos[1])) for pos in open_positions(sudoku) if free_at_pos(sudoku, pos[0], pos[1])]
+    constraints = [(pos[0], pos[1], free_at_pos(sudoku, pos[0], pos[1])) for pos in open_positions(sudoku)]
     constraints.sort(key=lambda c: len(c[2]))
 
     return constraints
@@ -123,18 +123,24 @@ def solve(sudoku):
 
         if consistent(sud):
             return sud
+        
+        cons = constraints(sud)
+        if cons:
+            constraint = cons[0]
+            for val in constraint[2]:
+                row = constraint[0]
+                col = constraint[1]
 
-        cons = open_positions(sud)[0]
-        for val in free_at_pos(sud, cons[0], cons[1]):
-            s = copy.deepcopy(sud)
-            s[cons[0]][cons[1]] = val
-            stack.append(s)
+                s = copy.deepcopy(sud)
 
-            if consistent(s):
-                return s
+                s = extend(s, row, col, val)
+                stack.append(s)
+
+                if consistent(s):
+                    return s
+
         
     return "failure"
-
                 
 def main():
     parser = argparse.ArgumentParser()
@@ -145,7 +151,8 @@ def main():
     sudoku = args.sudoku_string
 
     sudoku = sudokuToArray(sudoku)
-    sudoku2 = copy.deepcopy(sudoku)
+
+    print(constraints(sudoku))
 
     sudoku = solve(sudoku)
     
@@ -154,3 +161,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# extend(sudoku, r, c, values):
+# if len(values) > 0
+# sudoku[r][c] = values.pop(0)
+# else:
+# grid[r][c] = 0
+# return grid[x][y] !=0
