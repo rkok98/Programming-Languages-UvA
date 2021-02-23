@@ -139,7 +139,6 @@ def solve(sudoku):
                 if consistent(s):
                     return s
 
-        
     return "failure"
                 
 def main():
@@ -152,8 +151,6 @@ def main():
 
     sudoku = sudokuToArray(sudoku)
 
-    print(constraints(sudoku))
-
     sudoku = solve(sudoku)
     
     print_sudoku(sudoku)
@@ -161,10 +158,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# extend(sudoku, r, c, values):
-# if len(values) > 0
-# sudoku[r][c] = values.pop(0)
-# else:
-# grid[r][c] = 0
-# return grid[x][y] !=0
