@@ -25,6 +25,7 @@ def print_sudoku(sudoku):
 
     print()
 
+
 def extend(sudoku, row, col, value):
     sudoku[row][col] = value
     return sudoku
@@ -82,7 +83,8 @@ def free_at_pos(sudoku, row, col):
 
 
 def open_positions(sudoku):
-    return [(row, col) for row, cols in enumerate(sudoku) for col, val in enumerate(cols) if val == open_position]   
+    return [(row, col) for row, cols in enumerate(sudoku)
+            for col, val in enumerate(cols) if val == open_position]
 
 
 def valid_row(sudoku, row):
@@ -111,10 +113,12 @@ def consistent(sudoku):
 
 
 def constraints(sudoku):
-    constraints = [(pos[0], pos[1], free_at_pos(sudoku, pos[0], pos[1])) for pos in open_positions(sudoku)]
+    constraints = [(pos[0], pos[1], free_at_pos(sudoku, pos[0], pos[1]))
+                   for pos in open_positions(sudoku)]
     constraints.sort(key=lambda c: len(c[2]))
 
     return constraints
+
 
 def solve(sudoku, amount_sols):
     stack = []
@@ -129,7 +133,7 @@ def solve(sudoku, amount_sols):
 
             if len(solutions) is amount_sols:
                 return solutions
-        
+
         cons = constraints(sud)
         if cons:
             constraint = cons[0]
@@ -146,21 +150,32 @@ def solve(sudoku, amount_sols):
         return solutions
     else:
         raise ValueError
-                
+
+
 def main():
     sudoku, amount_sols = parse_args()
 
     sudoku = sudokuToArray(sudoku)
     sudokus = solve(sudoku, amount_sols)
-    
+
     for sudoku in sudokus:
         print_sudoku(sudoku)
 
+
 def parse_args():
+    '''
+    Parse given arguments.
+
+    Returns:
+        sudoku_file: The path to the given sudoku file
+        solutions_amount: Amount of requested solutions,
+                          returns 1 if argument is not given
+    '''
     sudoku_file = sys.argv[1]
     solutions_amount = sys.argv[2] if len(sys.argv) > 2 else 1
 
     return sudoku_file, solutions_amount
+
 
 if __name__ == "__main__":
     main()
