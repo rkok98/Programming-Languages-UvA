@@ -2,6 +2,11 @@ import sys
 import math
 import copy
 
+from collections import namedtuple
+
+Position = namedtuple('Position', ['row', 'col'])
+Constraint = namedtuple('Constraint', ['row', 'col', 'values'])
+
 open_position = 0
 
 
@@ -108,7 +113,7 @@ def free_in_sub_grid(sudoku, row, col):
 
 def free_at_pos(sudoku, row, col):
     '''
-    Returns the possible values of a given position based on 
+    Returns the possible values of a given position based on
     the remaining possible values of a row, column and sub grid.
     '''
     _row = free_in_row(sudoku, row)
@@ -122,7 +127,7 @@ def open_positions(sudoku):
     '''
     Returns a list of coordinates of every empty spot in a sudoku.
     '''
-    return [(row, col) for row, cols in enumerate(sudoku)
+    return [Position(row, col) for row, cols in enumerate(sudoku)
             for col, val in enumerate(cols) if val == open_position]
 
 
@@ -167,9 +172,10 @@ def constraints(sudoku):
     '''
     Returns a list of all possible solutions of all empty spots in a sudoku.
     '''
-    constraints = [(pos[0], pos[1], free_at_pos(sudoku, pos[0], pos[1]))
+    constraints = [Constraint(pos.row, pos.col,
+                   free_at_pos(sudoku, pos.row, pos.col))
                    for pos in open_positions(sudoku)]
-    constraints.sort(key=lambda c: len(c[2]))
+    constraints.sort(key=lambda c: len(c.values))
 
     return constraints
 
@@ -179,7 +185,8 @@ def solve(sudoku, amount_sols):
     Solves a sudoku using backtracking and a stack.
 
     Returns:
-        solutions: A list of n amount of solutions; An error if the sudoku is unsolvable
+        solutions: A list of n amount of solutions;
+                   An error if the sudoku is unsolvable
     '''
     stack = []
     solutions = []
@@ -197,13 +204,10 @@ def solve(sudoku, amount_sols):
         cons = constraints(sud)
         if cons:
             constraint = cons[0]
-            for val in constraint[2]:
-                row = constraint[0]
-                col = constraint[1]
-
+            for value in constraint.values:
                 s = copy.deepcopy(sud)
 
-                s = extend(s, row, col, val)
+                s = extend(s, constraint.row, constraint.col, value)
                 stack.append(s)
 
     if solutions:
