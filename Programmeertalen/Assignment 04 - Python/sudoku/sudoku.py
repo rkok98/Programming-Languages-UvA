@@ -30,9 +30,8 @@ def sudokuToArray(filename):
         except ValueError as e:
             print(e)
 
-
-
     return sudoku
+
 
 def parse_row(line, sudoku_size):
     '''Validates given rows and parses them to a sudoku row'''
@@ -47,17 +46,18 @@ def parse_row(line, sudoku_size):
     if not len(row) == sudoku_size:
         raise ValueError('Row doesn`t contain the right amount of numbers')
 
-    # Validates if row contains numbers that are not larger 
+    # Validates if row contains numbers that are not larger
     # then the max allowed number (the sudoku size)
     if not max(row) <= sudoku_size:
         raise ValueError('Sudoku contains numbers that are too large')
 
-    # Validates if row contains numbers that are not smaller 
+    # Validates if row contains numbers that are not smaller
     # then the min allowed number (0)
     if not min(row) >= open_position:
         raise ValueError('Sudoku contains numbers that are too low')
 
     return row
+
 
 def print_sudoku(sudoku):
     '''
@@ -203,7 +203,7 @@ def constraints(sudoku):
     Returns a list of all possible solutions of all empty spots in a sudoku.
     '''
     constraints = [Constraint(pos.row, pos.col,
-                   free_at_pos(sudoku, pos.row, pos.col))
+                              free_at_pos(sudoku, pos.row, pos.col))
                    for pos in open_positions(sudoku)]
     constraints.sort(key=lambda c: len(c.values))
 
