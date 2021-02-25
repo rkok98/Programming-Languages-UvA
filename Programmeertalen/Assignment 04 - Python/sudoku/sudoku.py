@@ -1,6 +1,7 @@
 import sys
 import math
 import copy
+import re
 
 from collections import namedtuple
 
@@ -21,13 +22,42 @@ def sudokuToArray(filename):
         sudoku = []
         lines = file.readlines()
 
-        for row in lines:
-            row = row.rstrip()
-            row = list(map(int, row.split(' ')))
-            sudoku.append(row)
+        try:
+            for row in lines:
+                row = row.rstrip()
+                row = parse_row(row, len(lines))
+                sudoku.append(row)
+        except ValueError as e:
+            print(e)
+
+
 
     return sudoku
 
+def parse_row(line, sudoku_size):
+    '''Validates given rows and parses them to a sudoku row'''
+    pattern = r"[0-9]+[0-9]*\s*"
+
+    if not re.match(pattern, line):
+        raise ValueError('No valid row')
+
+    row = list(map(int, line.split(' ')))
+
+    # Validates if row only contains spaces and numbers
+    if not len(row) == sudoku_size:
+        raise ValueError('Row doesn`t contain the right amount of numbers')
+
+    # Validates if row contains numbers that are not larger 
+    # then the max allowed number (the sudoku size)
+    if not max(row) <= sudoku_size:
+        raise ValueError('Sudoku contains numbers that are too large')
+
+    # Validates if row contains numbers that are not smaller 
+    # then the min allowed number (0)
+    if not min(row) >= open_position:
+        raise ValueError('Sudoku contains numbers that are too low')
+
+    return row
 
 def print_sudoku(sudoku):
     '''
