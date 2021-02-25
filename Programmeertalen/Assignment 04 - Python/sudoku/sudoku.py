@@ -63,8 +63,8 @@ def print_sudoku(sudoku):
     '''
     Print given sudoku.
     '''
-    for _, row in enumerate(sudoku):
-        print(' '.join(map(str, row)))
+    for row in sudoku:
+        print(*row)
 
     print()
 
