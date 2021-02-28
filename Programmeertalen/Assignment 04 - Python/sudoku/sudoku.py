@@ -1,3 +1,9 @@
+"""This script solves sudoku's by using a search tree.
+
+Author:   René Kok (13671146)
+Study:    Doorstroomminor Software Engineering UvA
+"""
+
 import copy
 import math
 import re
@@ -8,7 +14,7 @@ from collections import namedtuple
 Position = namedtuple('Position', ['row', 'col'])
 Constraint = namedtuple('Constraint', ['row', 'col', 'values'])
 
-open_position = 0
+OPEN_POSITION = 0
 
 
 def sudokuToArray(filename):
@@ -52,7 +58,7 @@ def parse_row(line, sudoku_size):
 
     # Validates if row contains numbers that are not smaller
     # then the min allowed number (0)
-    if not min(row) >= open_position:
+    if not min(row) >= OPEN_POSITION:
         raise ValueError('Sudoku contains numbers that are too low')
 
     return row
@@ -140,7 +146,7 @@ def free_at_pos(sudoku, row, col):
 def open_positions(sudoku):
     """Returns a list of coordinates of every empty spot in a sudoku."""
     return [Position(row, col) for row, cols in enumerate(sudoku)
-            for col, val in enumerate(cols) if val == open_position]
+            for col, val in enumerate(cols) if val == OPEN_POSITION]
 
 
 def valid_row(sudoku, row):
@@ -174,7 +180,7 @@ def consistent(sudoku):
 
 
 def constraints(sudoku):
-    """Returns a list of all possible solutions of all empty spots in a sudoku."""
+    """Returns a list of all possible values of all empty spots in a sudoku."""
     constraints = [Constraint(pos.row, pos.col,
                               free_at_pos(sudoku, pos.row, pos.col))
                    for pos in open_positions(sudoku)]
