@@ -1,7 +1,7 @@
-import sys
-import math
 import copy
+import math
 import re
+import sys
 
 from collections import namedtuple
 
@@ -12,12 +12,11 @@ open_position = 0
 
 
 def sudokuToArray(filename):
-    '''
-    Generates a sudoku matrix from a given sudoku file.
+    """Generates a sudoku matrix from a given sudoku file.
 
     Returns:
         sudoku
-    '''
+    """
     with open(filename) as file:
         sudoku = []
         lines = file.readlines()
@@ -34,7 +33,7 @@ def sudokuToArray(filename):
 
 
 def parse_row(line, sudoku_size):
-    '''Validates given rows and parses them to a sudoku row'''
+    """Validates given rows and parses them to a sudoku row"""
     pattern = r"[0-9]+[0-9]*\s*"
 
     if not re.match(pattern, line):
@@ -44,7 +43,7 @@ def parse_row(line, sudoku_size):
 
     # Validates if row only contains spaces and numbers
     if not len(row) == sudoku_size:
-        raise ValueError('Row doesn`t contain the right amount of numbers')
+        raise ValueError('Row does not contain the right amount of numbers')
 
     # Validates if row contains numbers that are not larger
     # then the max allowed number (the sudoku size)
@@ -60,9 +59,7 @@ def parse_row(line, sudoku_size):
 
 
 def print_sudoku(sudoku):
-    '''
-    Print given sudoku.
-    '''
+    '''Print given sudoku.'''
     for row in sudoku:
         print(*row)
 
@@ -70,17 +67,14 @@ def print_sudoku(sudoku):
 
 
 def extend(sudoku, row, col, value):
-    '''
-    Fills in the given value in a given spot in the sudoku.
-    '''
+    """Fills in the given value in a given spot in the sudoku."""
+
     sudoku[row][col] = value
     return sudoku
 
 
 def sub_grids(sudoku):
-    '''
-    Returns the subgrids of a sudoku.
-    '''
+    """Returns the subgrids of a sudoku."""
     sqrt = int(math.sqrt(len(sudoku)))
     size = [i for i in range(0, len(sudoku[0]))]
 
@@ -88,18 +82,16 @@ def sub_grids(sudoku):
 
 
 def sub_grids_start(sudoku):
-    '''
-    Returns the start coordinate of every subgrid.
-    '''
+    """Returns the start coordinate of every subgrid."""
+
     sqrt = int(math.sqrt(len(sudoku)))
 
     return [i for i in range(0, len(sudoku[0]), sqrt)]
 
 
 def get_grid(sudoku, row, col):
-    '''
-    Returns the values inside a sub grid.
-    '''
+    """Returns the values inside a sub grid."""
+
     grids = sub_grids(sudoku)
 
     grid_row = [i for rows in grids for i in rows if row in rows]
@@ -109,9 +101,7 @@ def get_grid(sudoku, row, col):
 
 
 def free_values(sequence):
-    '''
-    Returns the remaining values of a given sequence.
-    '''
+    """Returns the remaining values of a given sequence."""
     n = [i for i in range(1, len(sequence) + 1)]
 
     sequence_set = set(sequence)
@@ -121,71 +111,56 @@ def free_values(sequence):
 
 
 def free_in_row(sudoku, row):
-    '''
-    Returns the remaining values of a given row.
-    '''
+    """Returns the remaining values of a given row."""
     return free_values(sudoku[row])
 
 
 def free_in_col(sudoku, col):
-    '''
-    Returns the remaining values of a given column.
-    '''
+    """Returns the remaining values of a given column."""
+
     return free_values([row[col] for row in sudoku])
 
 
 def free_in_sub_grid(sudoku, row, col):
-    '''
-    Returns the remaining values of a given sub grid.
-    '''
+    """Returns the remaining values of a given sub grid."""
     return free_values(get_grid(sudoku, row, col))
 
 
 def free_at_pos(sudoku, row, col):
-    '''
-    Returns the possible values of a given position based on
+    """Returns the possible values of a given position based on
     the remaining possible values of a row, column and sub grid.
-    '''
-    _row = free_in_row(sudoku, row)
-    _col = free_in_col(sudoku, col)
-    _grid = free_in_sub_grid(sudoku, row, col)
+    """
+    free_row = free_in_row(sudoku, row)
+    free_col = free_in_col(sudoku, col)
+    free_sub_grid = free_in_sub_grid(sudoku, row, col)
 
-    return list(set(_row) & set(_col) & set(_grid))
+    return list(set(free_row) & set(free_col) & set(free_sub_grid))
 
 
 def open_positions(sudoku):
-    '''
-    Returns a list of coordinates of every empty spot in a sudoku.
-    '''
+    """Returns a list of coordinates of every empty spot in a sudoku."""
     return [Position(row, col) for row, cols in enumerate(sudoku)
             for col, val in enumerate(cols) if val == open_position]
 
 
 def valid_row(sudoku, row):
-    '''
-    Returns if a given row is valid.
-    '''
+    """Returns if a given row is valid."""
     return not free_in_row(sudoku, row)
 
 
 def valid_col(sudoku, col):
-    '''
-    Returns if a given column is valid.
-    '''
+    """Returns if a given column is valid."""
+
     return not free_in_col(sudoku, col)
 
 
 def valid_sub_grid(sudoku, row, col):
-    '''
-    Returns if a given sub grid is valid.
-    '''
+    """Returns if a given sub grid is valid."""
     return not free_in_sub_grid(sudoku, row, col)
 
 
 def consistent(sudoku):
-    '''
-    Returns if a the given sudoku is consistent.
-    '''
+    """Returns if a the given sudoku is consistent."""
     for i in range(0, len(sudoku)):
         if not (valid_row(sudoku, i) or valid_col(sudoku, i)):
             return False
@@ -199,9 +174,7 @@ def consistent(sudoku):
 
 
 def constraints(sudoku):
-    '''
-    Returns a list of all possible solutions of all empty spots in a sudoku.
-    '''
+    """Returns a list of all possible solutions of all empty spots in a sudoku."""
     constraints = [Constraint(pos.row, pos.col,
                               free_at_pos(sudoku, pos.row, pos.col))
                    for pos in open_positions(sudoku)]
@@ -211,13 +184,12 @@ def constraints(sudoku):
 
 
 def solve(sudoku, amount_sols):
-    '''
-    Solves a sudoku using backtracking and a stack.
+    """Solves a sudoku using backtracking and a stack.
 
     Returns:
         solutions: A list of n amount of solutions;
                    An error if the sudoku is unsolvable
-    '''
+    """
     stack = []
     solutions = []
     stack.append(sudoku)
@@ -246,6 +218,20 @@ def solve(sudoku, amount_sols):
         raise ValueError
 
 
+def parse_args():
+    """Parse given arguments.
+
+    Returns:
+        sudoku_file: The path to the given sudoku file
+        solutions_amount: Amount of requested solutions,
+                          returns 1 if argument is not given
+    """
+    sudoku_file = sys.argv[1]
+    solutions_amount = sys.argv[2] if len(sys.argv) > 2 else 1
+
+    return sudoku_file, solutions_amount
+
+
 def main():
     sudoku, amount_sols = parse_args()
 
@@ -256,20 +242,5 @@ def main():
         print_sudoku(sudoku)
 
 
-def parse_args():
-    '''
-    Parse given arguments.
-
-    Returns:
-        sudoku_file: The path to the given sudoku file
-        solutions_amount: Amount of requested solutions,
-                          returns 1 if argument is not given
-    '''
-    sudoku_file = sys.argv[1]
-    solutions_amount = sys.argv[2] if len(sys.argv) > 2 else 1
-
-    return sudoku_file, solutions_amount
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
