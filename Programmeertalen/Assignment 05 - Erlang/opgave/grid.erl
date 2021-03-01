@@ -2,6 +2,7 @@
 -export([show_hlines/2, show_vlines/2, print/1]).
 
 % TODO: The other functions.
+new(Width, Height) -> {Width, Height, []}
 
 % TODO
 show_hlines(Row, Grid) -> "". 
