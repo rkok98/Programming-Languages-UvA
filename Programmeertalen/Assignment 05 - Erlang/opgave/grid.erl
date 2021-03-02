@@ -1,8 +1,25 @@
 -module(grid).
--export([show_hlines/2, show_vlines/2, print/1]).
+-export([new/2, get_wall/3, add_wall/2, has_wall/2, show_hlines/2, show_vlines/2, print/1]).
 
 % TODO: The other functions.
-new(Width, Height) -> {Width, Height, []}
+new(Width, Height) -> {Width, Height, []}.
+
+get_wall(X, Y, Dir) ->
+	case Dir of
+		north -> {{X, Y - 1}, {X, Y}};
+		east  -> {{X, Y}, {X + 1, Y}};
+		south -> {{X, Y}, {X, Y + 1}};
+		west  -> {{X - 1, Y}, {X, Y}};
+		_	  -> no_dir
+	end.
+
+add_wall(Wall, Grid) ->
+	{Width, Height, Walls} = Grid,
+	{Width, Height,[Wall | Walls]}.
+
+has_wall(Wall, Grid) -> 
+	{_, _, Walls} = Grid,
+	lists:member(Wall, Walls).
 
 % TODO
 show_hlines(Row, Grid) -> "". 
