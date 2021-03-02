@@ -17,7 +17,7 @@ add_wall(Wall, Grid) ->
 	{Width, Height, Walls} = Grid,
 	
 	case has_wall(Wall, Grid) of
-		false -> {Width, Height,[Wall | Walls]};
+		false -> {Width, Height, lists:sort([Wall | Walls])};
 		true -> Grid
 	end.
 
@@ -26,9 +26,16 @@ has_wall(Wall, Grid) ->
 	lists:member(Wall, Walls).
 
 % TODO
-show_hlines(Row, Grid) -> "". 
+show_hlines(Row, Grid) -> 
+	{Width, Height, Walls} = Grid,
+	A = [W || {{X, _}, {X, _}} = W <- Walls, integer(X), X == Row],
+
+	
+
+	io:fwrite("~w", [A]).
+
 % TODO
-show_vlines(Row, Grid) -> "".
+show_vlines(Row, Grid) -> "BB".
 
 
 % Prints this grid in a structured format
