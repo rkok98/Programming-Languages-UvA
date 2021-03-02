@@ -7,7 +7,7 @@
 -import(grid, [show_vlines/2, show_hlines/2]).
 
 tests_run() ->
-    halt(case eunit:test(tests_5) of
+    halt(case eunit:test(?MODULE) of
         ok -> 0;
         _ -> 1
     end).
