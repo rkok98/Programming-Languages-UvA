@@ -15,7 +15,11 @@ get_wall(X, Y, Dir) ->
 
 add_wall(Wall, Grid) ->
 	{Width, Height, Walls} = Grid,
-	{Width, Height,[Wall | Walls]}.
+	
+	case has_wall(Wall, Grid) of
+		false -> {Width, Height,[Wall | Walls]};
+		true -> Grid
+	end.
 
 has_wall(Wall, Grid) -> 
 	{_, _, Walls} = Grid,
