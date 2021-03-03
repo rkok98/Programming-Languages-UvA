@@ -1,5 +1,5 @@
 -module(grid).
--export([new/2, get_wall/3, add_wall/2, has_wall/2, show_hlines/2, show_vlines/2, print/1]).
+-export([new/2, get_wall/3, add_wall/2, has_wall/2, show_hlines/2, show_vlines/2, get_cell_walls/2, get_all_walls/2, get_open_spots/1, print/1]).
 
 % TODO: The other functions.
 new(Width, Height) -> {Width, Height, []}.
@@ -57,6 +57,20 @@ show_vlines(Row, Grid) ->
 	{L, _} = lists:split(length(A) - 2, A),
 	L ++ "~n".
 
+get_cell_walls(X,Y) ->
+    [get_wall(X, Y, Dir) || Dir <- [north, east, south, west]].
+
+get_all_walls(Width, Height) ->
+	Walls = lists:merge([ get_cell_walls(X, Y) || X <- lists:seq(0, Width - 1), Y <- lists:seq(0, Height - 1)]),
+	lists:usort(Walls).
+
+get_open_spots(Grid) -> 
+	{Width, Height, Walls} = Grid,
+	Cells = get_all_walls(Width, Height),
+	Cells -- Walls.
+
+
+
 % Prints this grid in a structured format
 % using the show_Xlines functions.
 print(Grid) ->
@@ -75,3 +89,4 @@ print(Grid) ->
 	ok.
 
 % grid:print({5, 5, [{{1,2},{1,3}}, {{0,1},{1,1}}, {{1,1},{2,1}}, {{3,4},{4,4}}]}).
+% grid:get_open_spots({5, 5, [{{1,2},{1,3}}, {{0,1},{1,1}}, {{1,1},{2,1}}, {{3,4},{4,4}}]}).
