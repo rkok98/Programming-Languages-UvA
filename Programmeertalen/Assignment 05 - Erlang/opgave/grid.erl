@@ -28,34 +28,34 @@ has_wall(Wall, Grid) ->
 % TODO
 show_hlines(Row, Grid) -> 
 	{Width, Height, Walls} = Grid,
-	%W = [W || {{_, Y}, {_, Y}} = W <- Walls, is_integer(Y), Y == Row],
+	R = ["+" ++ draw_hline({{X, Row - 1}, {X, Row}}, Grid) || X <- lists:seq(0, Width)],
 
-	R = [draw_hline({{X, Row}, {X + 1, Row}}, Grid) || X <- lists:seq(1, Width)],
-
-	"+" ++ lists:flatten(R) ++ "~n".
+	string:strip(lists:flatten(R), right) ++ "~n".
 
 
 draw_hline(Wall, Grid) ->
 	case has_wall(Wall, Grid) of
 		true ->
-			"--+";
+			"--";
 		false ->
-			"  +"
+			"  "
 	end.
 
 draw_vline(Wall, Grid) ->
 	case has_wall(Wall, Grid) of
 		true ->
-			"  |";
+			"|";
 		false ->
-			"   "
+			" "
 	end.
 
-% TODO
 show_vlines(Row, Grid) ->
-	{Width, Height, Walls} = Grid,
-	R = [draw_vline({{X, Row}, {X, Row + 1}}, Grid) || X <- lists:seq(1, Width)],
-	" " ++ lists:flatten(R) ++ "~n".
+	{Width, _, _} = Grid,
+	R = [draw_vline({{X - 1, Row}, {X, Row}}, Grid) ++ "  " || X <- lists:seq(0, Width)],
+	A = lists:flatten(R),
+
+	{L, _} = lists:split(length(A) - 2, A),
+	L ++ "~n".
 
 % Prints this grid in a structured format
 % using the show_Xlines functions.
