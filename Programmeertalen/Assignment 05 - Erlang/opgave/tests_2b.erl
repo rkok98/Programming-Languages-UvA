@@ -13,21 +13,6 @@ tests_run() ->
         _ -> 1
     end).
 
-get_open_spots_test_() ->
-    Walls = [{{-1,0},{0,0}},
-         {{0,-1},{0,0}},
-         {{0,0},{0,1}},
-         {{0,0},{1,0}},
-         {{1,-1},{1,0}},
-         {{1,0},{1,1}},
-         {{1,0},{2,0}}
-        ],
-    [H|T] = Walls,
-
-    [?_assertEqual(H, client:choose_random_wall({2, 1, T})),
-     ?_assertEqual([], client:choose_random_wall({2, 1, [H|T]}))
-    ].
-
 setup() ->
     Client = client:new(),
     {ok, MockServer} = mock_game_server:start_link({1, 1, []}),
