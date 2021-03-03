@@ -27,7 +27,7 @@ has_wall(Wall, Grid) ->
 
 % TODO
 show_hlines(Row, Grid) -> 
-	{Width, Height, Walls} = Grid,
+	{Width, _, _} = Grid,
 	R = ["+" ++ draw_hline({{X, Row - 1}, {X, Row}}, Grid) || X <- lists:seq(0, Width)],
 
 	string:strip(lists:flatten(R), right) ++ "~n".
