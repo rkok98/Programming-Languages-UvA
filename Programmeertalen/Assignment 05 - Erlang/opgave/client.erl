@@ -8,7 +8,7 @@ move() ->
     receive
         finished ->
             io:format("~p: I am done~n", [self()]);
-        {move,ServerPid,Grid} ->
+        {move, ServerPid, Grid} ->
             OpenWalls = grid:get_open_spots(Grid),
             [Head | _] = OpenWalls,
             game_server:move(ServerPid, Head),

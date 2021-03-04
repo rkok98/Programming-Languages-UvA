@@ -16,9 +16,29 @@ move(Pid, Wall) ->
 % TODO: You need to inform the first player to move.
 init({Width, Height, Players}) ->
     Grid = grid:new(Width, Height),
+    hd(Players) ! {move, self(), Grid},
     {ok, {Grid, Players}}.
 
 % TODO: add handle_call for move.
+handle_call({move, Wall}, _From, {Grid, Players}) ->
+    Score = 1,
+
+    case length(grid:get_open_spots(Grid)) > 0 of
+        true -> 
+            Grid2 = grid:add_wall(Wall, Grid),
+            {reply, {ok, Score}, {Grid2, Players}};
+        false -> 
+            hd(Players) ! finished
+    end;
+
+    % {reply, {ok, Score}, State};
+
+    % 1. Muur aanmaken
+    % 2. Zijn er nog plekken over?
+    %   - Ja : OK
+    
+    %   - Nee: Finished
+    
 
 % Used for testing.
 handle_call(state, _From, State) ->

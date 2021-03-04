@@ -35,7 +35,8 @@ start_test() ->
     % No moves possible, so the client should receive finished.
     receive
         finished -> ok
-    end.
+    end,
+    ?debugHere.
 
 
 score_test() ->
