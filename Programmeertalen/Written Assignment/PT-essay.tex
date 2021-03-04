@@ -66,39 +66,47 @@ Smart Contracts \cite{what-are-smart-contracts} are key to simplify complex bloc
 Smart contracts can streamline this complex process that involves several intermediaries because of a 
 lack of trust among participants in the transaction.
 For this assignment I design a programming language that, in my view, matches the needs of smart contracts.
-%\lipsum[1]
 
 \subsection{Relevant characteristics of application domain}
-%\lipsum[2]
 
 \subsection{Use case description}
-%\lipsum[3]
 
 %-------------------------------------------------------------------------------
 %	METHODE
 %-------------------------------------------------------------------------------
 
 \section{Analysis}
-%\lipsum[3]
 \subsection{The type system}
-Because smart contracts are designed for transactions, a smart contract needs to be accurate and secure. No hidden suprises at runtime.
+\par Because smart contracts are designed for transactions, a smart contract needs to be accurate and secure. 
+No hidden surprises at runtime.
 That is why I chose to have the language static typed.
 Static type checking has the advantages that the smart contract is guaranteed to meet a number of type safety features for all possible inputs.
 In addition, a static typing language is better optimized as opposed to dynamically typed language, because the compiler knows if a program is correctly typed.
 This results in a smaller and faster binary because no dynamic safety checks need to be performed.
-\\\\
-While type inference does not affect runtime of a program, because types are inference occurs at compile-time,
+
+\par While type inference does not affect runtime of a program, because types are inference occurs at compile-time,
 an explicit type inference seems to be the best choice for smart contracts because  
 explicit type annotations serve as documentation for the code.
-\\\\
-I also made the choice for nominative typing. 
-While structural typing is more flexible, noimnative typing is less prone to errors.
+
+\par I also made the choice for nominative typing. 
+While structural typing is more flexible, nominative typing is less prone to errors.
 It's common for objects to be structural equivalent, but semanticily different.
 polymorphism can be implemented through a shared interface such as in the Java programming language.
 
 \subsection{State management}
+\par 
+
 \subsection{Compilation/interpretation strategy}
+\par I've chosen for an ahead of time (AOT) compilation. In contrast to the JIT compiler, 
+the original source code does not have to be supplied, but a compiled smart contract is uploaded.
+Normally, a compiled version must be written for each type of operating system. 
+This is not the case for our smart contracts, as the code only runs on a specialized virtual machine 
+designed for our blockchain. AOT compilers can also perform more complex and advanced code optimizations,
+which in most cases of JIT compiling is considered to be too costly.
+With AOT compilation, the programs runs faster because the program is already compiled before running.
+
 \subsection{Evaluation strategy}
+I made the choice for an eager evaluation strategy.
 % TODO: EAGER
 
 \subsection{Parameter evaluation strategy (call by value/reference)}
