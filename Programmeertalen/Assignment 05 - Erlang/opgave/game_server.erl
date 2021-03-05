@@ -25,29 +25,41 @@ init({Width, Height, Players}) ->
     State = {Grid, Players},
     {ok, State, {continue, move}}.
 
-handle_continue(move, {Grid, Players}) ->
-    %io:fwrite("AAAA"),
-    io:fwrite("~w",[length(grid:get_open_spots(Grid))]),
-    case length(grid:get_open_spots(Grid)) == 0 of
+handle_continue(move, State) ->
+    {Grid, Players} = State,
+    case grid:filled(Grid) of
         true ->
             finished(Players),
-            {noreply, {Grid, Players}};
+            {stop, normal, State};
         false ->
-            decide_next_player(Players) ! {move, self(), Grid},
-            {noreply, {Grid, Players}}
+            hd(Players) ! {move, self(), Grid},
+            {noreply, State}
     end.
 
-calculate_score() -> 1.
+calculate_score(Wall, Grid) -> 
+    {Cell1, Cell2} = Wall,
+    cell_score(Cell1, Grid) + cell_score(Cell2, Grid).
 
-decide_next_player(Players) -> hd(Players).
+cell_score(Cell, Grid) ->
+    case grid:is_closed(Cell, Grid) of
+        true ->
+            1;
+        false ->
+            0
+    end.
+
+decide_next_player(Players) -> 
+    lists:reverse(Players).
 
 % TODO: add handle_call for move.
 handle_call({move, Wall}, _From, State) ->
     {Grid, Players} = State,
-    Score = calculate_score(),
+    Score = 1, % calculate_score(Wall, Grid),
 
     NewGrid = grid:add_wall(Wall, Grid),
-    NewState = {NewGrid, Players},
+    NewPlayers = decide_next_player(Players),
+
+    NewState = {NewGrid, NewPlayers},
     
     {reply, {ok, Score}, NewState, {continue, move}};
 

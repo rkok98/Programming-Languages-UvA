@@ -1,5 +1,5 @@
 -module(grid).
--export([new/2, get_wall/3, add_wall/2, has_wall/2, show_hlines/2, show_vlines/2, get_cell_walls/2, get_all_walls/2, get_open_spots/1, choose_random_wall/1, print/1]).
+-export([new/2, get_wall/3, add_wall/2, has_wall/2, show_hlines/2, show_vlines/2, get_cell_walls/2, get_all_walls/2, get_open_spots/1, choose_random_wall/1, is_closed/2, filled/1, print/1]).
 
 % TODO: The other functions.
 new(Width, Height) -> {Width, Height, []}.
@@ -72,6 +72,16 @@ get_open_spots(Grid) ->
 choose_random_wall(Grid) ->
 	Open = get_open_spots(Grid),
 	lists:nth(rand:uniform(length(Open)), Open).
+
+is_closed(Cell, Grid) ->
+	{X, Y} = Cell,
+	{_, _, Walls} = Grid,
+	FreeWalls = get_cell_walls(X,Y) -- Walls,
+	FreeWalls == [].
+
+filled(Grid) ->
+	length(get_open_spots(Grid)) == 0.
+
 
 % Prints this grid in a structured format
 % using the show_Xlines functions.
