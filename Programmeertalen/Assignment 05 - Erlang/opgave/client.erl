@@ -16,4 +16,3 @@ move() ->
 
 new() ->
     spawn(client, move, []).
-% Open spots <- Head <- Game_server_move(Head, PID)
