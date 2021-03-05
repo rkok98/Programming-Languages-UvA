@@ -3,7 +3,7 @@
 -behaviour(gen_server).
 
 -export([start_link/1, handle_call/3, handle_cast/2]).
--export([init/1, move/2]).
+-export([init/1, move/2, handle_continue/2]).
 
 start_link({W, H, Players}) ->
     gen_server:start_link(game_server, {W, H, Players}, []).
@@ -12,24 +12,58 @@ start_link({W, H, Players}) ->
 move(Pid, Wall) ->
     gen_server:call(Pid, {move, Wall}).
 
+finished([]) ->
+    ok;
+finished(Players) -> 
+    [H | T] = Players,
+    H ! finished,
+    finished(T).
 
 % TODO: You need to inform the first player to move.
 init({Width, Height, Players}) ->
     Grid = grid:new(Width, Height),
-    hd(Players) ! {move, self(), Grid},
-    {ok, {Grid, Players}}.
+    State = {Grid, Players},
+    {ok, State, {continue, move}}.
+
+handle_continue(move, {Grid, Players}) ->
+    %io:fwrite("AAAA"),
+    io:fwrite("~w",[length(grid:get_open_spots(Grid))]),
+    case length(grid:get_open_spots(Grid)) == 0 of
+        true ->
+            finished(Players),
+            {noreply, {Grid, Players}};
+        false ->
+            decide_next_player(Players) ! {move, self(), Grid},
+            {noreply, {Grid, Players}}
+    end.
+
+calculate_score() -> 1.
+
+decide_next_player(Players) -> hd(Players).
 
 % TODO: add handle_call for move.
-handle_call({move, Wall}, _From, {Grid, Players}) ->
-    Score = 1,
+handle_call({move, Wall}, _From, State) ->
+    {Grid, Players} = State,
+    Score = calculate_score(),
 
-    case length(grid:get_open_spots(Grid)) > 0 of
-        true -> 
-            Grid2 = grid:add_wall(Wall, Grid),
-            {reply, {ok, Score}, {Grid2, Players}};
-        false -> 
-            hd(Players) ! finished
-    end;
+    NewGrid = grid:add_wall(Wall, Grid),
+    NewState = {NewGrid, Players},
+    
+    {reply, {ok, Score}, NewState, {continue, move}};
+
+    % Process move .
+    % Score berekenen .
+    % Score opslaan .
+    % Volgende speler bepalen .
+    % Continue !!
+    % ---
+    % Continue
+    %   Nieuwe ronde?
+    %       JA: Stuur move signaal
+    %       NEE: Game finished
+
+    % Bepalen wie is er aan de beurt?
+    % 
 
     % {reply, {ok, Score}, State};
 
@@ -38,7 +72,6 @@ handle_call({move, Wall}, _From, {Grid, Players}) ->
     %   - Ja : OK
     
     %   - Nee: Finished
-    
 
 % Used for testing.
 handle_call(state, _From, State) ->
