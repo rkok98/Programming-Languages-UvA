@@ -80,7 +80,7 @@ is_closed(Cell, Grid) ->
 	FreeWalls == [].
 
 filled(Grid) ->
-	length(get_open_spots(Grid)) == 0.
+	get_open_spots(Grid) == [].
 
 
 % Prints this grid in a structured format

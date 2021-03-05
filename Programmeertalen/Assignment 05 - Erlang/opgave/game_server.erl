@@ -54,36 +54,15 @@ decide_next_player(Players) ->
 % TODO: add handle_call for move.
 handle_call({move, Wall}, _From, State) ->
     {Grid, Players} = State,
-    Score = 1, % calculate_score(Wall, Grid),
-
+    
     NewGrid = grid:add_wall(Wall, Grid),
     NewPlayers = decide_next_player(Players),
 
     NewState = {NewGrid, NewPlayers},
     
+    Score = calculate_score(Wall, NewGrid),
+
     {reply, {ok, Score}, NewState, {continue, move}};
-
-    % Process move .
-    % Score berekenen .
-    % Score opslaan .
-    % Volgende speler bepalen .
-    % Continue !!
-    % ---
-    % Continue
-    %   Nieuwe ronde?
-    %       JA: Stuur move signaal
-    %       NEE: Game finished
-
-    % Bepalen wie is er aan de beurt?
-    % 
-
-    % {reply, {ok, Score}, State};
-
-    % 1. Muur aanmaken
-    % 2. Zijn er nog plekken over?
-    %   - Ja : OK
-    
-    %   - Nee: Finished
 
 % Used for testing.
 handle_call(state, _From, State) ->
