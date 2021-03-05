@@ -1,9 +1,9 @@
 -module(grid).
 -export([new/2, get_wall/3, add_wall/2, has_wall/2, show_hlines/2, show_vlines/2, get_cell_walls/2, get_all_walls/2, get_open_spots/1, choose_random_wall/1, is_closed/2, filled/1, print/1]).
 
-% TODO: The other functions.
 new(Width, Height) -> {Width, Height, []}.
 
+% Returns the wall of a cell based on the given direction.
 get_wall(X, Y, Dir) ->
 	case Dir of
 		north -> {{X, Y - 1}, {X, Y}};
@@ -13,6 +13,7 @@ get_wall(X, Y, Dir) ->
 		_	  -> no_dir
 	end.
 
+% Adds a wall to the given grid.
 add_wall(Wall, Grid) ->
 	{Width, Height, Walls} = Grid,
 	
@@ -21,67 +22,41 @@ add_wall(Wall, Grid) ->
 		true -> Grid
 	end.
 
+% Checks if a grid has the given wall.
 has_wall(Wall, Grid) -> 
 	{_, _, Walls} = Grid,
 	lists:member(Wall, Walls).
 
-% TODO
-show_hlines(Row, Grid) -> 
-	{Width, _, _} = Grid,
-	R = ["+" ++ draw_hline({{X, Row - 1}, {X, Row}}, Grid) || X <- lists:seq(0, Width)],
-
-	string:strip(lists:flatten(R), right) ++ "~n".
-
-
-draw_hline(Wall, Grid) ->
-	case has_wall(Wall, Grid) of
-		true ->
-			"--";
-		false ->
-			"  "
-	end.
-
-draw_vline(Wall, Grid) ->
-	case has_wall(Wall, Grid) of
-		true ->
-			"|";
-		false ->
-			" "
-	end.
-
-show_vlines(Row, Grid) ->
-	{Width, _, _} = Grid,
-	R = [draw_vline({{X - 1, Row}, {X, Row}}, Grid) ++ "  " || X <- lists:seq(0, Width)],
-	A = lists:flatten(R),
-
-	{L, _} = lists:split(length(A) - 2, A),
-	L ++ "~n".
-
+% Returns the walls of a given cell.
 get_cell_walls(X,Y) ->
     [get_wall(X, Y, Dir) || Dir <- [north, east, south, west]].
 
+% Returns a list of walls based on given width and height.
 get_all_walls(Width, Height) ->
 	Walls = lists:merge([ get_cell_walls(X, Y) || X <- lists:seq(0, Width - 1), Y <- lists:seq(0, Height - 1)]),
 	lists:usort(Walls).
 
+% Returns a list of open positions based on given grid.
 get_open_spots(Grid) -> 
 	{Width, Height, Walls} = Grid,
 	Cells = get_all_walls(Width, Height),
 	Cells -- Walls.
 
+% Chooses a open position to place a wall.
 choose_random_wall(Grid) ->
 	Open = get_open_spots(Grid),
 	lists:nth(rand:uniform(length(Open)), Open).
 
+% Validates if an cell is closed (all fenced walls are drawn).
 is_closed(Cell, Grid) ->
 	{X, Y} = Cell,
 	{_, _, Walls} = Grid,
 	FreeWalls = get_cell_walls(X,Y) -- Walls,
 	FreeWalls == [].
 
+% Checks if an grid is filled.
 filled(Grid) ->
 	get_open_spots(Grid) == [].
-
 
 % Prints this grid in a structured format
 % using the show_Xlines functions.
@@ -100,6 +75,36 @@ print(Grid) ->
 	io:fwrite("~n"),
 	ok.
 
-% grid:print({5, 5, [{{1,2},{1,3}}, {{0,1},{1,1}}, {{1,1},{2,1}}, {{3,4},{4,4}}]}).
-% grid:get_open_spots({5, 5, [{{1,2},{1,3}}, {{0,1},{1,1}}, {{1,1},{2,1}}, {{3,4},{4,4}}]}).
-% grid:choose_random_wall({5, 5, [{{1,2},{1,3}}, {{0,1},{1,1}}, {{1,1},{2,1}}, {{3,4},{4,4}}]}).
+% Returns the horizontal walls line of a grid.
+show_hlines(Row, Grid) -> 
+	{Width, _, _} = Grid,
+	R = ["+" ++ draw_hline({{X, Row - 1}, {X, Row}}, Grid) || X <- lists:seq(0, Width)],
+
+	string:strip(lists:flatten(R), right) ++ "~n".
+
+% Returns the right visualization of a horizontal wall.
+draw_hline(Wall, Grid) ->
+	case has_wall(Wall, Grid) of
+		true ->
+			"--";
+		false ->
+			"  "
+	end.
+
+% Returns the vertical walls line of a grid.
+show_vlines(Row, Grid) ->
+	{Width, _, _} = Grid,
+	R = [draw_vline({{X - 1, Row}, {X, Row}}, Grid) ++ "  " || X <- lists:seq(0, Width)],
+	A = lists:flatten(R),
+
+	{L, _} = lists:split(length(A) - 2, A),
+	L ++ "~n".
+
+% Returns the right visualization of a vertical wall.
+draw_vline(Wall, Grid) ->
+	case has_wall(Wall, Grid) of
+		true ->
+			"|";
+		false ->
+			" "
+	end.

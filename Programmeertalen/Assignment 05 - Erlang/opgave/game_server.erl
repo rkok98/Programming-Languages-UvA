@@ -12,12 +12,31 @@ start_link({W, H, Players}) ->
 move(Pid, Wall) ->
     gen_server:call(Pid, {move, Wall}).
 
+% Informs the players that the game has finished.
 finished([]) ->
     ok;
 finished(Players) -> 
     [H | T] = Players,
     H ! finished,
     finished(T).
+
+% Calculates the score of an added wall.
+calculate_score(Wall, Grid) -> 
+    {Cell1, Cell2} = Wall,
+    cell_score(Cell1, Grid) + cell_score(Cell2, Grid).
+
+% Calculates the score of a cell.
+cell_score(Cell, Grid) ->
+    case grid:is_closed(Cell, Grid) of
+        true ->
+            1;
+        false ->
+            0
+    end.
+
+% Decides who is the next player
+decide_next_player(Players) -> 
+    lists:reverse(Players).
 
 % TODO: You need to inform the first player to move.
 init({Width, Height, Players}) ->
@@ -36,22 +55,9 @@ handle_continue(move, State) ->
             {noreply, State}
     end.
 
-calculate_score(Wall, Grid) -> 
-    {Cell1, Cell2} = Wall,
-    cell_score(Cell1, Grid) + cell_score(Cell2, Grid).
-
-cell_score(Cell, Grid) ->
-    case grid:is_closed(Cell, Grid) of
-        true ->
-            1;
-        false ->
-            0
-    end.
-
-decide_next_player(Players) -> 
-    lists:reverse(Players).
-
-% TODO: add handle_call for move.
+% Handle move call
+% Adds the new wall to the state and decides the next player.
+% It also calculates the score of the move.
 handle_call({move, Wall}, _From, State) ->
     {Grid, Players} = State,
     
@@ -63,7 +69,6 @@ handle_call({move, Wall}, _From, State) ->
     Score = calculate_score(Wall, NewGrid),
 
     {reply, {ok, Score}, NewState, {continue, move}};
-
 % Used for testing.
 handle_call(state, _From, State) ->
     {reply, {ok, State}, State};
