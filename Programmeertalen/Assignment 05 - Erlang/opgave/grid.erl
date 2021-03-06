@@ -4,14 +4,14 @@
 new(Width, Height) -> {Width, Height, []}.
 
 % Returns the wall of a cell based on the given direction.
-get_wall(X, Y, Dir) ->
-	case Dir of
-		north -> {{X, Y - 1}, {X, Y}};
-		east  -> {{X, Y}, {X + 1, Y}};
-		south -> {{X, Y}, {X, Y + 1}};
-		west  -> {{X - 1, Y}, {X, Y}};
-		_	  -> no_dir
-	end.
+get_wall(X, Y, north) ->
+	{{X, Y - 1}, {X, Y}};
+get_wall(X, Y, east) ->
+	{{X, Y}, {X + 1, Y}};
+get_wall(X, Y, south) ->
+	{{X, Y}, {X, Y + 1}};
+get_wall(X, Y, west) ->
+	{{X - 1, Y}, {X, Y}}.
 
 % Adds a wall to the given grid.
 add_wall(Wall, Grid) ->
