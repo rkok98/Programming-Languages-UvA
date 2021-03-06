@@ -1,17 +1,25 @@
--module(grid).
--export([new/2, get_wall/3, add_wall/2, has_wall/2, show_hlines/2, show_vlines/2, get_cell_walls/2, get_all_walls/2, get_open_spots/1, choose_random_wall/1, is_closed/2, filled/1, print/1]).
+% Author	René Kok <13671146>
+% Study 	Doorstroomminor Software Engineering UvA
+%
+% Implements a game of 'dots and boxes'.
 
+-module(grid).
+-export([new/2, get_wall/3, add_wall/2, has_wall/2, show_hlines/2, show_vlines/2, 
+	     get_cell_walls/2, get_all_walls/2, get_open_spots/1, choose_random_wall/1, 
+		 is_closed/2, filled/1, print/1]).
+
+% Initialize a new grid.
 new(Width, Height) -> {Width, Height, []}.
 
 % Returns the wall of a cell based on the given direction.
-get_wall(X, Y, Dir) ->
-	case Dir of
-		north -> {{X, Y - 1}, {X, Y}};
-		east  -> {{X, Y}, {X + 1, Y}};
-		south -> {{X, Y}, {X, Y + 1}};
-		west  -> {{X - 1, Y}, {X, Y}};
-		_	  -> no_dir
-	end.
+get_wall(X, Y, north) ->
+	{{X, Y - 1}, {X, Y}};
+get_wall(X, Y, east) ->
+	{{X, Y}, {X + 1, Y}};
+get_wall(X, Y, south) ->
+	{{X, Y}, {X, Y + 1}};
+get_wall(X, Y, west) ->
+	{{X - 1, Y}, {X, Y}}.
 
 % Adds a wall to the given grid.
 add_wall(Wall, Grid) ->
@@ -45,7 +53,12 @@ get_open_spots(Grid) ->
 % Chooses a open position to place a wall.
 choose_random_wall(Grid) ->
 	Open = get_open_spots(Grid),
-	lists:nth(rand:uniform(length(Open)), Open).
+	case Open /= [] of
+		true ->
+			lists:nth(rand:uniform(length(Open)), Open);
+		false ->
+			[]
+	end.
 
 % Validates if an cell is closed (all fenced walls are drawn).
 is_closed(Cell, Grid) ->

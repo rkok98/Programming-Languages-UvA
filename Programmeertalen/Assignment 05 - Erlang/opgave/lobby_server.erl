@@ -1,3 +1,8 @@
+% Author	René Kok <13671146>
+% Study 	Doorstroomminor Software Engineering UvA
+%
+% Implements the lobby server for 'dots and boxes'.
+
 -module(lobby_server).
 
 -behaviour(gen_server).
