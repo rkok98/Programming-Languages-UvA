@@ -45,7 +45,13 @@ get_open_spots(Grid) ->
 % Chooses a open position to place a wall.
 choose_random_wall(Grid) ->
 	Open = get_open_spots(Grid),
-	lists:nth(rand:uniform(length(Open)), Open).
+	case Open /= [] of
+		true ->
+			lists:nth(rand:uniform(length(Open)), Open);
+		false ->
+			no_open_spots
+	end.
+		
 
 % Validates if an cell is closed (all fenced walls are drawn).
 is_closed(Cell, Grid) ->
