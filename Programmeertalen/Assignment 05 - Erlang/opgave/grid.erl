@@ -49,7 +49,7 @@ choose_random_wall(Grid) ->
 		true ->
 			lists:nth(rand:uniform(length(Open)), Open);
 		false ->
-			no_open_spots
+			[]
 	end.
 		
 
