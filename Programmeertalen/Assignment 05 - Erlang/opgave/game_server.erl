@@ -1,3 +1,8 @@
+% Author	René Kok <13671146>
+% Study 	Doorstroomminor Software Engineering UvA
+%
+% Implements the game server for 'dots and boxes'.
+
 -module(game_server).
 
 -behaviour(gen_server).
@@ -9,10 +14,11 @@
 start_link({W, H, Players}) ->
     gen_server:start_link(game_server, {W, H, Players}, []).
 
+% @doc
 % Abstraction to make a move.
 move(Pid, Wall) -> gen_server:call(Pid, {move, Wall}).
 
-% Informs the players that the game has finished.
+%% @doc Informs the players that the game has finished.
 finished([]) -> ok;
 finished(Players) ->
     [H | T] = Players,

@@ -1,6 +1,14 @@
--module(grid).
--export([new/2, get_wall/3, add_wall/2, has_wall/2, show_hlines/2, show_vlines/2, get_cell_walls/2, get_all_walls/2, get_open_spots/1, choose_random_wall/1, is_closed/2, filled/1, print/1]).
+% Author	René Kok <13671146>
+% Study 	Doorstroomminor Software Engineering UvA
+%
+% Implements a game of 'dots and boxes'.
 
+-module(grid).
+-export([new/2, get_wall/3, add_wall/2, has_wall/2, show_hlines/2, show_vlines/2, 
+	     get_cell_walls/2, get_all_walls/2, get_open_spots/1, choose_random_wall/1, 
+		 is_closed/2, filled/1, print/1]).
+
+% Initialize a new grid.
 new(Width, Height) -> {Width, Height, []}.
 
 % Returns the wall of a cell based on the given direction.
