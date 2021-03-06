@@ -14,7 +14,6 @@
 start_link({W, H, Players}) ->
     gen_server:start_link(game_server, {W, H, Players}, []).
 
-% @doc
 % Abstraction to make a move.
 move(Pid, Wall) -> gen_server:call(Pid, {move, Wall}).
 

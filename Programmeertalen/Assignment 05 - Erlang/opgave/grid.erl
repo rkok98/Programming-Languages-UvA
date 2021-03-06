@@ -59,7 +59,6 @@ choose_random_wall(Grid) ->
 		false ->
 			[]
 	end.
-		
 
 % Validates if an cell is closed (all fenced walls are drawn).
 is_closed(Cell, Grid) ->
