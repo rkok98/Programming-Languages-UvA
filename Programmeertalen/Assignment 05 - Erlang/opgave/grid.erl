@@ -26,7 +26,7 @@ add_wall(Wall, Grid) ->
 	{Width, Height, Walls} = Grid,
 	
 	case has_wall(Wall, Grid) of
-		false -> {Width, Height, lists:sort([Wall | Walls])};
+		false -> {Width, Height, [Wall | Walls]};
 		true -> Grid
 	end.
 
