@@ -15,6 +15,8 @@
 \usepackage[style=numeric-comp]{biblatex}
 \addbibresource{PT-essay.bib}
 
+\usepackage{listings}
+
 %-------------------------------------------------------------------------------
 %	GEGEVENS VOOR IN DE TITEL
 %-------------------------------------------------------------------------------
@@ -127,8 +129,8 @@ I want my programming language to support higher-order functions.
 A good use-case for higher-order functions is validating an object.
 The basic idea is a function that takes an object as an argument and then any number of 
 functions that must evaluate to true for the object to be considered valid.
-
-
+See "Appendix A: Higher-order functions example" For a short example of applying 
+Higher order functions to validate an object.
 
 \subsection{Anonymous functions}
 
@@ -147,8 +149,9 @@ functions that must evaluate to true for the object to be considered valid.
 %-------------------------------------------------------------------------------
 %	BIJLAGEN EN EINDE
 %-------------------------------------------------------------------------------
-
-%\section{Bijlage A}
+\newpage
+\section{Appendix A: Higher-order functions example}
+\lstinputlisting[basicstyle=\small, language=C]{resources/higher_order_example.c}
 %\section{Bijlage B}
 %\section{Bijlage C}
 \end{document}
