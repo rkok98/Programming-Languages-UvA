@@ -35,7 +35,7 @@
 \docent{dr. Ana Oprescu}
 \course{Programmeertalen}
 % Te vinden op onder andere Datanose.
-\courseid{}
+\courseid{5062PROG6Y}
 
 % Dit is de datum die op het document komt te staan. Standaard is dat vandaag.
 \date{\today}
@@ -116,7 +116,20 @@ I have made this choice so that the scope of a variable is clear.
 So the chance of unwanted side effects is reduced by modifying a copy of a value as opposed to call via reference.
 
 \subsection{Communication semantics (synchronous/asynchronous)}
+As far as I know, there is no language that is completely asynchronous. 
+I want my programming language to be synchronous, but it needs to support asynchronous communication semantics.
+
+For example, information can be retrieved from multiple sources at the same time by means of asynchronous requests, 
+which means that the processing time of a smart contract is shorter than when this information is retrieved synchronously.
+
 \subsection{Higher-order functions}
+I want my programming language to support higher-order functions.
+A good use-case for higher-order functions is validating an object.
+The basic idea is a function that takes an object as an argument and then any number of 
+functions that must evaluate to true for the object to be considered valid.
+
+
+
 \subsection{Anonymous functions}
 
 \section{Discussion}
