@@ -106,10 +106,15 @@ which in most cases of JIT compiling is considered to be too costly.
 With AOT compilation, the programs runs faster because the program is already compiled before running.
 
 \subsection{Evaluation strategy}
-I made the choice for an eager evaluation strategy.
-% TODO: EAGER
+I made the choice for an eager evaluation strategy to avoid unexpected behavior.
+In addition, lazy evaluation is difficult to combine with imperative functions such as 
+input/output, because the order of operations becomes indeterminate.
 
-\subsection{Parameter evaluation strategy (call by value/reference)}
+\subsection{Parameter evaluation strategy}
+I choose for call by value as parameter evaluation strategy. 
+I have made this choice so that the scope of a variable is clear. 
+So the chance of unwanted side effects is reduced by modifying a copy of a value as opposed to call via reference.
+
 \subsection{Communication semantics (synchronous/asynchronous)}
 \subsection{Higher-order functions}
 \subsection{Anonymous functions}
