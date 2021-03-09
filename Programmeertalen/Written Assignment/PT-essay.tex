@@ -79,8 +79,15 @@ communication semantics (synchronous/asynchronous),
 higher-order functions and anonymous functions.
 
 \subsection{Relevant characteristics of application domain}
+Smart contracts are automated contracts with specific instructions programmed. 
+They help people exchange anything of value in a transparent way while avoiding intermediaries.
+
+Smart contracts are run in a virtual machine because it needs to be deterministic, terminable and isolated.
+A program can give different outputs on different types of machines.
+For a smart contract you want the output to always yield the same results.
 
 \subsection{Use case description}
+
 
 %-------------------------------------------------------------------------------
 %	METHODE
@@ -101,7 +108,7 @@ explicit type annotations serve as documentation for the code.
 
 \par I also made the choice for nominative typing. 
 While structural typing is more flexible, nominative typing is less prone to errors.
-It's common for objects to be structural equivalent, but semanticily different.
+It's common for objects to be structural equivalent, but semantically different.
 polymorphism can be implemented through a shared interface such as in the Java programming language.
 
 \subsection{State management}
@@ -148,6 +155,8 @@ Anonymous functions are harder to debug and anonymous functions are not reusable
 Because anonymous functions are an addition to the language and not a trade-off, 
 I have made the choice to offer support for anonymous functions. 
 So programmers are free to make use of anonymous functions.
+
+In addition, anonymous functions are often used in combination with higher-order functions.
 
 \section{Discussion}
 %\lipsum[5]
