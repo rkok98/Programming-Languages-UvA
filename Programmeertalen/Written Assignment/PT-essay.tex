@@ -67,7 +67,16 @@
 Smart Contracts \cite{what-are-smart-contracts} are key to simplify complex blockchain transactions.
 Smart contracts can streamline this complex process that involves several intermediaries because of a 
 lack of trust among participants in the transaction.
-For this assignment I design a programming language that, in my view, matches the needs of smart contracts.
+
+The ultimate goal of this essay is to design a programming language that best fits the use cases of smart contracts.
+The language is designed on the basis of the design choices: 
+the type system,
+state management,
+compilation/interpretation strategy,
+evaluation strategy (lazy/eager),
+parameter evaluation strategy (call by value/reference),
+communication semantics (synchronous/asynchronous),
+higher-order functions and anonymous functions.
 
 \subsection{Relevant characteristics of application domain}
 
@@ -101,7 +110,7 @@ polymorphism can be implemented through a shared interface such as in the Java p
 \subsection{Compilation/interpretation strategy}
 \par I've chosen for an ahead of time (AOT) compilation. In contrast to the JIT compiler, 
 the original source code does not have to be supplied, but a compiled smart contract is uploaded.
-Normally, a compiled version must be written for each type of operating system. 
+Normally, a compiled version must be written for each type of system. 
 This is not the case for our smart contracts, as the code only runs on a specialized virtual machine 
 designed for our blockchain. AOT compilers can also perform more complex and advanced code optimizations,
 which in most cases of JIT compiling is considered to be too costly.
