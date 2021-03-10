@@ -49,11 +49,10 @@ func solve(maze Maze) (route []Position) {
 
 	// Initialize a channel for communication with goroutines
 	// No functional dependency on the size of a buffer is allowed
-	routes chan []Position := make(chan []Position)
-	finalroute chan []Position := make(chan []Position)
-	allRoutines chan int := make(chan int)
+	var routes chan []Position = make(chan []Position)
+	var finalroute chan []Position = make(chan []Position)
+	var allRoutines chan int = make(chan int)
 
-	route []Position := make([]Position, 0)
 	route = append(route, Position{Row: 0, Col: 0})
 
 	amountOfRows := len(maze)
@@ -64,10 +63,16 @@ func solve(maze Maze) (route []Position) {
 	 *       would be considered inefficient. However, achieving  efficient
 	 *       concurrency is not the point of this exercise.
 	 */
-	explore := func(position Position, path []Position) {
-		if len(path) != 1 {
+	explore := func(route []Position) {
+		var previous Position
+
+		if len(route) == 1 {
+			previous = Position{Row: -2, Col: -2}
+		} else {
 			previous = route[len(route)-2]
 		}
+
+		position := route[len(route)-1]
 
 		openPositions := openPositions(position, previous, maze)
 
@@ -80,7 +85,7 @@ func solve(maze Maze) (route []Position) {
 				return
 			}
 
-			routes <- append(route, freePos[i])
+			routes <- append(route, openPositions[i])
 		}
 
 		allRoutines <- 1
@@ -88,10 +93,10 @@ func solve(maze Maze) (route []Position) {
 	}
 
 	// Initialize onceMaze and use it to limit each cell to a single visit
-	onceMaze = make([][]sync.Once, numRows)
+	onceMaze = make([][]sync.Once, amountOfRows)
 
-	for i := 0; i < numRows; i++ {
-		onceMaze[i] = make([]sync.Once, numCol)
+	for i := 0; i < amountOfRows; i++ {
+		onceMaze[i] = make([]sync.Once, amountOfCols)
 	}
 
 	// Start the exploration of the maze in a goroutine at position {0, 0}
@@ -99,16 +104,52 @@ func solve(maze Maze) (route []Position) {
 
 	onceMaze[0][0].Do(func() {
 		activeRoutines++
-		go explore(pos, path)
+		go explore(route)
 	})
 
 	// Receive messages from the goroutines and spawn new ones as needed
 	// Do not spawn new goroutines if a way out of the maze has been found
 	// Stop receiving only when no more exploration goroutines are running
+	found := false
+
+	for activeRoutines > 0 {
+
+		select {
+		case temp := <-routes:
+			var route = make([]Position, len(temp))
+			copy(route, temp)
+
+			row := temp[len(temp)-1].Row
+			col := temp[len(temp)-1].Col
+
+			onceMaze[row][col].Do(func() {
+				activeRoutines++
+				go explore(route)
+			})
+
+		case <-allRoutines:
+			activeRoutines--
+
+		case x := <-finalroute:
+			if found == false {
+
+				var copyFinal = make([]Position, len(x))
+				copy(copyFinal, x)
+
+				route = copyFinal
+				found = true
+			}
+		}
+	}
 
 	close(allRoutines)
 	close(routes)
 	close(finalroute)
+
+	if found == false {
+
+		route = nil
+	}
 
 	return
 }
