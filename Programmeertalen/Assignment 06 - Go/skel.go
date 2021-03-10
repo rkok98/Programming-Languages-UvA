@@ -70,7 +70,7 @@ func main() {
 	amountOfArgs := len(os.Args)
 
 	if amountOfArgs != 2 {
-		log.Fatalf("Incorrect amount of given arguments. Expected %d, actual arguments: %d.", 2, amountOfArgs)
+		log.Fatalf("Incorrect amount of given arguments. Expected arguments: %d, actual: %d.", 2, amountOfArgs)
 	}
 
 	f, error := os.Open(os.Args[1])
