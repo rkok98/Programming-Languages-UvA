@@ -83,6 +83,7 @@ func main() {
 	for _, pos := range solve(maze) {
 		maze[pos.Row][pos.Col] |= (1 << 2) // The third flag
 	}
+
 	for _, line := range maze {
 		// TODO: handle errors
 		fmt.Println(string(line))
