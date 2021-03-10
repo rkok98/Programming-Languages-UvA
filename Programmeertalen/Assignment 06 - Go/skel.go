@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sync"
 )
 
 const southWall byte = (1 << 0) // The first flag
@@ -44,7 +45,17 @@ func readMaze(f *os.File) (maze Maze) {
 }
 
 func solve(maze Maze) (route []Position) {
-	// var onceMaze [][]sync.Once
+	var onceMaze [][]sync.Once
+
+	explore := func(pos Position, path []Position) {
+		if len(route) == 1 {
+
+		}
+	}
+
+	onceMaze[0][0].Do(func() {
+		go explore(pos, path)
+	})
 
 	// Initialize a channel for communication with goroutines
 	// No functional dependency on the size of a buffer is allowed
@@ -62,6 +73,30 @@ func solve(maze Maze) (route []Position) {
 	// Receive messages from the goroutines and spawn new ones as needed
 	// Do not spawn new goroutines if a way out of the maze has been found
 	// Stop receiving only when no more exploration goroutines are running
+
+	return
+}
+
+func openPositions(position Position, lastPosition Position, maze Maze) (openPositions []Position) {
+	north := Position{Row: position.Row - 1, Col: position.Col}
+	if north.Row >= 0 && north != lastPosition && maze[north.Row][north.Col]&southWall == 0 {
+		openPositions = append(openPositions, north)
+	}
+
+	east := Position{Row: position.Row + 1, Col: position.Col}
+	if east != lastPosition && maze[east.Row][east.Col]&eastWall == 0 {
+		openPositions = append(openPositions, east)
+	}
+
+	south := Position{Row: position.Row, Col: position.Col + 1}
+	if south != lastPosition && maze[south.Row][south.Col]&southWall == 0 {
+		openPositions = append(openPositions, south)
+	}
+
+	west := Position{Row: position.Row, Col: position.Col - 1}
+	if west.Col >= 0 && west != lastPosition && maze[west.Row][west.Col]&eastWall == 0 {
+		openPositions = append(openPositions, west)
+	}
 
 	return
 }
