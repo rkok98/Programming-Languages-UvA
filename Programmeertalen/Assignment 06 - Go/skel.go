@@ -47,54 +47,90 @@ func readMaze(f *os.File) (maze Maze) {
 func solve(maze Maze) (route []Position) {
 	var onceMaze [][]sync.Once
 
-	explore := func(pos Position, path []Position) {
-		if len(route) == 1 {
-
-		}
-	}
-
-	onceMaze[0][0].Do(func() {
-		go explore(pos, path)
-	})
-
 	// Initialize a channel for communication with goroutines
 	// No functional dependency on the size of a buffer is allowed
+	routes chan []Position := make(chan []Position)
+	finalroute chan []Position := make(chan []Position)
+	allRoutines chan int := make(chan int)
+
+	route []Position := make([]Position, 0)
+	route = append(route, Position{Row: 0, Col: 0})
+
+	amountOfRows := len(maze)
+	amountOfCols := len(maze[0])
 
 	// Include a closure for the exploration of maze cells in goroutines
 	/* NOTE: The closure will be a short-lived function. Normally, this
 	 *       would be considered inefficient. However, achieving  efficient
 	 *       concurrency is not the point of this exercise.
 	 */
+	explore := func(position Position, path []Position) {
+		if len(path) != 1 {
+			previous = route[len(route)-2]
+		}
+
+		openPositions := openPositions(position, previous, maze)
+
+		for i := range openPositions {
+			if openPositions[i].Row >= amountOfRows || openPositions[i].Col >= amountOfCols {
+				routes <- route
+				finalroute <- route
+				allRoutines <- 1
+
+				return
+			}
+
+			routes <- append(route, freePos[i])
+		}
+
+		allRoutines <- 1
+		return
+	}
 
 	// Initialize onceMaze and use it to limit each cell to a single visit
+	onceMaze = make([][]sync.Once, numRows)
+
+	for i := 0; i < numRows; i++ {
+		onceMaze[i] = make([]sync.Once, numCol)
+	}
 
 	// Start the exploration of the maze in a goroutine at position {0, 0}
+	activeRoutines := 0
+
+	onceMaze[0][0].Do(func() {
+		activeRoutines++
+		go explore(pos, path)
+	})
 
 	// Receive messages from the goroutines and spawn new ones as needed
 	// Do not spawn new goroutines if a way out of the maze has been found
 	// Stop receiving only when no more exploration goroutines are running
 
+	close(allRoutines)
+	close(routes)
+	close(finalroute)
+
 	return
 }
 
-func openPositions(pos Position, lastpos Position, maze Maze) (openPositions []Position) {
-	north := Position{Row: pos.Row - 1, Col: pos.Col}
-	if north.Row >= 0 && north != lastpos && maze[north.Row][north.Col]&southWall == 0 {
+func openPositions(position Position, lastPosition Position, maze Maze) (openPositions []Position) {
+	north := Position{Row: position.Row - 1, Col: position.Col}
+	if north.Row >= 0 && north != lastPosition && maze[north.Row][north.Col]&southWall == 0 {
 		openPositions = append(openPositions, north)
 	}
 
-	east := Position{Row: pos.Row, Col: pos.Col + 1}
-	if east != lastpos && maze[pos.Row][pos.Col]&eastWall == 0 {
+	east := Position{Row: position.Row, Col: position.Col + 1}
+	if east != lastPosition && maze[position.Row][position.Col]&eastWall == 0 {
 		openPositions = append(openPositions, east)
 	}
 
-	south := Position{Row: pos.Row + 1, Col: pos.Col}
-	if south != lastpos && maze[pos.Row][pos.Col]&southWall == 0 {
+	south := Position{Row: position.Row + 1, Col: position.Col}
+	if south != lastPosition && maze[position.Row][position.Col]&southWall == 0 {
 		openPositions = append(openPositions, south)
 	}
 
-	west := Position{Row: pos.Row, Col: pos.Col - 1}
-	if west.Col >= 0 && west != lastpos && maze[west.Row][west.Col]&eastWall == 0 {
+	west := Position{Row: position.Row, Col: position.Col - 1}
+	if west.Col >= 0 && west != lastPosition && maze[west.Row][west.Col]&eastWall == 0 {
 		openPositions = append(openPositions, west)
 	}
 

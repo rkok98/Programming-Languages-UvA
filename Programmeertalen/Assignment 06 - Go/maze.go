@@ -101,59 +101,19 @@ func traverse(route []Position, maze Maze, routes chan []Position,
 	/* If one of the new positions is out of bounds (as in an exit has been
 	found), the current route will be sent into the channel finalroute. */
 
-	for pos := range freePositions {
-		if freePositions[pos].Row >= len(maze) || freePositions[pos].Col >= len(maze[0]) {
-
+	for i := range freePositions {
+		if freePositions[i].Row >= len(maze) || freePositions[i].Col >= len(maze[0]) {
 			routes <- route
 			finalroute <- route
-
 			allRoutines <- 1
 
 			return
 		}
-	}
 
-	/* Checks the amount of paths and instructs the solve function to spawn the
-	correct amount of go-routines. */
-
-	if len(freePositions) == 0 {
-
-		allRoutines <- 1
-
-		return
-
-	} else if len(freePositions) == 1 {
-
-		route = append(route, freePositions[0])
-		routes <- route
-
-	} else if len(freePositions) == 2 {
-
-		var newRoute []Position = route
-
-		route = append(route, freePositions[0])
-		routes <- route
-
-		newRoute = append(newRoute, freePositions[1])
-		routes <- newRoute
-
-	} else if len(freePositions) == 3 {
-
-		var newRoute []Position = route
-		var newnewRoute []Position = route
-
-		route = append(route, freePositions[0])
-		routes <- route
-
-		newRoute = append(newRoute, freePositions[1])
-		routes <- newRoute
-
-		newnewRoute = append(newnewRoute, freePositions[2])
-		routes <- newnewRoute
+		routes <- append(route, freePositions[i])
 	}
 
 	allRoutines <- 1
-
 	return
 }
 
