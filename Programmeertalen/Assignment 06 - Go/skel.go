@@ -77,28 +77,28 @@ func solve(maze Maze) (route []Position) {
 	return
 }
 
-func openPositions(position Position, lastPosition Position, maze Maze) (openPositions []Position) {
-	north := Position{Row: position.Row - 1, Col: position.Col}
-	if north.Row >= 0 && north != lastPosition && maze[north.Row][north.Col]&southWall == 0 {
-		openPositions = append(openPositions, north)
+func openPositions(pos Position, lastpos Position, maze Maze) (freePositions []Position) {
+	north := Position{Row: pos.Row - 1, Col: pos.Col}
+	if north.Row >= 0 && north != lastpos && maze[north.Row][north.Col]&southWall == 0 {
+		freePositions = append(freePositions, north)
 	}
 
-	east := Position{Row: position.Row + 1, Col: position.Col}
-	if east != lastPosition && maze[east.Row][east.Col]&eastWall == 0 {
-		openPositions = append(openPositions, east)
+	east := Position{Row: pos.Row, Col: pos.Col + 1}
+	if east != lastpos && maze[pos.Row][pos.Col]&eastWall == 0 {
+		freePositions = append(freePositions, east)
 	}
 
-	south := Position{Row: position.Row, Col: position.Col + 1}
-	if south != lastPosition && maze[south.Row][south.Col]&southWall == 0 {
-		openPositions = append(openPositions, south)
+	south := Position{Row: pos.Row + 1, Col: pos.Col}
+	if south != lastpos && maze[pos.Row][pos.Col]&southWall == 0 {
+		freePositions = append(freePositions, south)
 	}
 
-	west := Position{Row: position.Row, Col: position.Col - 1}
-	if west.Col >= 0 && west != lastPosition && maze[west.Row][west.Col]&eastWall == 0 {
-		openPositions = append(openPositions, west)
+	west := Position{Row: pos.Row, Col: pos.Col - 1}
+	if west.Col >= 0 && west != lastpos && maze[west.Row][west.Col]&eastWall == 0 {
+		freePositions = append(freePositions, west)
 	}
 
-	return
+	return freePositions
 }
 
 func main() {
