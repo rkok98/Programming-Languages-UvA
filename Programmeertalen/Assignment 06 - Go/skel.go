@@ -77,28 +77,28 @@ func solve(maze Maze) (route []Position) {
 	return
 }
 
-func openPositions(pos Position, lastpos Position, maze Maze) (freePositions []Position) {
+func openPositions(pos Position, lastpos Position, maze Maze) (openPositions []Position) {
 	north := Position{Row: pos.Row - 1, Col: pos.Col}
 	if north.Row >= 0 && north != lastpos && maze[north.Row][north.Col]&southWall == 0 {
-		freePositions = append(freePositions, north)
+		openPositions = append(openPositions, north)
 	}
 
 	east := Position{Row: pos.Row, Col: pos.Col + 1}
 	if east != lastpos && maze[pos.Row][pos.Col]&eastWall == 0 {
-		freePositions = append(freePositions, east)
+		openPositions = append(openPositions, east)
 	}
 
 	south := Position{Row: pos.Row + 1, Col: pos.Col}
 	if south != lastpos && maze[pos.Row][pos.Col]&southWall == 0 {
-		freePositions = append(freePositions, south)
+		openPositions = append(openPositions, south)
 	}
 
 	west := Position{Row: pos.Row, Col: pos.Col - 1}
 	if west.Col >= 0 && west != lastpos && maze[west.Row][west.Col]&eastWall == 0 {
-		freePositions = append(freePositions, west)
+		openPositions = append(openPositions, west)
 	}
 
-	return freePositions
+	return
 }
 
 func main() {
