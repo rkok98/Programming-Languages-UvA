@@ -67,8 +67,18 @@ func solve(maze Maze) (route []Position) {
 }
 
 func main() {
-	// TODO: handle errors
-	f, _ := os.Open(os.Args[1])
+	amountOfArgs := len(os.Args)
+
+	if amountOfArgs != 2 {
+		log.Fatalf("Incorrect amount of given arguments. Expected %d, actual arguments: %d.", 2, amountOfArgs)
+	}
+
+	f, error := os.Open(os.Args[1])
+
+	if error != nil {
+		log.Fatalf("There was an error opening %s: %s.", os.Args[1], error)
+	}
+
 	maze := readMaze(f)
 	for _, pos := range solve(maze) {
 		maze[pos.Row][pos.Col] |= (1 << 2) // The third flag
