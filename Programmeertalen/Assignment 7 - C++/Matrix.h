@@ -31,13 +31,62 @@ class Matrix
 /*! Reads a Matrix from 'is' stream. */
 std::istream& operator>>(std::istream& is,Matrix& matrix)
 {
+    std::vector<double> matrix_entries;
+    std::vector<std::string> entries;
+    std::string row, token;
+    int rows, columns;
+
+    char delimiter = ',';
+
+    while (std::getline(is, row))
+    {
+        std::stringstream stream(row);
+
+        while (std::getline(stream, token, delimiter)) {
+            trim(token);
+
+            double entry;
+            entry = atof(token.c_str());
+
+            matrix_entries.push_back(entry);
+        }
+
+        rows++;   
+    }
+
+    columns = matrix_entries.size() / rows;     
+
+    matrix.m_rows = rows;
+    matrix.m_cols = columns;
+    matrix.m_data = matrix_entries;
+
     return is; // to be completed
 }
 
 /*! Writes Matrix 'matrix' to 'os' stream. */
 std::ostream& operator<<(std::ostream& os,const Matrix& matrix)
 {
-    return os; // to be completed
+    int cols = matrix.nr_cols();
+    std::vector<double> data = matrix.vec();
+
+    /* Loop below Puts every number into the ostream, followed by a comma or
+    a newline (if all the numbers of a row have been added) */
+
+    for (unsigned int i = 0; i < data.size(); i++)
+    {
+        os << data[i];
+
+        if ((i + 1) % cols == 0)
+        {
+            os << "\n";
+        }
+        else
+        {
+            os << ",";
+        }
+    }
+
+    return os;
 }
 
 /*! Returns a new Matrix that is the negation of 'matrix' */
