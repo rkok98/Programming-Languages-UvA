@@ -1,3 +1,16 @@
+/**
+ * Author:   René Kok (13671146)
+ * Study:    Doorstroomminor Software Engineering UvA
+ *
+ * A distributed maze solver. The only argument for this program is to take the file name of a maze.
+ *
+ * A maze is a rectangular field of square boxes. These boxes have four sides
+ * which are either open or blocked by a wall. One solution to the maze is to have
+ * a series of connected squares such that a path runs from the entrance of the maze to the exit,
+ * without the path being obstructed by a wall. The entrance is always on the north-west edge of
+ * the maze, and the exit is on the south-east edge of the maze.
+ */
+
 package main
 
 import (
@@ -19,14 +32,14 @@ type Position struct {
 	Row, Col int
 }
 
-/* EXAMPLE: for a Position pos, there is NO wall north of pos if and only if
+/**
+ * EXAMPLE: for a Position pos, there is NO wall north of pos if and only if
  *  maze[pos.Row - 1][pos.Col] & southWall == 0
  *
  * Use the above construct, including the '== 0' part, when checking for the
  * absence of walls. For an explanation of why this works, see the provided
  * 'Questions and Answers' document.
  */
-
 func readMaze(f *os.File) (maze Maze) {
 	s := bufio.NewScanner(f)
 	for s.Scan() {
@@ -51,9 +64,9 @@ func solve(maze Maze) (route []Position) {
 
 	// Initialize a channel for communication with goroutines
 	// No functional dependency on the size of a buffer is allowed
+	var solution chan []Position = make(chan []Position)
 	var routes chan []Position = make(chan []Position)
-	var finalroute chan []Position = make(chan []Position)
-	var allRoutines chan int = make(chan int)
+	var counter chan int = make(chan int)
 
 	route = append(route, Position{Row: 0, Col: 0})
 
@@ -79,8 +92,8 @@ func solve(maze Maze) (route []Position) {
 		for i := range openPositions {
 			if openPositions[i].Row >= amountOfRows || openPositions[i].Col >= amountOfCols {
 				routes <- route
-				finalroute <- route
-				allRoutines <- 1
+				solution <- route
+				counter <- 1
 
 				return
 			}
@@ -88,7 +101,7 @@ func solve(maze Maze) (route []Position) {
 			routes <- append(route, openPositions[i])
 		}
 
-		allRoutines <- 1
+		counter <- 1
 		return
 	}
 
@@ -101,19 +114,19 @@ func solve(maze Maze) (route []Position) {
 
 	// Start the exploration of the maze in a goroutine at position {0, 0}
 	start := Position{Row: 0, Col: 0}
-	activeRoutines := 0
+	active := 0
 
 	onceMaze[0][0].Do(func() {
-		activeRoutines++
+		active++
 		go explore(start, route)
 	})
 
 	// Receive messages from the goroutines and spawn new ones as needed
 	// Do not spawn new goroutines if a way out of the maze has been found
 	// Stop receiving only when no more exploration goroutines are running
-	found := false
+	solved := false
 
-	for activeRoutines > 0 {
+	for active > 0 {
 		select {
 		case temp := <-routes:
 			var route = make([]Position, len(temp))
@@ -124,37 +137,39 @@ func solve(maze Maze) (route []Position) {
 			position := Position{Row: row, Col: col}
 
 			onceMaze[row][col].Do(func() {
-				activeRoutines++
+				active++
 				go explore(position, route)
 			})
 
-		case <-allRoutines:
-			activeRoutines--
+		case <-counter:
+			active--
 
-		case x := <-finalroute:
-			if !found {
+		case x := <-solution:
+			if !solved {
 
 				var copyFinal = make([]Position, len(x))
 				copy(copyFinal, x)
 
 				route = copyFinal
-				found = true
+				solved = true
 			}
 		}
 	}
 
-	close(allRoutines)
+	close(counter)
 	close(routes)
-	close(finalroute)
+	close(solution)
 
-	if found == false {
-
+	if !solved {
 		route = nil
 	}
 
 	return
 }
 
+/**
+ * Returns a list of every possible next step (a neighbor cell not seperated by a wall).
+ */
 func openPositions(position Position, lastPosition Position, maze Maze) (openPositions []Position) {
 	north := Position{Row: position.Row - 1, Col: position.Col}
 	if north.Row >= 0 && north != lastPosition && maze[north.Row][north.Col]&southWall == 0 {
@@ -198,7 +213,6 @@ func main() {
 	}
 
 	for _, line := range maze {
-		// TODO: handle errors
 		fmt.Println(string(line))
 	}
 }
