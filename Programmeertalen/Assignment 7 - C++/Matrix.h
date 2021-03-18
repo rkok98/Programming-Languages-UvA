@@ -68,15 +68,15 @@ std::istream &operator>>(std::istream &is, Matrix &matrix)
 /*! Writes Matrix 'matrix' to 'os' stream. */
 std::ostream &operator<<(std::ostream &os, const Matrix &matrix)
 {
-    int rows = matrix.nr_rows(), cols = matrix.nr_cols();
+    int rows = matrix.nr_rows(), columns = matrix.nr_cols();
 
     for (int row = 0; row < rows; row++)
     {
-        for (int col = 0; col < cols; col++)
+        for (int column = 0; column < columns; column++)
         {
-            os << matrix(row, col);
+            os << matrix(row, column);
 
-            if (col < cols - 1)
+            if (column < columns - 1)
             {
                 os << ',';
             }
@@ -110,9 +110,9 @@ Matrix transpose(const Matrix &matrix)
     std::vector<double> new_entries;
     int rows = matrix.nr_rows(), columns = matrix.nr_cols();
 
-    for (int col = 0; col < columns; col++) {
+    for (int column = 0; column < columns; column++) {
         for (int row = 0; row < rows; row++) {
-            new_entries.push_back(matrix(row, col));
+            new_entries.push_back(matrix(row, column));
         }
     }
 
@@ -152,27 +152,26 @@ Matrix operator-(const Matrix &m1, const Matrix &m2)
 Matrix operator*(const Matrix &m1, const Matrix &m2)
 {
     std::vector<double> new_data;
-    int m1_rows = m1.nr_rows(), m1_columns = m1.nr_cols(), m2_rows = m2.nr_rows(), m2_cols = m2.nr_cols();
+    int m1_rows = m1.nr_rows(), m1_columns = m1.nr_cols(), m2_rows = m2.nr_rows(), m2_columns = m2.nr_cols();
     double sum{};
 
     if (m1_columns != m2_rows) {
-        throw Evaluator_exception("Invalid dimensions"
-                                  " in matrix multiplication");
+        throw Evaluator_exception("Incorrect dimensions");
     }
 
     for (int m1_row = 0; m1_row < m1_rows; m1_row++) {
-        for (int m2_col = 0; m2_col < m2_cols; m2_col++) {
-            sum = m1(m1_row, 0) * m2(0, m2_col);
+        for (int m2_column = 0; m2_column < m2_columns; m2_column++) {
+            sum = m1(m1_row, 0) * m2(0, m2_column);
             
-            for (int m1_col = 1; m1_col < m1_columns; m1_col++) {
-                sum = sum + m1(m1_row, m1_col) * m2(m1_col, m2_col);
+            for (int m1_column = 1; m1_column < m1_columns; m1_column++) {
+                sum = sum + m1(m1_row, m1_column) * m2(m1_column, m2_column);
             }
 
             new_data.push_back(sum);
         }
     }
 
-    Matrix new_matrix(m1_rows, m2_cols);
+    Matrix new_matrix(m1_rows, m2_columns);
     new_matrix.vec() = new_data;
 
     return new_matrix;
