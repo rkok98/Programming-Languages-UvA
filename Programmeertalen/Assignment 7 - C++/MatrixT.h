@@ -121,8 +121,10 @@ MatrixT<T> transpose(const MatrixT<T> &matrix)
     std::vector<T> new_entries;
     int rows = matrix.nr_rows(), columns = matrix.nr_cols();
 
-    for (int column = 0; column < columns; column++) {
-        for (int row = 0; row < rows; row++) {
+    for (int column = 0; column < columns; column++)
+    {
+        for (int row = 0; row < rows; row++)
+        {
             new_entries.push_back(matrix(row, column));
         }
     }
@@ -169,17 +171,19 @@ MatrixT<T> operator*(const MatrixT<T> &m1, const MatrixT<T> &m2)
     int m1_rows = m1.nr_rows(), m1_columns = m1.nr_cols(), m2_rows = m2.nr_rows(), m2_columns = m2.nr_cols();
     T sum{};
 
-    
-
-    if (m1_columns != m2_rows) {
+    if (m1_columns != m2_rows)
+    {
         throw Evaluator_exception("Incorrect dimensions");
     }
 
-    for (int m1_row = 0; m1_row < m1_rows; m1_row++) {
-        for (int m2_column = 0; m2_column < m2_columns; m2_column++) {
+    for (int m1_row = 0; m1_row < m1_rows; m1_row++)
+    {
+        for (int m2_column = 0; m2_column < m2_columns; m2_column++)
+        {
             sum = m1(m1_row, 0) * m2(0, m2_column);
-            
-            for (int m1_column = 1; m1_column < m1_columns; m1_column++) {
+
+            for (int m1_column = 1; m1_column < m1_columns; m1_column++)
+            {
                 sum = sum + m1(m1_row, m1_column) * m2(m1_column, m2_column);
             }
 
