@@ -1,14 +1,14 @@
 #ifndef MATRIX_INCLUDED
 #define MATRIX_INCLUDED
 
-#include <vector>
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <algorithm>
-#include <utility>
-#include <numeric>
 #include <iomanip>
+#include <iostream>
+#include <numeric>
+#include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 #include "evaluator_exception.h"
 #include "evaluator_string_tools.h"
