@@ -77,11 +77,11 @@ std::istream &operator>>(std::istream &is, MatrixT<T> &matrix)
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const MatrixT<T> &matrix)
 {
-    int rows = matrix.nr_rows(), columns = matrix.nr_cols();
+    unsigned int rows = matrix.nr_rows(), columns = matrix.nr_cols();
 
-    for (int row = 0; row < rows; row++)
+    for (unsigned int row = 0; row < rows; row++)
     {
-        for (int column = 0; column < columns; column++)
+        for (unsigned int column = 0; column < columns; column++)
         {
             os << matrix(row, column);
 
@@ -118,18 +118,19 @@ MatrixT<T> operator-(const MatrixT<T> &matrix)
 template <typename T>
 MatrixT<T> transpose(const MatrixT<T> &matrix)
 {
-    std::vector<T> new_entries;
-    int rows = matrix.nr_rows(), columns = matrix.nr_cols();
+    unsigned int rows = matrix.nr_rows(), columns = matrix.nr_cols();
 
-    for (int column = 0; column < columns; column++)
+    MatrixT<T> new_matrix(columns, rows);
+    std::vector<T> new_entries;
+
+    for (unsigned int column = 0; column < columns; column++)
     {
-        for (int row = 0; row < rows; row++)
+        for (unsigned int row = 0; row < rows; row++)
         {
             new_entries.push_back(matrix(row, column));
         }
     }
 
-    MatrixT<T> new_matrix(columns, rows);
     new_matrix.vec() = new_entries;
 
     return new_matrix;
@@ -167,8 +168,12 @@ MatrixT<T> operator-(const MatrixT<T> &m1, const MatrixT<T> &m2)
 template <typename T>
 MatrixT<T> operator*(const MatrixT<T> &m1, const MatrixT<T> &m2)
 {
+    unsigned int m1_rows = m1.nr_rows(), m1_columns = m1.nr_cols(),
+                 m2_rows = m2.nr_rows(), m2_columns = m2.nr_cols();
+
+    MatrixT<T> new_matrix(m1_rows, m2_columns);
     std::vector<T> new_data;
-    int m1_rows = m1.nr_rows(), m1_columns = m1.nr_cols(), m2_rows = m2.nr_rows(), m2_columns = m2.nr_cols();
+
     T sum{};
 
     if (m1_columns != m2_rows)
@@ -176,13 +181,13 @@ MatrixT<T> operator*(const MatrixT<T> &m1, const MatrixT<T> &m2)
         throw Evaluator_exception("Incorrect dimensions");
     }
 
-    for (int m1_row = 0; m1_row < m1_rows; m1_row++)
+    for (unsigned int m1_row = 0; m1_row < m1_rows; m1_row++)
     {
-        for (int m2_column = 0; m2_column < m2_columns; m2_column++)
+        for (unsigned int m2_column = 0; m2_column < m2_columns; m2_column++)
         {
             sum = m1(m1_row, 0) * m2(0, m2_column);
 
-            for (int m1_column = 1; m1_column < m1_columns; m1_column++)
+            for (unsigned int m1_column = 1; m1_column < m1_columns; m1_column++)
             {
                 sum = sum + m1(m1_row, m1_column) * m2(m1_column, m2_column);
             }
@@ -191,7 +196,6 @@ MatrixT<T> operator*(const MatrixT<T> &m1, const MatrixT<T> &m2)
         }
     }
 
-    MatrixT<T> new_matrix(m1_rows, m2_columns);
     new_matrix.vec() = new_data;
 
     return new_matrix;
