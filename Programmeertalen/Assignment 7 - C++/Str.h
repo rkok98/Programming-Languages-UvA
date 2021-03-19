@@ -33,19 +33,19 @@ std::ostream &operator<<(std::ostream &os, const Str &str)
     return os << str.str();
 }
 
-Str operator-(const Str& string)
+Str operator-(const Str &string)
 {
     return Str("(-" + string.str() + ")");
 }
 
-Str operator+(const Str& str_1,const Str& str_2)
+Str operator+(const Str &str_1, const Str &str_2)
 {
     return Str("(" + str_1.str() + "+" + str_2.str() + ")");
 }
 
 Str operator-(const Str &str_1, const Str &str_2)
 {
-  return Str("(" + str_1.str() + "-" + str_2.str() + ")");
+    return Str("(" + str_1.str() + "-" + str_2.str() + ")");
 }
 
 Str operator*(const Str &str_1, const Str &str_2)
