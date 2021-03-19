@@ -5,7 +5,7 @@
 class Str
 {
 public:
-    Str() : m_str{""} {}
+    Str() : m_str("") {}
 
     Str(std::string string)
     {
