@@ -108,7 +108,7 @@ MatrixT<T> operator-(const MatrixT<T> &matrix)
 
     for (unsigned int i = 0; i < matrix.vec().size(); i++)
     {
-        new_matrix.vec()[i] = matrix.vec()[i] * -1;
+        new_matrix.vec()[i] = -matrix.vec()[i];
     }
 
     return new_matrix;
