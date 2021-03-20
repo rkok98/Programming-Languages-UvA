@@ -35,7 +35,7 @@ std::ostream &operator<<(std::ostream &os, const Str &str)
 
 Str operator-(const Str &str)
 {
-    return Str(str.str());
+    return Str("(-" + str.str() + ")");
 }
 
 Str operator+(const Str &str_1, const Str &str_2)
