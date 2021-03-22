@@ -1,3 +1,12 @@
+/*
+ * Author:   René Kok (13671146)
+ * Study:    Doorstroomminor Software Engineering UvA
+ * 
+ * This file defines a generic matrix class and the according 
+ * respective operator overloaded functions: negation, +, -, * and transpose. 
+ * This file also includes two functions for reading and writing a matrix.
+ */
+
 #ifndef MATRIXT_INCLUDED
 #define MATRIXT_INCLUDED
 
@@ -114,28 +123,6 @@ MatrixT<T> operator-(const MatrixT<T> &matrix)
     return new_matrix;
 }
 
-/*! Returns a new Matrix that is the transpose of 'matrix'. */
-template <typename T>
-MatrixT<T> transpose(const MatrixT<T> &matrix)
-{
-    unsigned int rows = matrix.nr_rows(), columns = matrix.nr_cols();
-
-    MatrixT<T> new_matrix(columns, rows);
-    std::vector<T> new_entries;
-
-    for (unsigned int column = 0; column < columns; column++)
-    {
-        for (unsigned int row = 0; row < rows; row++)
-        {
-            new_entries.push_back(matrix(row, column));
-        }
-    }
-
-    new_matrix.vec() = new_entries;
-
-    return new_matrix;
-}
-
 /*! Returns a new Matrix that is equal to 'm1+m2'. */
 template <typename T>
 MatrixT<T> operator+(const MatrixT<T> &m1, const MatrixT<T> &m2)
@@ -197,6 +184,28 @@ MatrixT<T> operator*(const MatrixT<T> &m1, const MatrixT<T> &m2)
     }
 
     new_matrix.vec() = new_data;
+
+    return new_matrix;
+}
+
+/*! Returns a new Matrix that is the transpose of 'matrix'. */
+template <typename T>
+MatrixT<T> transpose(const MatrixT<T> &matrix)
+{
+    unsigned int rows = matrix.nr_rows(), columns = matrix.nr_cols();
+
+    MatrixT<T> new_matrix(columns, rows);
+    std::vector<T> new_entries;
+
+    for (unsigned int column = 0; column < columns; column++)
+    {
+        for (unsigned int row = 0; row < rows; row++)
+        {
+            new_entries.push_back(matrix(row, column));
+        }
+    }
+
+    new_matrix.vec() = new_entries;
 
     return new_matrix;
 }
