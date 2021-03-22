@@ -81,30 +81,44 @@ higher-order functions and anonymous functions.
 \subsection{Relevant characteristics of application domain}
 Smart contracts are automated contracts with specific instructions programmed. 
 They help people exchange anything of value in a transparent way while avoiding intermediaries.
+Smart contracts can be applied in any industry where transactions take place.
 
 Smart contracts are run in a virtual machine because it needs to be deterministic, terminable and isolated.
 A program can give different outputs on different types of machines.
 For a smart contract you want the output to always yield the same results.
 
 \subsection{Use case description}
-
+% TODO
+\newpage
 
 %-------------------------------------------------------------------------------
 %	METHODE
 %-------------------------------------------------------------------------------
-
 \section{Analysis}
 \subsection{The type system}
-\par Because smart contracts are designed for transactions, a smart contract needs to be accurate and secure. 
+\par A type system defines how a programming language groups data into different data types.
+The major categories of the type system are: static or dynamically typed, manifest or inferred 
+type inference and nominal or structural type system.
+\vspace{5mm}
+
+\par The purpose of a type checker is to prevent an incorrect operation from being executed.
+A static type checker does this by stopping the compiler from generating a program with type errors, 
+a dynamic type checker halts the program as it is about to make a type error \cite{matthews1987static}.
+Because smart contracts are designed for transactions, a smart contract needs to be accurate and secure. 
 No hidden surprises at runtime.
 That is why I chose to have the language static typed.
 Static type checking has the advantages that the smart contract is guaranteed to meet a number of type safety features for all possible inputs.
 In addition, a static typing language is better optimized as opposed to dynamically typed language, because the compiler knows if a program is correctly typed.
 This results in a smaller and faster binary because no dynamic safety checks need to be performed.
+\vspace{5mm}
 
-\par While type inference does not affect runtime of a program, because types are inference occurs at compile-time,
+\par The purpose of type inference is to retrieve the type of an declared variable.
+Manifest typing is an explicit identification and requires that the the type of each variable is declared.
+Inferred typing determines the type of an variable by the type of the assigned initialization expression.
+While type inference does not affect runtime of a program, because types are inference occurs at compile-time,
 an explicit type inference seems to be the best choice for smart contracts because  
 explicit type annotations serve as documentation for the code.
+\vspace{5mm}
 
 \par I also made the choice for nominative typing. 
 While structural typing is more flexible, nominative typing is less prone to errors.
