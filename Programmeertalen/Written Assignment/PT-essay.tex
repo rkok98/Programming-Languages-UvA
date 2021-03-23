@@ -9,10 +9,7 @@
 %-------------------------------------------------------------------------------
 
 \documentclass{uva-inf-article}
-%\usepackage[dutch]{babel}
-%\usepackage{csquotes}
-
-\usepackage[style=numeric-comp]{biblatex}
+\usepackage[style=apa]{biblatex}
 \addbibresource{PT-essay.bib}
 
 \usepackage{listings}
@@ -64,7 +61,7 @@
 %-------------------------------------------------------------------------------
 
 \section{Introduction}
-Smart Contracts \cite{what-are-smart-contracts} are key to simplify complex blockchain transactions.
+Smart Contracts (\cite{what-are-smart-contracts}) are key to simplify complex blockchain transactions.
 Smart contracts can streamline this complex process that involves several intermediaries because of a 
 lack of trust among participants in the transaction.
 
@@ -103,7 +100,7 @@ type inference and nominal or structural type system.
 
 \par The purpose of a type checker is to prevent an incorrect operation from being executed.
 A static type checker does this by stopping the compiler from generating a program with type errors, 
-a dynamic type checker halts the program as it is about to make a type error \cite{matthews1987static}.
+a dynamic type checker halts the program as it is about to make a type error (\cite{matthews1987static}).
 Because smart contracts are designed for transactions, a smart contract needs to be accurate and secure. 
 No hidden surprises at runtime.
 That is why I chose to have the language static typed.
@@ -126,10 +123,24 @@ It's common for objects to be structural equivalent, but semantically different.
 polymorphism can be implemented through a shared interface such as in the Java programming language.
 
 \subsection{State management}
-\par 
+\par A program can be stateful or stateless. A stateful program stores it's state in variables.
+These variables can be read or mutated during execution of the program.
+A stateless program does not store it's state in variables. 
+The program's data is passed through chained functions. 
+
+\par A stateless program is according to research more reliable (\cite{Merelo}) because it is not depending on it's state.
+Because it doesn't rely on it's state, multithreading is easier to program then a stateful program. 
+Because the synchronization of the states no longer has to be taken into account (\cite{Merelo}).
+
+\par Because of these reasons my language will be stateless.
 
 \subsection{Compilation/interpretation strategy}
-\par I've chosen for an ahead of time (AOT) compilation. In contrast to the JIT compiler, 
+\par Just-in-time (JIT) compilation during program execution and ahead-of-time (AOT) compilation during 
+software installation are alternate techniques used by managed language virtual machines (VM) to 
+generate optimized native code while simultaneously achieving binary code portability and 
+high execution performance (\cite{wade2017aot}).
+
+\par I've chosen for an ahead-of-time compilation. In contrast to the JIT compiler, 
 the original source code does not have to be supplied, but a compiled smart contract is uploaded.
 Normally, a compiled version must be written for each type of system. 
 This is not the case for our smart contracts, as the code only runs on a specialized virtual machine 
@@ -138,16 +149,26 @@ which in most cases of JIT compiling is considered to be too costly.
 With AOT compilation, the programs runs faster because the program is already compiled before running.
 
 \subsection{Evaluation strategy}
+\par In a function call, arguments expressions may be evaluated eagerly 
+to obtain the arguments value before evaluating the function body.
+Alternatively, one might evaluate arguments lazily, that is, postpone evaluation 
+of the arguments until we have seen that the value of the argument is really needed.
+If the argument is not needed, the argument is never evaluated. If it is, 
+then the argument is evaluated and cached in case it will be needed again
+(\cite{Sestoft2012-2}).
+
 I made the choice for an eager evaluation strategy to avoid unexpected behavior.
 In addition, lazy evaluation is difficult to combine with imperative functions such as 
 input/output, because the order of operations becomes indeterminate.
 
 \subsection{Parameter evaluation strategy}
+% TODO: Bronnen en introductie schrijven
 I choose for call by value as parameter evaluation strategy. 
 I have made this choice so that the scope of a variable is clear. 
 So the chance of unwanted side effects is reduced by modifying a copy of a value as opposed to call via reference.
 
 \subsection{Communication semantics (synchronous/asynchronous)}
+% TODO: Bronnen en introductie schrijven
 As far as I know, there is no language that is completely asynchronous. 
 I want my programming language to be synchronous, but it needs to support asynchronous communication semantics.
 
@@ -155,6 +176,11 @@ For example, information can be retrieved from multiple sources at the same time
 which means that the processing time of a smart contract is shorter than when this information is retrieved synchronously.
 
 \subsection{Higher-order functions}
+\par A higher-order functional language is one in which a function may be used as a value, 
+just like an integer or a boolean. That is, the value of a variable may be a function, 
+and a function may take a function as argument and may return a function as a result
+(\cite{Sestoft2012}).
+
 I want my programming language to support higher-order functions.
 A good use-case for higher-order functions is validating an object.
 The basic idea is a function that takes an object as an argument and then any number of 
