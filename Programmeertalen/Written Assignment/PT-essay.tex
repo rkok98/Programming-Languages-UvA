@@ -173,12 +173,13 @@ the original remains the same. With call by reference, the original value is adj
 per reference, as it does not have a state to reference.
 
 \subsection{Communication semantics (synchronous/asynchronous)}
-% TODO: Bronnen en introductie schrijven
-As far as I know, there is no language that is completely asynchronous. 
-I want my programming language to be synchronous, but it needs to support asynchronous communication semantics.
+\par Asynchronous communication means that the program executes an action and then does not wait for the result while it continues. 
+In synchronous communication, the program waits for the result of the action before continuing.
 \vspace{5mm}
 
-\par For example, information can be retrieved from multiple sources at the same time by means of asynchronous requests, 
+As far as I know, there is no language that is completely asynchronous. 
+I want my programming language to be synchronous, but it needs to support asynchronous communication semantics.
+For example, information can be retrieved from multiple sources at the same time by means of asynchronous requests, 
 which means that the processing time of a smart contract is shorter than when this information is retrieved synchronously.
 
 \newpage
