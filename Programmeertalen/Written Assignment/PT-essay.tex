@@ -127,18 +127,20 @@ polymorphism can be implemented through a shared interface such as in the Java p
 These variables can be read or mutated during execution of the program.
 A stateless program does not store it's state in variables. 
 The program's data is passed through chained functions. 
+\vspace{5mm}
 
 \par A stateless program is according to research more reliable (\cite{Merelo}) because it is not depending on it's state.
 Because it doesn't rely on it's state, multithreading is easier to program then a stateful program. 
 Because the synchronization of the states no longer has to be taken into account (\cite{Merelo}).
+Because of these reasons my language will be stateless.
 
-\par Because of these reasons my language will be stateless.
-
+\newpage
 \subsection{Compilation/interpretation strategy}
 \par Just-in-time (JIT) compilation during program execution and ahead-of-time (AOT) compilation during 
 software installation are alternate techniques used by managed language virtual machines (VM) to 
 generate optimized native code while simultaneously achieving binary code portability and 
 high execution performance (\cite{wade2017aot}).
+\vspace{5mm}
 
 \par I've chosen for an ahead-of-time compilation. In contrast to the JIT compiler, 
 the original source code does not have to be supplied, but a compiled smart contract is uploaded.
@@ -156,23 +158,28 @@ of the arguments until we have seen that the value of the argument is really nee
 If the argument is not needed, the argument is never evaluated. If it is, 
 then the argument is evaluated and cached in case it will be needed again
 (\cite{Sestoft2012-2}).
+\vspace{5mm}
 
-I made the choice for an eager evaluation strategy to avoid unexpected behavior.
+\par I made the choice for an eager evaluation strategy to avoid unexpected behavior.
 In addition, lazy evaluation is difficult to combine with imperative functions such as 
 input/output, because the order of operations becomes indeterminate.
 
 \subsection{Parameter evaluation strategy}
-% TODO: Bronnen en introductie schrijven
-I choose for call by value as parameter evaluation strategy. 
-I have made this choice so that the scope of a variable is clear. 
-So the chance of unwanted side effects is reduced by modifying a copy of a value as opposed to call via reference.
+\par The most common way of parameter evaluation strategy are call by value and call by reference. 
+With call by value, a copy is made of the data structure. When the copy is adjusted within the function, 
+the original remains the same. With call by reference, the original value is adjusted.
+\vspace{5mm}
+
+\par Since legalease's state management is stateless, it is not possible to provide a value 
+per reference, as it does not have a state to reference.
 
 \subsection{Communication semantics (synchronous/asynchronous)}
 % TODO: Bronnen en introductie schrijven
 As far as I know, there is no language that is completely asynchronous. 
 I want my programming language to be synchronous, but it needs to support asynchronous communication semantics.
+\vspace{5mm}
 
-For example, information can be retrieved from multiple sources at the same time by means of asynchronous requests, 
+\par For example, information can be retrieved from multiple sources at the same time by means of asynchronous requests, 
 which means that the processing time of a smart contract is shorter than when this information is retrieved synchronously.
 
 \subsection{Higher-order functions}
@@ -180,8 +187,9 @@ which means that the processing time of a smart contract is shorter than when th
 just like an integer or a boolean. That is, the value of a variable may be a function, 
 and a function may take a function as argument and may return a function as a result
 (\cite{Sestoft2012}).
+\vspace{5mm}
 
-I want my programming language to support higher-order functions.
+\par I want my programming language to support higher-order functions.
 A good use-case for higher-order functions is validating an object.
 The basic idea is a function that takes an object as an argument and then any number of 
 functions that must evaluate to true for the object to be considered valid.
@@ -195,8 +203,9 @@ Anonymous functions are harder to debug and anonymous functions are not reusable
 Because anonymous functions are an addition to the language and not a trade-off, 
 I have made the choice to offer support for anonymous functions. 
 So programmers are free to make use of anonymous functions.
+\vspace{5mm}
 
-In addition, anonymous functions are often used in combination with higher-order functions.
+\par In addition, anonymous functions are often used in combination with higher-order functions.
 
 \section{Discussion}
 %\lipsum[5]
