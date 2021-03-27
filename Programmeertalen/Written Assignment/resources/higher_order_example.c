@@ -7,8 +7,8 @@ bool oldEnough(User, Item) {
 }
 
 function validate(User, Item, Validators[]) {
-  for (int i = 0; i < tests.length; i++) {
-    if (!tests[i](obj)) {
+  for (int i = 0; i < Validators.length; i++) {
+    if (!Validators[i](User, Item)) {
       return false;
     }
   }
