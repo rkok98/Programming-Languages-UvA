@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/latex,macos,vscode
 # Edit at https://www.toptal.com/developers/gitignore?templates=latex,macos,vscode
 
+__*.pdf
+__*.tex
+
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:
 *.aux
