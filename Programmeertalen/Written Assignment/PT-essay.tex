@@ -1,11 +1,5 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% LATEX-TEMPLATE TECHNISCH RAPPORT
 %-------------------------------------------------------------------------------
-% This template is derived from the AVI PT report template.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%-------------------------------------------------------------------------------
-%	PACKAGES EN DOCUMENT CONFIGURATIE
+%	PACKAGES
 %-------------------------------------------------------------------------------
 
 \documentclass{uva-inf-article}
@@ -15,51 +9,32 @@
 \usepackage{listings}
 
 %-------------------------------------------------------------------------------
-%	GEGEVENS VOOR IN DE TITEL
+%	INFO
 %-------------------------------------------------------------------------------
 
-% Vul de naam van de opdracht in.
 \assignment{Individual Written Assessment}
-% Vul het soort opdracht in.
 \assignmenttype{Essay}
-% Vul de titel van de eindopdracht in.
 \title{Designing \texttt{legalease}, a Smart Contracts programming language}
 
-% Vul de volledige namen van alle auteurs in.
 \author{René Kok}
-% Vul de corresponderende UvAnetID's in.
 \uvanetid{13671146}
 
-% Vul eventueel ook de naam van de docent of vakcoordinator toe.
 \docent{Koen van Elsen}
 \course{Programmeertalen}
-% Te vinden op onder andere Datanose.
 \courseid{5062PROG6Y}
 
-% Dit is de datum die op het document komt te staan. Standaard is dat vandaag.
 \date{\today}
 
 %-------------------------------------------------------------------------------
-%	VOORPAGINA
+%	COVER
 %-------------------------------------------------------------------------------
-
 \begin{document}
 \maketitle
-
-%-------------------------------------------------------------------------------
-%	INHOUDSOPGAVE EN ABSTRACT
-%-------------------------------------------------------------------------------
-
-% Niet doen bij korte verslagen en rapporten
-%\tableofcontents
-%\begin{abstract}
-%\lipsum[13]
-%\end{abstract}
-
-%-------------------------------------------------------------------------------
-%	INTRODUCTIE
-%-------------------------------------------------------------------------------
 \newpage
+
+%-------------------------------------------------------------------------------
+%	INTRODUCTION
+%-------------------------------------------------------------------------------
 \section{Introduction}
 Smart Contracts (\cite{what-are-smart-contracts}) are key to simplify complex blockchain transactions.
 Smart contracts can streamline this complex process that involves several intermediaries because of a 
@@ -92,8 +67,8 @@ That means the transaction cannot be changed, and only parties who have been gra
 \vspace{5mm}
 
 \subsection{Use case description}
-\textit{"In recent times, industry interest has increasingly moved to second generation blockhain applications, 
-including digitising asset ownership, intellectual property and smart contracts. The latter usecase is particularly interesting, 
+\textit{"In recent times, industry interest has increasingly moved to second generation blockchain applications, 
+including digitising asset ownership, intellectual property and smart contracts. The latter use case is particularly interesting, 
 as one can encode the rules of a contract in computer code, which is replicated and executed across the blockchain’s nodes. 
 Such a contract can be self-enforcing, monitoring external inputs from trusted sources (e.g. the meteorological service, or a financial exchange) in 
 order to settle according to the contract’s stipulations."}\cite{Peters2016}.
@@ -110,7 +85,7 @@ For a smart contract you want the output to always yield the same results.
 
 \newpage
 %-------------------------------------------------------------------------------
-%	METHODE
+%	METHOD
 %-------------------------------------------------------------------------------
 \section{Analysis}
 \subsection{The type system}
@@ -232,6 +207,9 @@ So programmers are free to make use of anonymous functions.
 
 \newpage
 
+%-------------------------------------------------------------------------------
+%	DISCUSSION AND CONCLUSION
+%-------------------------------------------------------------------------------
 \section{Discussion}
 \par This essay takes a very abstract look at the possible characteristic of the programming language legalease.
 Based on these characteristics, choices have been applied to the different concepts of a programming language.
@@ -251,18 +229,15 @@ Legalease will be used by programmers to write smart contracts for anyone who wa
 That is why choices have been made to make the language easier to understand (see explicit type inference).
 Because of my choices, I consider legalease to be a suitable language for Ethereum's smart contracts.
 
-
 \newpage
 %-------------------------------------------------------------------------------
-%	REFERENTIES
+%	REFERENCES
 %-------------------------------------------------------------------------------
-
 \printbibliography
-
 \newpage
 
 %-------------------------------------------------------------------------------
-%	BIJLAGEN EN EINDE
+%	APPENDIX
 %-------------------------------------------------------------------------------
 \newpage
 \section{Appendix A: Higher-order functions example}

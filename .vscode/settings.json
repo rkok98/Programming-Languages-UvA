@@ -67,5 +67,8 @@
         "utility": "cpp",
         "numeric": "cpp"
     },
-    "cSpell.language": "nl,en,en-GB,en-US"
+    "cSpell.language": "nl,en,en-GB,en-US",
+    "cSpell.words": [
+        "legalease"
+    ]
 }
