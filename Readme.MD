@@ -1,4 +1,4 @@
-# Programmeertalen
+# Universiteit van Amsterdam: Programmeertalen
 ## Weekly assignments
 - Assignment 1: Bash]
 - Assignment 2: Haskell
